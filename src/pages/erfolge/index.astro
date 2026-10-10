@@ -1,0 +1,135 @@
+---
+import Base from '../../layouts/Base.astro';
+import erfolge from '../../data/erfolge.json';
+import verein from '../../data/verein.json';
+import { getCollection } from 'astro:content';
+import { url, formatDate } from '../../lib/url';
+
+const berichte = (await getCollection('news', ({ data }) => !data.draft && data.kategorie === 'Erfolg'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const highlights = erfolge.filter((e) => e.highlight);
+const stufen = ['Alle', 'U8', 'U10', 'U12', 'U14+'];
+const max = Math.max(...verein.wettkaempfe_pro_jahr.map((w) => w.anzahl));
+const wk2026 = verein.wettkaempfe_pro_jahr.find((w) => w.jahr.startsWith('2026'))?.anzahl;
+---
+<Base title="Erfolge" active="erfolge">
+  <section class="wrap" style="padding-top:16px">
+    <div class="card-dark" style="display:grid;gap:32px" id="erfolge-head">
+      <div style="display:flex;flex-direction:column;gap:20px;align-items:flex-start">
+        <span class="pill pill-neon tag-mono">ERFOLGE</span>
+        <h1 class="h-xl" style="color:#fff">Hart trainiert.<br /><span class="neon">Laut gefeiert.</span></h1>
+        <p>Vom ersten Pokal beim KiLa-Cup bis zum Berliner Meistertitel: Hier sammeln wir, was unsere Athlet:innen erreichen – jede Medaille, jede Bestleistung, jeder Teamsieg.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><b class="neon">[X]</b><span>Berliner Meistertitel</span></div>
+        <div class="stat"><b>[X]</b><span>Podestplätze 2026</span></div>
+        <div class="stat"><b>{wk2026}</b><span>Wettkämpfe 2026 bisher</span></div>
+        <div class="stat"><b>[X]</b><span>Athlet:innen am Start</span></div>
+      </div>
+    </div>
+    <div class="ticker" style="margin-top:16px" aria-hidden="true">
+      {highlights.map((h) => <span>{h.wettkampf.toUpperCase()} {h.klasse} · {h.platz}</span>)}
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-l" style="margin-bottom:24px">Berichte zu unseren Erfolgen</h2>
+    <div class="grid grid-3">
+      {berichte.map((n) => (
+        <a href={url(`/news/${n.id}/`)} class="card">
+          <div class="ph">Foto · {n.data.title}</div>
+          <div class="card-body"><span class="meta">{formatDate(n.data.date)}{n.data.klasse && ` · ${n.data.klasse}`}</span><h3 class="h-s">{n.data.title}</h3><strong style="margin-top:auto">Zum Bericht →</strong></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head">
+      <h2 class="h-l">Alle Ergebnisse</h2>
+      <span class="muted">Offizielle Ergebnislisten über LADV</span>
+    </div>
+    <div class="chips" role="group" aria-label="Nach Altersklasse filtern" style="margin-bottom:20px">
+      {stufen.map((s, i) => <button type="button" class="chip chip-neon" data-stufe={s} aria-pressed={i === 0 ? 'true' : 'false'}>{s}</button>)}
+    </div>
+    <div class="results" id="results">
+      {erfolge.map((e) => {
+        const gold = e.platz.startsWith('1.');
+        return (
+          <div class="result-row" data-stufen={e.stufen.join(',')}>
+            <span class={`medal ${gold ? 'gold' : ''} ${e.platz.length > 3 ? 'small-text' : ''}`}>{e.platz}</span>
+            <span class="d-only muted">{e.datum}</span>
+            <span><strong>{e.wettkampf}</strong><span class="m-only" style="font-size:14px;color:var(--text-2)">{e.klasse} · {e.disziplin}</span><span class="m-only" style="font-size:13px;color:var(--muted)">{e.datum} · {e.wer}</span></span>
+            <span class="d-only">{e.klasse}</span>
+            <span class="d-only">{e.disziplin}</span>
+            <span class="d-only">{e.wer}</span>
+            <span class="d-only">{e.link ? <a href={e.link} class="link-u">Ergebnis ↗</a> : <span class="muted">Link folgt</span>}</span>
+          </div>
+        );
+      })}
+      <p id="leer" class="muted" hidden>Für diese Altersklasse sind noch keine Ergebnisse eingetragen.</p>
+    </div>
+    <p class="muted" style="margin-top:16px;font-size:14px">Namen und Fotos von Kindern nur mit Einwilligung der Eltern, sonst „Athlet:in U12" oder Teamname. Einträge mit [Platzhaltern] werden noch ergänzt.</p>
+  </section>
+
+  <section class="wrap section">
+    <div class="grid grid-2" style="align-items:start">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h2 class="h-l">Immer öfter am Start</h2>
+        <p class="lead">Seit der Gründung Ende 2022 nimmt EASTSIDE an immer mehr Wettkämpfen teil. Die Saison 2026 läuft noch.</p>
+        <span class="muted" style="font-size:14px">Quelle: LADV-Vereinsprofil, Stand September 2026</span>
+      </div>
+      <figure style="margin:0">
+        <figcaption style="font-weight:700;margin-bottom:14px">Wettkämpfe pro Jahr</figcaption>
+        <div class="bars" role="img" aria-label={verein.wettkaempfe_pro_jahr.map((w) => `${w.jahr}: ${w.anzahl}`).join(', ')}>
+          {verein.wettkaempfe_pro_jahr.map((w) => (
+            <div class="bar-row" title={`${w.jahr}: ${w.anzahl} Wettkämpfe`}>
+              <span class="muted">{w.jahr}</span>
+              <div class={`bar ${w.jahr.includes('bisher') ? 'partial' : ''}`} style={`width:${Math.round((w.anzahl / max) * 100)}%`}></div>
+              <strong style="text-align:right">{w.anzahl}</strong>
+            </div>
+          ))}
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head"><h2 class="h-l">Gesichter hinter den Erfolgen</h2><span class="muted">Nur mit Einwilligung der Eltern</span></div>
+    <div class="grid grid-3">
+      <div class="card"><div class="ph">Foto · Porträt</div><div class="card-body"><h3 class="h-s">[Vorname], U14</h3><p class="muted">„[Was ich an EASTSIDE mag und was mein nächstes Ziel ist.]"</p></div></div>
+      <div class="card"><div class="ph alt">Foto · Porträt</div><div class="card-body"><h3 class="h-s">[Vorname], U12</h3><p class="muted">„[Was ich an EASTSIDE mag und was mein nächstes Ziel ist.]"</p></div></div>
+      <div class="card"><div class="ph">Foto · Team</div><div class="card-body"><h3 class="h-s">KiLa-Team [U8/U10]</h3><p class="muted">„[Ein Satz aus dem Team oder vom Trainer.]"</p></div></div>
+    </div>
+  </section>
+
+  <section class="wrap section grid grid-2">
+    <div style="background:var(--neon);border-radius:var(--radius-lg);padding:40px;display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+      <h2 class="h-m">Dein Kind will auch aufs Treppchen?</h2>
+      <p>Jede Karriere beginnt mit einem Probetraining.</p>
+      <a href={url('/mitmachen/')} class="btn btn-dark">Zum Gruppenfinder →</a>
+    </div>
+    <div class="card-soft" style="border-radius:var(--radius-lg);padding:40px;display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+      <h2 class="h-m">Für Trainer:innen: Erfolg melden</h2>
+      <p class="muted">Wettkampf, Platz, Foto – in zwei Minuten vom Handy. Die Redaktion kümmert sich um den Rest.</p>
+      <a href={url('/erfolge/melden/')} class="btn btn-outline">Zum Meldeformular →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  @media (min-width: 1000px) { #erfolge-head { grid-template-columns: 7fr 5fr; align-items: end; } }
+</style>
+
+<script>
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-stufe]'));
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('#results [data-stufen]'));
+  const leer = document.getElementById('leer')!;
+  chips.forEach((c) => c.addEventListener('click', () => {
+    const s = c.dataset.stufe!;
+    chips.forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
+    let n = 0;
+    rows.forEach((r) => { const show = s === 'Alle' || r.dataset.stufen!.split(',').includes(s); r.hidden = !show; if (show) n++; });
+    leer.hidden = n > 0;
+  }));
+</script>

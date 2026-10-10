@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import stufen from '../../data/stufen.json';
+import { url } from '../../lib/url';
+
+const look = [
+  { bg: 'var(--soft)', fg: 'var(--ink)', size: [84, 120], font: [24, 30] },
+  { bg: 'var(--soft-2)', fg: 'var(--ink)', size: [92, 150], font: [26, 36] },
+  { bg: 'var(--neon)', fg: 'var(--ink)', size: [96, 180], font: [28, 42] },
+  { bg: 'var(--ink)', fg: 'var(--neon)', size: [96, 220], font: [28, 50] },
+];
+---
+<Base title="Dein Weg bei EASTSIDE" active="mitmachen">
+  <section class="wrap page-head">
+    <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+      <span class="pill pill-soft">Dein Weg bei EASTSIDE</span>
+      <h1 class="h-xl">Mit jedem Jahr ein <span class="mark">Stück weiter.</span></h1>
+    </div>
+    <p class="lead">So sieht Leichtathletik bei uns in jeder Altersstufe aus: wie oft trainiert wird, was auf dem Plan steht, welche Wettkämpfe es gibt und was wir uns von den Kindern wünschen.</p>
+  </section>
+
+  <section class="wrap section steps">
+    {stufen.map((s, i) => (
+      <div class="step">
+        <div class="step-left">
+          <div class="step-circle" style={`--s:${look[i].size[0]}px;--S:${look[i].size[1]}px;--f:${look[i].font[0]}px;--F:${look[i].font[1]}px;background:${look[i].bg};color:${look[i].fg}`}>
+            <b>{s.stufe}</b><span>{s.phase}</span>
+          </div>
+          {i < stufen.length - 1 && <div class="step-line"></div>}
+        </div>
+        <div class="step-card">
+          <div><small>Training</small>{s.training}<div class="muted" style="font-size:14px;margin-top:4px">Jg. {s.jahrgaenge}</div></div>
+          <div><small>Was wir trainieren</small>{s.inhalte}</div>
+          <div><small>Wettkämpfe</small>{s.wettkaempfe}</div>
+          <div><small>Was wir uns wünschen</small><strong>{s.erwartung}</strong></div>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap section" id="spass" style="padding-top:40px">
+    <div style="border:2px dashed #9aa092;border-radius:var(--radius-lg);padding:32px;display:grid;gap:20px;align-items:center" class="spass">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <h2 class="h-m">Spaß-Gruppe: einfach Freude an Bewegung</h2>
+        <p class="lead">Für alle, die sich gerne bewegen und Teil unserer Gemeinschaft sein wollen – ganz bewusst ohne Wettkampfehrgeiz. Jahrgänge 2012–2016, einmal pro Woche mittwochs, keine Wettkämpfe.</p>
+      </div>
+      <a href={url('/mitmachen/?jahr=2014')} class="btn btn-neon" style="justify-self:start">Plätze frei →</a>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="card-dark" style="display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <span class="pill pill-neon">Für Trainer:innen</span>
+        <h2 class="h-l" style="color:#fff">Deine Rolle wächst mit den Kindern.</h2>
+      </div>
+      <div class="roles">
+        {stufen.map((s) => (
+          <div class="role" style="background:var(--ink-2)">
+            <b class="neon">{s.stufe}</b>
+            <h3>{s.rolle}</h3>
+            <p style="font-size:15px">{s.rolle_erwartung}</p>
+          </div>
+        ))}
+      </div>
+      <a href={url('/trainer/')} class="btn btn-neon" style="align-self:flex-start">Trainer:in werden →</a>
+    </div>
+  </section>
+
+  <section class="wrap section" style="text-align:center">
+    <a href={url('/mitmachen/')} class="btn btn-dark">Passende Gruppe für mein Kind finden →</a>
+  </section>
+</Base>
+
+<style>
+  .step-circle { width: var(--s); height: var(--s); }
+  .step-circle b { font-size: var(--f); }
+  @media (min-width: 900px) {
+    .step-circle { width: var(--S); height: var(--S); }
+    .step-circle b { font-size: var(--F); }
+  }
+  @media (min-width: 900px) { .spass { grid-template-columns: 1fr auto; } }
+</style>

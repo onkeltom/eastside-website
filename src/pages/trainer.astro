@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import stufen from '../data/stufen.json';
+import verein from '../data/verein.json';
+import { url } from '../lib/url';
+
+const looks = [
+  'background:var(--soft);color:var(--ink)',
+  'background:var(--soft-2);color:var(--ink)',
+  'background:var(--neon);color:var(--ink)',
+  'background:var(--ink);color:#fff',
+];
+---
+<Base title="Trainer:in werden" active="trainer">
+  <div class="wrap" style="padding:0 12px">
+    <section class="hero" style="min-height:560px">
+      <div class="ph dark">Foto · Trainer:in erklärt einer Gruppe den Weitsprung</div>
+      <div class="hero-body" style="padding-bottom:72px">
+        <span class="pill pill-neon" style="align-self:flex-start">Wir suchen Verstärkung</span>
+        <h1 style="font-size:clamp(44px,7vw,88px)">Werde Trainer:in bei EASTSIDE.</h1>
+        <p>Begleite Kinder vom ersten Sprint bis zur Berliner Meisterschaft – in einem jungen Verein, der wächst und gewinnt.</p>
+        <div class="btn-row">
+          <a href="#kontakt" class="btn btn-neon">Jetzt melden</a>
+          <a href="#rollen" class="btn btn-outline-light">Welche Rolle passt zu mir?</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="wrap section grid grid-3">
+    <div class="card-soft" style="display:flex;flex-direction:column;gap:10px"><b style="font-family:var(--display);font-size:44px;line-height:1">Warteliste</b><h2 class="h-s">Mit dir öffnen wir neue Gruppen</h2><p class="muted">Fast alle Gruppen sind voll. Jede neue Trainerin, jeder neue Trainer bedeutet Plätze für Kinder, die gerade warten.</p></div>
+    <div class="card-dark" style="border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;gap:10px"><b class="neon" style="font-family:var(--display);font-size:44px;line-height:1">1.</b><h2 class="h-s" style="color:#fff">Ein Team, das gewinnt</h2><p>Berliner Meistertitel in U12 und U14, Siege beim KiLa-Cup.</p><a href={url('/erfolge/')} class="neon" style="font-weight:700;margin-top:auto">Zu den Erfolgen →</a></div>
+    <div class="card-soft" style="display:flex;flex-direction:column;gap:10px"><b style="font-family:var(--display);font-size:44px;line-height:1">{verein.gegruendet}</b><h2 class="h-s">Jung, familiär, im Aufbau</h2><p class="muted">Du gestaltest mit, statt nur Pläne abzuarbeiten. Kurze Wege, ein offenes Team, Platz für eigene Ideen.</p></div>
+  </section>
+
+  <section class="wrap section" id="rollen">
+    <div class="page-head" style="padding-top:0;margin-bottom:28px">
+      <h2 class="h-l">Deine Rolle wächst mit den Kindern</h2>
+      <p class="lead">Ob du Spiele anleitest oder Technik coachst: Such dir die Stufe, die zu deiner Erfahrung und deiner Zeit passt.</p>
+    </div>
+    <div class="roles">
+      {stufen.map((s, i) => (
+        <div class="role" style={looks[i]}>
+          <b>{s.stufe}</b>
+          <h3>{s.rolle}</h3>
+          <p style="font-size:15px;flex-grow:1">{s.rolle_erwartung}</p>
+          <div class="time"><strong>Zeitaufwand</strong><br />{s.training}</div>
+        </div>
+      ))}
+    </div>
+    <a href={url('/mitmachen/dein-weg/')} class="link-u" style="display:inline-block;margin-top:24px">So sieht das Training je Altersstufe aus →</a>
+  </section>
+
+  <section class="wrap section grid grid-2" style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <h2 class="h-l">Das bieten wir dir</h2>
+      <p class="lead">Du musst kein Profi sein. Wichtig sind Freude an der Arbeit mit Kindern und Verlässlichkeit.</p>
+    </div>
+    <div class="grid grid-2" style="gap:14px">
+      <div class="card-outline" style="padding:22px"><h3 class="h-s">Aufwandsentschädigung</h3><p class="muted">[Höhe und Form zu klären]</p></div>
+      <div class="card-outline" style="padding:22px"><h3 class="h-s">Aus- und Fortbildung</h3><p class="muted">[z. B. Übernahme der Lizenzkosten – zu klären]</p></div>
+      <div class="card-outline" style="padding:22px"><h3 class="h-s">Einarbeitung im Team</h3><p class="muted">Du startest an der Seite erfahrener Trainer:innen.</p></div>
+      <div class="card-outline" style="padding:22px"><h3 class="h-s">Feste Zeiten, freie Ferien</h3><p class="muted">Training nachmittags, in den Schulferien trainingsfrei.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="card-soft quote" style="border-radius:var(--radius-lg);display:grid;gap:28px;align-items:center">
+      <div class="ph" style="aspect-ratio:1;border-radius:24px;max-width:320px">Foto · Dejvid Kolić</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <p style="font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,32px);line-height:1.3">„[Zitat von Dejvid: Warum es Spaß macht, bei EASTSIDE Kinder zu trainieren.]"</p>
+        <strong>Dejvid Kolić · Gründer, Präsident und Cheftrainer</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-l" style="margin-bottom:24px">So steigst du ein</h2>
+    <div class="grid grid-3">
+      <div style="display:flex;flex-direction:column;gap:10px"><span class="medal gold">1</span><h3 class="h-s">Melden</h3><p class="muted">Kurzes Formular unten – wir melden uns innerhalb weniger Tage.</p></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span class="medal gold">2</span><h3 class="h-s">Reinschnuppern</h3><p class="muted">Du schaust bei einem Training zu und lernst Team und Kinder kennen.</p></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span class="medal gold">3</span><h3 class="h-s">Loslegen</h3><p class="muted">Erst als Co-Trainer:in, dann mit eigener Gruppe – in deinem Tempo.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="kontakt">
+    <div class="card-dark grid grid-2" style="gap:32px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h2 class="h-l" style="color:#fff">Lust bekommen?<br /><span class="neon">Melde dich.</span></h2>
+        <p>Oder schreib uns direkt: <a href={`mailto:${verein.email}`} class="neon">{verein.email}</a></p>
+      </div>
+      <form class="form two" id="trainer-form">
+        <label>Name<input name="name" required autocomplete="name" /></label>
+        <label>E-Mail<input type="email" name="email" required autocomplete="email" /></label>
+        <label>Telefon (optional)<input type="tel" name="tel" autocomplete="tel" /></label>
+        <label>Interesse an<select name="stufe"><option>Noch offen</option><option>U8</option><option>U10</option><option>U12</option><option>U14+</option><option>Spaß-Gruppe</option></select></label>
+        <label class="full">Erfahrung (Sport, Lizenz, Arbeit mit Kindern)<textarea name="erfahrung" rows="3"></textarea></label>
+        <button type="submit" class="btn btn-neon full">Absenden</button>
+        <p class="notice full" id="trainer-note" hidden>Vorschau: Das Formular ist noch nicht angeschlossen. Bitte vorerst per E-Mail an {verein.email}.</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  @media (min-width: 900px) { .quote { grid-template-columns: 320px 1fr; padding: 56px 64px; } }
+</style>
+<script>
+  document.getElementById('trainer-form')!.addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('trainer-note')!.hidden = false; });
+</script>

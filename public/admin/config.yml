@@ -1,0 +1,81 @@
+# Konfiguration des Redaktionsbereichs (Sveltia CMS)
+# Doku: https://sveltiacms.app/en/docs
+backend:
+  name: github
+  repo: onkeltom/eastside-website
+  branch: main
+  # base_url: https://<dein-worker>.workers.dev   # GitHub-Login-Helfer (sveltia-cms-auth), später eintragen
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+locale: de
+
+collections:
+  - name: news
+    label: News & Berichte
+    label_singular: Beitrag
+    folder: src/content/news
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Titel, widget: string }
+      - { name: date, label: Datum, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { name: kategorie, label: Kategorie, widget: select, options: [Erfolg, Wettkampf, Verein, Training] }
+      - { name: klasse, label: "Altersklasse (optional)", widget: string, required: false }
+      - { name: fotos, label: "Anzahl Fotos (optional)", widget: number, value_type: int, required: false }
+      - { name: teaser, label: Kurztext für die Übersicht, widget: text }
+      - { name: draft, label: "Entwurf (nicht veröffentlichen)", widget: boolean, default: true }
+      - { name: body, label: Text, widget: markdown }
+
+  - name: daten
+    label: Vereinsdaten
+    files:
+      - name: erfolge
+        label: Erfolge / Ergebnisse
+        file: src/data/erfolge.json
+        fields:
+          - name: items
+            label: Ergebnisse
+            widget: list
+            root: true
+            fields:
+              - { name: platz, label: Platz, widget: string }
+              - { name: datum, label: Datum, widget: string }
+              - { name: saison, label: Saison, widget: number, value_type: int }
+              - { name: wettkampf, label: Wettkampf, widget: string }
+              - { name: klasse, label: Altersklasse, widget: string }
+              - { name: stufen, label: "Stufen für den Filter", widget: select, multiple: true, options: [U8, U10, U12, "U14+"] }
+              - { name: disziplin, label: Disziplin, widget: string }
+              - { name: wer, label: "Athlet:in / Team (nur mit Einwilligung)", widget: string }
+              - { name: highlight, label: Highlight, widget: boolean, default: false }
+              - { name: link, label: "Link zur Ergebnisliste", widget: string, required: false }
+      - name: gruppen
+        label: Gruppen & freie Plätze
+        file: src/data/gruppen.json
+        fields:
+          - name: items
+            label: Gruppen
+            widget: list
+            root: true
+            fields:
+              - { name: id, label: Kürzel, widget: string }
+              - { name: name, label: Name, widget: string }
+              - { name: jahrgaenge, label: Jahrgänge, widget: list, field: { name: jahr, label: Jahr, widget: number, value_type: int } }
+              - { name: status, label: Status, widget: select, options: [{ label: "Plätze frei", value: frei }, { label: Warteliste, value: warteliste }] }
+              - { name: stufe, label: Stufe, widget: string }
+              - { name: sommer, label: "Zeiten Sommer", widget: string }
+              - { name: winter, label: "Zeiten Winter", widget: string }
+              - { name: tage, label: Trainingstage, widget: string }
+              - { name: trainer, label: "Trainer:in", widget: string }
+      - name: termine
+        label: Termine
+        file: src/data/termine.json
+        fields:
+          - name: items
+            label: Termine
+            widget: list
+            root: true
+            fields:
+              - { name: datum, label: Datum, widget: string }
+              - { name: titel, label: Titel, widget: string }

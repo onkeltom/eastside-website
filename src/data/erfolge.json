@@ -1,0 +1,6 @@
+[
+  { "platz": "1.", "datum": "[TT.MM.JJJJ]", "saison": 2026, "wettkampf": "Berliner Meisterschaften", "klasse": "U14", "stufen": ["U14+"], "disziplin": "[Disziplin]", "wer": "[Name mit Einwilligung]", "highlight": true, "link": "" },
+  { "platz": "1.", "datum": "[TT.MM.JJJJ]", "saison": 2026, "wettkampf": "Berliner Meisterschaften", "klasse": "U12", "stufen": ["U12"], "disziplin": "[Disziplin]", "wer": "[Name mit Einwilligung]", "highlight": true, "link": "" },
+  { "platz": "1.+2.", "datum": "10.05.2026", "saison": 2026, "wettkampf": "KiLa-Süd-Cup", "klasse": "[U8/U10]", "stufen": ["U8", "U10"], "disziplin": "Teamwettkampf", "wer": "EASTSIDE Team 1 + 2", "highlight": true, "link": "" },
+  { "platz": "1.", "datum": "2025", "saison": 2025, "wettkampf": "KiLa Cup Finale", "klasse": "U12", "stufen": ["U12"], "disziplin": "Teamwettkampf", "wer": "EASTSIDE U12", "highlight": false, "link": "" }
+]

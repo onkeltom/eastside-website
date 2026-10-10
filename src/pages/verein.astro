@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import verein from '../data/verein.json';
+import { url } from '../lib/url';
+---
+<Base title="Verein" active="verein">
+  <section class="wrap page-head">
+    <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+      <span class="pill pill-soft">Über uns</span>
+      <h1 class="h-xl">Ein junger Verein mit <span class="mark">großen Zielen.</span></h1>
+    </div>
+    <p class="lead">EAST SIDE BERLIN e.V. wurde am 21. Dezember 2022 gegründet. Wir fördern Talente, machen Lust auf Bewegung und sind offen für alle aus dem Kiez, die beim Training und bei Wettkämpfen ein bisschen mehr wollen.</p>
+  </section>
+
+  <section class="wrap section grid grid-3">
+    <div class="card-soft"><h2 class="h-s">Talentförderung</h2><p class="muted" style="margin-top:6px">[Kurztext: wie wir Talente erkennen und begleiten]</p></div>
+    <div class="card-soft"><h2 class="h-s">Freude an Bewegung</h2><p class="muted" style="margin-top:6px">[Kurztext: Spaß als Grundlage für jedes Training]</p></div>
+    <div class="card-soft"><h2 class="h-s">Offen für den Kiez</h2><p class="muted" style="margin-top:6px">[Kurztext: Gemeinschaft, Vielfalt als Selbstverständnis]</p></div>
+  </section>
+
+  <section class="wrap section" id="team">
+    <h2 class="h-l" style="margin-bottom:24px">Team &amp; Vorstand</h2>
+    <div class="grid grid-4">
+      <div class="card"><div class="ph">Foto</div><div class="card-body"><h3 class="h-s">Dejvid Kolić</h3><p class="muted">Gründer, Präsident und Cheftrainer</p></div></div>
+      <div class="card"><div class="ph alt">Foto</div><div class="card-body"><h3 class="h-s">Michael Kolić</h3><p class="muted">Mitgründer und Co-Trainer</p></div></div>
+      <div class="card"><div class="ph">Foto</div><div class="card-body"><h3 class="h-s">[Name]</h3><p class="muted">[Rolle]</p></div></div>
+      <div class="card"><div class="ph alt">Foto</div><div class="card-body"><h3 class="h-s">[Name]</h3><p class="muted">[Rolle]</p></div></div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="beitraege">
+    <div class="card-outline" style="display:flex;flex-direction:column;gap:10px">
+      <h2 class="h-m">Mitgliedschaft &amp; Beiträge</h2>
+      <p class="muted">[Beiträge laut Beitragsordnung, Ermäßigungen, Kündigungsfrist]. Drei Probetrainings sind kostenlos.</p>
+    </div>
+  </section>
+
+  <section class="wrap section" id="partner">
+    <div class="card-dark grid grid-2" style="gap:28px">
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+        <span class="pill pill-neon">Partner &amp; Sponsoren</span>
+        <h2 class="h-l" style="color:#fff">Werde Partner von EASTSIDE.</h2>
+        <p>Mit eurer Unterstützung öffnen wir neue Gruppen, bilden Trainer:innen aus und bringen Kinder aus dem Kiez zu Wettkämpfen.</p>
+        <a href={`mailto:${verein.email}?subject=Partnerschaft`} class="btn btn-neon">Kontakt aufnehmen →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="win-tile"><span>[Partnerpaket 1: z. B. Trikotpartner]</span></div>
+        <div class="win-tile"><span>[Partnerpaket 2: z. B. Camp-Partner]</span></div>
+        <div class="win-tile"><span>[Partnerpaket 3: Material- oder Geldspende]</span></div>
+      </div>
+    </div>
+    <div class="partners" style="margin-top:24px"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
+  </section>
+
+  <section class="wrap section" id="satzung">
+    <div class="card-soft" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center">
+      <div><h2 class="h-s">Presse &amp; Downloads</h2><p class="muted">Satzung, Beitragsordnung, Logos, Fotos für die Presse [Dateien folgen]</p></div>
+      <a href={url('/erfolge/')} class="btn btn-outline">Erfolge ansehen</a>
+    </div>
+  </section>
+</Base>

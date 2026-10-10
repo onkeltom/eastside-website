@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { url, formatDate } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const news = await getCollection('news', ({ data }) => !data.draft);
+  return news.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fotos = Math.min(entry.data.fotos ?? 6, 9);
+---
+<Base title={entry.data.title} active="news">
+  <article class="wrap" style="padding-top:40px;display:flex;flex-direction:column;gap:28px">
+    <a href={url('/news/')} class="muted" style="font-weight:700">← Alle Beiträge</a>
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:900px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <span class={`pill ${entry.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-soft'}`}>{entry.data.kategorie}</span>
+        {entry.data.klasse && <span class="pill pill-soft">{entry.data.klasse}</span>}
+        <span class="meta">{formatDate(entry.data.date)}</span>
+      </div>
+      <h1 class="h-xl">{entry.data.title}</h1>
+      <p class="lead">{entry.data.teaser}</p>
+    </div>
+    <div class="ph dark" style="aspect-ratio:16/8;border-radius:var(--radius-lg)">Titelfoto</div>
+    <div class="prose"><Content /></div>
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 class="h-m">Fotogalerie {entry.data.fotos && <span class="muted" style="font-size:18px;font-weight:500">({entry.data.fotos} Fotos)</span>}</h2>
+      <div class="gallery">
+        {Array.from({ length: fotos }, (_, i) => <div class={`ph ${i === 0 ? 'big alt' : i % 2 ? 'alt' : ''}`}>Foto {i + 1}</div>)}
+      </div>
+    </section>
+  </article>
+</Base>

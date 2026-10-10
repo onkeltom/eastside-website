@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+import verein from '../data/verein.json';
+import { url } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: 'mitmachen' | 'erfolge' | 'news' | 'verein' | 'trainer';
+}
+
+const { title, description = verein.claim, active } = Astro.props;
+const pageTitle = title ? `${title} · ${verein.name}` : `${verein.name} – Leichtathletik im Berliner Osten`;
+
+// Vorschau-Modus: Hinweisbalken + keine Indexierung durch Suchmaschinen.
+// Standardmäßig an; für den Livebetrieb PREVIEW=false setzen.
+const preview = import.meta.env.PREVIEW !== 'false';
+
+const nav = [
+  { key: 'mitmachen', label: 'Mitmachen', href: '/mitmachen/' },
+  { key: 'erfolge', label: 'Erfolge', href: '/erfolge/' },
+  { key: 'news', label: 'News & Termine', href: '/news/' },
+  { key: 'verein', label: 'Verein', href: '/verein/' },
+  { key: 'trainer', label: 'Trainer:in werden', href: '/trainer/' },
+];
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  {preview && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+</head>
+<body>
+  <a href="#inhalt" class="visually-hidden">Zum Inhalt springen</a>
+  {preview && (
+    <div class="preview-bar">
+      <strong>Vorschau</strong> der neuen Vereinswebsite – nicht die offizielle Seite. Feedback gerne an {verein.email}
+    </div>
+  )}
+
+  <div class="topbar">
+    <div class="wrap">
+      <span><strong>Probetraining:</strong> 3× kostenlos testen <span class="d-inline">· <strong>Ab 1. November:</strong> Winterzeiten in der Halle</span></span>
+      <nav aria-label="Service">
+        <a href={verein.instagram}>Instagram</a>
+        <a href={`mailto:${verein.email}`}>Kontakt</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href={url('/')} class="logo" aria-label="EASTSIDE – zur Startseite"><span class="logo-dot"></span>EASTSIDE</a>
+      <nav class="main-nav" aria-label="Hauptmenü">
+        {nav.map((n) => (
+          <a href={url(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>
+        ))}
+      </nav>
+      <a href={url('/mitmachen/')} class="btn btn-dark header-cta">Probetraining anfragen</a>
+      <details class="menu-toggle">
+        <summary aria-label="Menü öffnen">
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+        </summary>
+        <div class="menu-panel">
+          <a href={url('/')}>Startseite</a>
+          {nav.map((n) => <a href={url(n.href)}>{n.label}</a>)}
+          <a href={url('/mitmachen/dein-weg/')}>Dein Weg bei EASTSIDE</a>
+          <a href={url('/mitmachen/')} class="btn btn-neon">Probetraining anfragen</a>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main id="inhalt">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a href={url('/')} class="logo">EASTSIDE</a>
+          <p class="muted" style="margin-top:10px;max-width:320px">{verein.claim}</p>
+        </div>
+        <nav aria-label="Mitmachen">
+          <strong>Mitmachen</strong>
+          <a href={url('/mitmachen/')}>Gruppenfinder</a>
+          <a href={url('/mitmachen/dein-weg/')}>Dein Weg</a>
+          <a href={url('/mitmachen/')}>Probetraining</a>
+          <a href={url('/verein/#beitraege')}>Beiträge</a>
+        </nav>
+        <nav aria-label="Verein">
+          <strong>Verein</strong>
+          <a href={url('/verein/')}>Über uns</a>
+          <a href={url('/erfolge/')}>Erfolge</a>
+          <a href={url('/trainer/')}>Trainer:in werden</a>
+          <a href={url('/verein/#partner')}>Partner &amp; Sponsoren</a>
+          <a href={url('/erfolge/melden/')}>Erfolg melden (Trainer:innen)</a>
+        </nav>
+        <nav aria-label="Kontakt">
+          <strong>Kontakt</strong>
+          <a href={`mailto:${verein.email}`}>{verein.email}</a>
+          <a href={verein.instagram}>Instagram @sc_eastside</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>{verein.name}</span>
+        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> · <a href={url('/verein/#satzung')}>Satzung</a></span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

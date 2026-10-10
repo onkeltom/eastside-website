@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import gruppen from '../../data/gruppen.json';
+import { url } from '../../lib/url';
+
+const jahre = Array.from({ length: 11 }, (_, i) => 2011 + i);
+const start = 2017;
+---
+<Base title="Mitmachen – Gruppenfinder" active="mitmachen">
+  <section class="wrap" style="padding-top:48px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px">
+    <span class="pill pill-soft">Gruppenfinder</span>
+    <h1 class="h-xl">Welche Gruppe passt<br />zu <span class="mark">deinem Kind?</span></h1>
+    <p class="lead" style="max-width:640px">Wähle das Geburtsjahr. Du siehst sofort Trainingszeiten, Ort und ob gerade ein Platz frei ist.</p>
+  </section>
+
+  <section class="wrap section" style="padding-top:40px">
+    <div class="finder-box">
+      <h2 class="h-s" id="jahr-label">Geburtsjahr deines Kindes</h2>
+      <div class="chips" role="group" aria-labelledby="jahr-label">
+        {jahre.map((j) => <button type="button" class="chip" data-year={j} aria-pressed={j === start ? 'true' : 'false'}>{j}</button>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" style="padding-top:40px" aria-live="polite">
+    <h2 class="h-s" style="margin-bottom:20px">Passend für Jahrgang <span id="jahr-out">{start}</span></h2>
+    <div class="grid grid-2" id="treffer"></div>
+  </section>
+
+  <section class="wrap section" id="anfrage">
+    <div class="card-outline" style="display:grid;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <h2 class="h-m" id="form-title">Probetraining anfragen</h2>
+        <p class="muted">Dreimal kostenlos testen. Wir melden uns mit einem Termin – oder, wenn die Gruppe voll ist, sobald ein Platz frei wird.</p>
+      </div>
+      <form class="form two" id="anfrage-form">
+        <label>Gruppe<select name="gruppe" id="gruppe-select">{gruppen.map((g) => <option value={g.id}>{g.name}</option>)}</select></label>
+        <label>Geburtsjahr des Kindes<input name="jahr" id="jahr-input" inputmode="numeric" value={start} /></label>
+        <label>Name (Elternteil)<input name="name" required autocomplete="name" /></label>
+        <label>E-Mail<input type="email" name="email" required autocomplete="email" /></label>
+        <label class="check full"><input type="checkbox" required /><span>Ich bin einverstanden, dass der Verein meine Angaben zur Bearbeitung der Anfrage speichert. [Datenschutzhinweis folgt]</span></label>
+        <div class="full" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+          <button type="submit" class="btn btn-dark" id="form-submit">Anfrage senden</button>
+          <span class="notice" id="form-note" hidden>Vorschau: Das Formular ist noch nicht angeschlossen, es wurde nichts gesendet. Bitte vorerst per E-Mail an sc.east.side2023@gmail.com.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="card-outline" style="display:grid;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <h2 class="h-m">Warum gibt es eine Warteliste?</h2>
+        <p class="lead">Immer mehr Kinder möchten bei uns trainieren – schneller, als unser Trainerteam wachsen kann. Damit jedes Kind gut betreut ist, machen wir die Gruppen nicht größer. Wer auf der Liste steht, bekommt Bescheid, sobald ein Platz frei wird, und kann sich jederzeit wieder austragen.</p>
+      </div>
+      <div class="btn-row">
+        <a href={url('/trainer/')} class="btn btn-neon">Trainer:in werden →</a>
+        <a href={url('/verein/#partner')} class="btn btn-outline">Als Partner unterstützen →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="alle-gruppen">
+    <h2 class="h-l" style="margin-bottom:24px">Alle Gruppen und Trainingszeiten</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Gruppe</th><th>Jahrgänge</th><th>Sommer (Apr–Okt)</th><th>Winter (Nov–Mär)</th><th>Status</th></tr></thead>
+        <tbody>
+          {gruppen.map((g) => (
+            <tr>
+              <td><strong>{g.name}</strong></td>
+              <td>{Math.min(...g.jahrgaenge)}–{Math.max(...g.jahrgaenge)}</td>
+              <td>{g.sommer}</td>
+              <td>{g.winter}</td>
+              <td><span class={`pill ${g.status === 'frei' ? 'pill-neon' : 'pill-white'}`}>{g.status === 'frei' ? 'Plätze frei' : 'Warteliste'}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:14px">In den Berliner Schulferien findet kein Training statt.</p>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-l" style="margin-bottom:20px">Häufige Fragen</h2>
+    <div class="grid grid-2">
+      <div class="card-soft"><h3 class="h-s">Was kostet die Mitgliedschaft?</h3><p class="muted" style="margin-top:6px">[Beitrag laut Beitragsordnung] – die drei Probetrainings sind kostenlos.</p></div>
+      <div class="card-soft"><h3 class="h-s">Was muss mein Kind mitbringen?</h3><p class="muted" style="margin-top:6px">Sportkleidung, Turnschuhe, Trinkflasche – im Winter Hallenschuhe.</p></div>
+      <div class="card-soft"><h3 class="h-s">Wird in den Ferien trainiert?</h3><p class="muted" style="margin-top:6px">Nein, in den Berliner Schulferien findet kein Training statt. Dafür gibt es Camps.</p></div>
+      <div class="card-soft"><h3 class="h-s">Muss mein Kind an Wettkämpfen teilnehmen?</h3><p class="muted" style="margin-top:6px">Nein. Wer einfach Spaß an Bewegung hat, ist in der <a href={url('/mitmachen/dein-weg/#spass')} class="link-u">Spaß-Gruppe</a> genau richtig.</p></div>
+    </div>
+  </section>
+
+  <script type="application/json" id="gruppen-data" set:html={JSON.stringify(gruppen)}></script>
+</Base>
+
+<script>
+  type Gruppe = { id: string; name: string; jahrgaenge: number[]; status: string; sommer: string; winter: string; trainer: string };
+  const gruppen: Gruppe[] = JSON.parse(document.getElementById('gruppen-data')!.textContent || '[]');
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.chip[data-year]'));
+  const out = document.getElementById('treffer')!;
+  const jahrOut = document.getElementById('jahr-out')!;
+  const select = document.getElementById('gruppe-select') as HTMLSelectElement;
+  const jahrInput = document.getElementById('jahr-input') as HTMLInputElement;
+  const formTitle = document.getElementById('form-title')!;
+  const submit = document.getElementById('form-submit')!;
+
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+
+  function choose(id: string, wait: boolean) {
+    select.value = id;
+    formTitle.textContent = wait ? 'Auf die Warteliste setzen' : 'Probetraining anfragen';
+    submit.textContent = wait ? 'Auf die Warteliste' : 'Anfrage senden';
+    document.getElementById('anfrage')!.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function render(year: number) {
+    jahrOut.textContent = String(year);
+    jahrInput.value = String(year);
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(Number(c.dataset.year) === year)));
+    const fits = gruppen.filter((g) => g.jahrgaenge.includes(year));
+    out.innerHTML = fits.map((g) => {
+      const open = g.status === 'frei';
+      const alt = fits.find((o) => o.status === 'frei' && o.id !== g.id);
+      const tip = alt ? `Tipp: In der ${esc(alt.name)} sind noch Plätze frei.` : 'Tipp: Schaut euch unsere Ferien-Camps an [Termine folgen].';
+      return `
+        <article class="result ${open ? '' : 'is-wait'}">
+          <div class="result-head">
+            <div><h3>${esc(g.name)}</h3><span class="muted">Jahrgänge ${Math.min(...g.jahrgaenge)}–${Math.max(...g.jahrgaenge)}</span></div>
+            <span class="pill ${open ? 'pill-neon' : 'pill-white'}"><span class="dot ${open ? '' : 'dot-muted'}"></span>${open ? 'Plätze frei' : 'Warteliste'}</span>
+          </div>
+          <div class="time-box"><small>Sommer (April bis Oktober)</small>${esc(g.sommer)}</div>
+          <div class="time-box"><small>Winter (November bis März)</small>${esc(g.winter)}</div>
+          <span class="muted" style="font-size:14px">Trainer:in: ${esc(g.trainer)} · In den Schulferien kein Training</span>
+          ${open
+            ? `<button type="button" class="btn btn-dark" data-choose="${g.id}">Kostenloses Probetraining anfragen →</button>`
+            : `<p>Diese Gruppe ist gerade voll. Trag dich auf die Warteliste ein – wir melden uns, sobald ein Platz frei wird.</p>
+               <button type="button" class="btn btn-outline" data-choose="${g.id}" data-wait="1">Auf die Warteliste setzen</button>
+               <span class="alt-tip">${tip}</span>`}
+        </article>`;
+    }).join('');
+  }
+
+  chips.forEach((c) => c.addEventListener('click', () => render(Number(c.dataset.year))));
+  out.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-choose]');
+    if (b) choose(b.dataset.choose!, b.dataset.wait === '1');
+  });
+  document.getElementById('anfrage-form')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('form-note')!.hidden = false;
+  });
+  render(Number(new URLSearchParams(location.search).get('jahr')) || 2017);
+</script>

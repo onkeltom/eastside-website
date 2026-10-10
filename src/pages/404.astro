@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+---
+<Base title="Seite nicht gefunden">
+  <section class="wrap" style="padding-top:64px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+    <h1 class="h-xl">Fehlstart.</h1>
+    <p class="lead">Diese Seite gibt es nicht (mehr).</p>
+    <a href={url('/')} class="btn btn-dark">Zur Startseite</a>
+  </section>
+</Base>

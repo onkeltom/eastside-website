@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+const stufen = ['U8', 'U10', 'U12', 'U14+'];
+const plaetze = ['1.', '2.', '3.', 'Andere'];
+---
+<Base title="Erfolg melden">
+  <section class="wrap" style="max-width:680px;padding-top:40px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span class="pill pill-soft" style="align-self:flex-start">Für Trainer:innen</span>
+      <h1 class="h-l">Erfolg melden</h1>
+      <p class="muted">Dauert etwa zwei Minuten. Die Redaktion prüft die Meldung und veröffentlicht sie.</p>
+    </div>
+    <form class="form" id="melden">
+      <label>Wettkampf<input name="wettkampf" placeholder="z. B. Berliner Meisterschaften" required /></label>
+      <label>Datum<input type="date" name="datum" required /></label>
+      <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+        <legend style="font-size:14px;font-weight:700;margin-bottom:8px">Altersklasse</legend>
+        <div class="chips">{stufen.map((s, i) => <button type="button" class="chip chip-neon" data-group="stufe" aria-pressed={i === 3 ? 'true' : 'false'}>{s}</button>)}</div>
+      </fieldset>
+      <label>Disziplin<select name="disziplin"><option>Sprint</option><option>Weitsprung</option><option>Hochsprung</option><option>Wurf / Stoß</option><option>Mittelstrecke</option><option>Staffel</option><option>Mehrkampf</option><option>Teamwettkampf (KiLa)</option><option>Crosslauf</option></select></label>
+      <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+        <legend style="font-size:14px;font-weight:700;margin-bottom:8px">Platzierung</legend>
+        <div class="chips">{plaetze.map((p, i) => <button type="button" class="chip chip-neon" data-group="platz" aria-pressed={i === 0 ? 'true' : 'false'}>{p}</button>)}</div>
+      </fieldset>
+      <label>Athlet:in oder Team<input name="wer" placeholder="z. B. Vorname oder Staffel U12" /></label>
+      <label class="check"><input type="checkbox" name="einwilligung" /><span><strong>Eltern haben zugestimmt</strong>, dass Name und Foto veröffentlicht werden. Ohne Häkchen zeigen wir nur Altersklasse oder Team.</span></label>
+      <label>Foto<input type="file" accept="image/*" name="foto" /></label>
+      <label>Ein paar Worte (optional)<textarea name="text" rows="3" placeholder="Was war besonders?"></textarea></label>
+      <label>Link zur Ergebnisliste (optional)<input type="url" name="link" placeholder="https://ladv.de/…" /></label>
+      <label class="check"><input type="checkbox" name="highlight" /><span>Als Highlight für die Startseite vorschlagen</span></label>
+      <button type="submit" class="btn btn-dark">Erfolg melden</button>
+    </form>
+    <div id="danke" class="card-soft" hidden style="text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center">
+      <h2 class="h-m">Danke – ist angekommen!</h2>
+      <p class="muted">Die Redaktion prüft die Meldung und veröffentlicht sie auf der Erfolge-Seite.</p>
+      <p class="notice">Vorschau: Das Formular ist noch nicht angeschlossen, es wurde nichts gesendet.</p>
+      <button type="button" class="btn btn-outline" id="nochmal">Weiteren Erfolg melden</button>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-group]').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll<HTMLButtonElement>(`[data-group="${b.dataset.group}"]`).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  }));
+  const form = document.getElementById('melden') as HTMLFormElement;
+  const danke = document.getElementById('danke')!;
+  form.addEventListener('submit', (e) => { e.preventDefault(); form.hidden = true; danke.hidden = false; });
+  document.getElementById('nochmal')!.addEventListener('click', () => { form.reset(); form.hidden = false; danke.hidden = true; });
+</script>

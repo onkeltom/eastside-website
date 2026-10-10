@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import gruppen from '../data/gruppen.json';
+import termine from '../data/termine.json';
+import { url, formatDate } from '../lib/url';
+
+const news = (await getCollection('news', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const [top, ...rest] = news;
+const side = rest.slice(0, 2);
+const more = rest.slice(2, 5);
+const frei = gruppen.filter((g) => g.status === 'frei');
+---
+<Base>
+  <div class="wrap" style="padding:0 12px">
+    <section class="hero" aria-label="Willkommen">
+      <div class="ph dark">Hero-Foto · Gruppenbild der ganzen Crew im Stadion</div>
+      <div class="hero-body">
+        {top && <a class="hero-news" href={url(`/news/${top.id}/`)}><span class="tag-mono">NEU</span>{top.data.title} →</a>}
+        <span style="font-size:clamp(16px,1.6vw,20px);font-weight:500;color:var(--soft-2)">Willkommen beim Sportverein</span>
+        <h1>EAST SIDE<br />BERLIN</h1>
+        <p>Dein Leichtathletikverein, in dem und mit dem du wachsen kannst – vom ersten Sprint bis zur Berliner Meisterschaft.</p>
+        <div class="btn-row">
+          <a href={url('/mitmachen/')} class="btn btn-neon">Passende Gruppe finden</a>
+          <a href={url('/verein/')} class="btn btn-outline-light">Über uns</a>
+        </div>
+      </div>
+    </section>
+    <nav class="quicklinks" aria-label="Schnellzugriff">
+      <a href={url('/mitmachen/')}><strong>Gruppe finden</strong><span>Nach Geburtsjahr, mit freien Plätzen</span></a>
+      <a href={url('/mitmachen/#alle-gruppen')}><strong>Trainingszeiten</strong><span>Sommer und Winter, alle Orte</span></a>
+      <a href={url('/erfolge/')}><strong>Erfolge</strong><span>Meistertitel, Pokale, Ergebnisse</span></a>
+      <a href={url('/mitmachen/')} class="is-neon"><strong>Probetraining</strong><span>Dreimal kostenlos testen</span></a>
+    </nav>
+  </div>
+
+  <section class="wrap section" id="news">
+    <div class="section-head">
+      <div><span class="eyebrow">News und Infos</span><h2 class="h-l">Aktuelles aus dem Verein</h2></div>
+      <a href={url('/news/')} class="link-u">Alle Beiträge →</a>
+    </div>
+    <div class="news-feature">
+      {top && (
+        <a href={url(`/news/${top.id}/`)} class="card news-big">
+          <div class="ph">
+            Foto · {top.data.title}
+            <div class="badge-row"><span class="pill pill-neon">{top.data.kategorie}</span>{top.data.fotos && <span class="pill pill-dark">{top.data.fotos} Fotos</span>}</div>
+          </div>
+          <div class="card-body">
+            <span class="meta">{formatDate(top.data.date)}</span>
+            <h3>{top.data.title}</h3>
+            <p class="lead">{top.data.teaser}</p>
+            <strong style="margin-top:4px">Weiterlesen →</strong>
+          </div>
+        </a>
+      )}
+      <div class="news-side">
+        {side.map((n, i) => (
+          <a href={url(`/news/${n.id}/`)} class="news-row">
+            <div class={`ph ${i % 2 ? 'alt' : ''}`}>Foto</div>
+            <div class="news-row-body">
+              <span><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span></span>
+              <span class="meta">{formatDate(n.data.date)}</span>
+              <h3>{n.data.title}</h3>
+              {n.data.fotos && <span style="font-size:14px;font-weight:700;margin-top:auto">{n.data.fotos} Fotos · Weiterlesen →</span>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+    {more.length > 0 && (
+      <div class="grid grid-3" style="margin-top:24px">
+        {more.map((n) => (
+          <a href={url(`/news/${n.id}/`)} class="card"><div class="ph">Foto</div><div class="card-body"><span class="meta">{formatDate(n.data.date)} · {n.data.kategorie}</span><h3 class="h-s">{n.data.title}</h3></div></a>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <section class="wrap section grid grid-2">
+    <div class="card-outline list-dates">
+      <h3 class="h-m" style="margin-bottom:14px">Nächste Termine</h3>
+      {termine.map((t) => <div class="list-row"><span class="date">{t.datum}</span><span>{t.titel}</span></div>)}
+      <a href={url('/news/#termine')} style="display:inline-block;font-weight:700;margin-top:12px">Alle Termine →</a>
+    </div>
+    <div class="card-soft">
+      <h3 class="h-m" style="margin-bottom:14px">Freie Plätze</h3>
+      {frei.map((g) => <div class="list-row"><strong>{g.name} <span class="muted" style="font-weight:400">{g.tage}</span></strong><span class="pill pill-neon">Plätze frei</span></div>)}
+      <div class="list-row"><strong>Alle anderen Gruppen</strong><span class="pill pill-white">Warteliste</span></div>
+      <a href={url('/mitmachen/')} style="display:inline-block;font-weight:700;margin-top:12px">Zum Gruppenfinder →</a>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head">
+      <h2 class="h-l">Momente aus Training und Wettkampf</h2>
+      <a href="https://instagram.com/sc_eastside/" class="link-u">Mehr auf Instagram →</a>
+    </div>
+    <div class="gallery">
+      <div class="ph alt big">Foto · Staffelübergabe</div>
+      <div class="ph">Foto · Weitsprung U10</div>
+      <div class="ph alt">Foto · Aufwärmen</div>
+      <div class="ph alt">Foto · Sportcamp</div>
+      <div class="ph">Foto · Siegerehrung</div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="angebot">
+    <div class="section-head"><div><span class="eyebrow">Unser Angebot</span><h2 class="h-l">Für jedes Alter das Richtige</h2></div></div>
+    <div class="grid grid-4">
+      <a href={url('/mitmachen/dein-weg/')} class="card"><div class="ph">Foto · U8/U10</div><div class="card-body"><span class="meta">Jg. 2015–2021</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/')} class="card"><div class="ph alt">Foto · U14/U16</div><div class="card-body"><span class="meta">Jg. 2011–2014</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/#spass')} class="card"><div class="ph">Foto · Spaß-Gruppe</div><div class="card-body"><span class="meta">Jg. 2012–2016</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/news/')} class="card"><div class="ph alt">Foto · Camp</div><div class="card-body"><span class="meta">In den Ferien</span><h3 class="h-s">Sportcamps</h3><p class="muted" style="flex-grow:1">[Termine und Alter folgen]</p><strong>Mehr →</strong></div></a>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="card-dark wins">
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+        <span class="pill pill-neon tag-mono">ERFOLGE</span>
+        <h2 class="h-m" style="color:#fff">Hart trainiert. <span class="neon">Laut gefeiert.</span></h2>
+        <a href={url('/erfolge/')} class="btn btn-neon">Alle Erfolge ansehen →</a>
+      </div>
+      <div class="wins-tiles">
+        <div class="win-tile"><b>1.</b><span>Berliner Meisterschaften U14</span></div>
+        <div class="win-tile"><b>1.</b><span>Berliner Meisterschaften U12</span></div>
+        <div class="win-tile"><b>1.+2.</b><span>KiLa-Süd-Cup</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="partner">
+    <h2 class="h-s" style="margin-bottom:20px">Danke an unsere Partner</h2>
+    <div class="partners"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
+  </section>
+</Base>
