@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import termine from '../../data/termine.json';
 import { url, formatDate } from '../../lib/url';
+import Foto from '../../components/Foto.astro';
 
 const news = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -20,10 +21,10 @@ const news = (await getCollection('news', ({ data }) => !data.draft))
     <div class="grid grid-3">
       {news.map((n, i) => (
         <a href={url(`/news/${n.id}/`)} class="card">
-          <div class={`ph ${i % 2 ? 'alt' : ''}`}>
+          <Foto news={n.id} class={i % 2 ? 'alt' : ''}>
             Foto · {n.data.title}
-            <div class="badge-row"><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span>{n.data.fotos && <span class="pill pill-dark">{n.data.fotos} Fotos</span>}</div>
-          </div>
+            <div slot="over" class="badge-row"><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span>{n.data.fotos && <span class="pill pill-dark">{n.data.fotos} Fotos</span>}</div>
+          </Foto>
           <div class="card-body">
             <span class="meta">{formatDate(n.data.date)}</span>
             <h2 class="h-s">{n.data.title}</h2>

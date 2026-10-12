@@ -4,6 +4,7 @@ import erfolge from '../../data/erfolge.json';
 import verein from '../../data/verein.json';
 import { getCollection } from 'astro:content';
 import { url, formatDate } from '../../lib/url';
+import Foto from '../../components/Foto.astro';
 
 const berichte = (await getCollection('news', ({ data }) => !data.draft && data.kategorie === 'Erfolg'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -37,7 +38,7 @@ const wk2026 = verein.wettkaempfe_pro_jahr.find((w) => w.jahr.startsWith('2026')
     <div class="grid grid-3">
       {berichte.map((n) => (
         <a href={url(`/news/${n.id}/`)} class="card">
-          <div class="ph">Foto · {n.data.title}</div>
+          <Foto news={n.id}>Foto · {n.data.title}</Foto>
           <div class="card-body"><span class="meta">{formatDate(n.data.date)}{n.data.klasse && ` · ${n.data.klasse}`}</span><h3 class="h-s">{n.data.title}</h3><strong style="margin-top:auto">Zum Bericht →</strong></div>
         </a>
       ))}

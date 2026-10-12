@@ -1,0 +1,16 @@
+---
+// Platzhalter-Fläche, die in der Vorschau ein verlinktes Foto der alten Website zeigt
+// (src/data/vorschau-fotos.json). Lädt das Foto nicht, bleibt der Platzhalter-Text sichtbar.
+import fotos from '../data/vorschau-fotos.json';
+
+interface Props { id?: string; news?: string; class?: string; style?: string }
+const { id, news, class: cls = '', style } = Astro.props;
+const preview = import.meta.env.PREVIEW !== 'false';
+const map = fotos as unknown as Record<string, string> & { news: Record<string, string> };
+const src = preview ? (news ? map.news[news] : id ? map[id] : '') : '';
+---
+<div class={`ph ${cls}`} style={style}>
+  <slot />
+  {src && <img class="ph-img" src={src} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()" />}
+  <slot name="over" />
+</div>
