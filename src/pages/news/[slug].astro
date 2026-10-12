@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import { url, formatDate } from '../../lib/url';
+import Foto from '../../components/Foto.astro';
 
 export async function getStaticPaths() {
   const news = await getCollection('news', ({ data }) => !data.draft);
@@ -23,7 +24,7 @@ const fotos = Math.min(entry.data.fotos ?? 6, 9);
       <h1 class="h-xl">{entry.data.title}</h1>
       <p class="lead">{entry.data.teaser}</p>
     </div>
-    <div class="ph dark" style="aspect-ratio:16/8;border-radius:var(--radius-lg)">Titelfoto</div>
+    <Foto news={entry.id} class="dark" style="aspect-ratio:16/8;border-radius:var(--radius-lg)">Titelfoto</Foto>
     <div class="prose"><Content /></div>
     <section style="display:flex;flex-direction:column;gap:16px">
       <h2 class="h-m">Fotogalerie {entry.data.fotos && <span class="muted" style="font-size:18px;font-weight:500">({entry.data.fotos} Fotos)</span>}</h2>

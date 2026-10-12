@@ -1,0 +1,18 @@
+{
+  "_hinweis": "Nur für die Vorschau: Links auf Fotos der alten Website sc-eastside.de, damit die Seite mit Bildern wirkt. Es werden keine Bilddateien ins Repository eingecheckt. Leere Einträge zeigen den Platzhalter. Im Livebetrieb (PREVIEW=false) werden diese Fotos nicht angezeigt – dann durch eigene Fotos mit dokumentierter Einwilligung ersetzen.",
+  "hero": "https://sc-eastside.de/wp-content/uploads/2024/07/17-DSCF8229-2048x1365.jpg",
+  "galerie-staffel": "https://sc-eastside.de/wp-content/uploads/2024/07/42-DSCF8331-1536x1024.jpg",
+  "galerie-weitsprung": "https://sc-eastside.de/wp-content/uploads/2026/05/KiLa_5.9.2026-63-683x1024.jpg",
+  "galerie-aufwaermen": "https://sc-eastside.de/wp-content/uploads/2023/05/1684082940571-768x432.jpg",
+  "galerie-camp": "https://sc-eastside.de/wp-content/uploads/2023/03/IMG_5512-768x481.jpg",
+  "galerie-siegerehrung": "https://sc-eastside.de/wp-content/uploads/2026/03/Lian-Paul-800m-Podium-768x576.jpeg",
+  "angebot-kinder": "https://sc-eastside.de/wp-content/uploads/2024/03/U8-768x576.jpg",
+  "angebot-schueler": "https://sc-eastside.de/wp-content/uploads/2026/03/MAlik-768x620.jpeg",
+  "angebot-spass": "https://sc-eastside.de/wp-content/uploads/2026/05/KiLa_5.9.2026-67-768x512.jpg",
+  "angebot-camp": "https://sc-eastside.de/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-04-at-20.15.17_a735fd65-1-768x576.jpg",
+  "news": {
+    "2025-10-21-kila-cup-finale-2025": "https://sc-eastside.de/wp-content/uploads/2025/10/WhatsApp-Slika-2025-10-21-u-18.45.55_2c1178e5-1024x771.jpg",
+    "2026-02-28-bm-halle-2026": "https://sc-eastside.de/wp-content/uploads/2026/03/Ekipa-BM-768x1024.jpeg",
+    "2026-05-10-doppelsieg-kila-sued-cup": "https://sc-eastside.de/wp-content/uploads/2026/05/KiLa_5.9.2026-68-1536x1024.jpg"
+  }
+}

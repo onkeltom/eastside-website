@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import gruppen from '../data/gruppen.json';
 import termine from '../data/termine.json';
 import { url, formatDate } from '../lib/url';
+import Foto from '../components/Foto.astro';
 
 const news = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -15,7 +16,7 @@ const frei = gruppen.filter((g) => g.status === 'frei');
 <Base>
   <div class="wrap" style="padding:0 12px">
     <section class="hero" aria-label="Willkommen">
-      <div class="ph dark">Hero-Foto · Gruppenbild der ganzen Crew im Stadion</div>
+      <Foto id="hero" class="dark">Hero-Foto · Gruppenbild der ganzen Crew im Stadion</Foto>
       <div class="hero-body">
         {top && <a class="hero-news" href={url(`/news/${top.id}/`)}><span class="tag-mono">NEU</span>{top.data.title} →</a>}
         <span style="font-size:clamp(16px,1.6vw,20px);font-weight:500;color:var(--soft-2)">Willkommen beim Sportverein</span>
@@ -43,10 +44,10 @@ const frei = gruppen.filter((g) => g.status === 'frei');
     <div class="news-feature">
       {top && (
         <a href={url(`/news/${top.id}/`)} class="card news-big">
-          <div class="ph">
+          <Foto news={top.id}>
             Foto · {top.data.title}
-            <div class="badge-row"><span class="pill pill-neon">{top.data.kategorie}</span>{top.data.fotos && <span class="pill pill-dark">{top.data.fotos} Fotos</span>}</div>
-          </div>
+            <div slot="over" class="badge-row"><span class="pill pill-neon">{top.data.kategorie}</span>{top.data.fotos && <span class="pill pill-dark">{top.data.fotos} Fotos</span>}</div>
+          </Foto>
           <div class="card-body">
             <span class="meta">{formatDate(top.data.date)}</span>
             <h3>{top.data.title}</h3>
@@ -58,7 +59,7 @@ const frei = gruppen.filter((g) => g.status === 'frei');
       <div class="news-side">
         {side.map((n, i) => (
           <a href={url(`/news/${n.id}/`)} class="news-row">
-            <div class={`ph ${i % 2 ? 'alt' : ''}`}>Foto</div>
+            <Foto news={n.id} class={i % 2 ? 'alt' : ''}>Foto</Foto>
             <div class="news-row-body">
               <span><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span></span>
               <span class="meta">{formatDate(n.data.date)}</span>
@@ -72,7 +73,7 @@ const frei = gruppen.filter((g) => g.status === 'frei');
     {more.length > 0 && (
       <div class="grid grid-3" style="margin-top:24px">
         {more.map((n) => (
-          <a href={url(`/news/${n.id}/`)} class="card"><div class="ph">Foto</div><div class="card-body"><span class="meta">{formatDate(n.data.date)} · {n.data.kategorie}</span><h3 class="h-s">{n.data.title}</h3></div></a>
+          <a href={url(`/news/${n.id}/`)} class="card"><Foto news={n.id}>Foto</Foto><div class="card-body"><span class="meta">{formatDate(n.data.date)} · {n.data.kategorie}</span><h3 class="h-s">{n.data.title}</h3></div></a>
         ))}
       </div>
     )}
@@ -98,21 +99,21 @@ const frei = gruppen.filter((g) => g.status === 'frei');
       <a href="https://instagram.com/sc_eastside/" class="link-u">Mehr auf Instagram →</a>
     </div>
     <div class="gallery">
-      <div class="ph alt big">Foto · Staffelübergabe</div>
-      <div class="ph">Foto · Weitsprung U10</div>
-      <div class="ph alt">Foto · Aufwärmen</div>
-      <div class="ph alt">Foto · Sportcamp</div>
-      <div class="ph">Foto · Siegerehrung</div>
+      <Foto id="galerie-staffel" class="alt big">Foto · Staffelübergabe</Foto>
+      <Foto id="galerie-weitsprung">Foto · Weitsprung U10</Foto>
+      <Foto id="galerie-aufwaermen" class="alt">Foto · Aufwärmen</Foto>
+      <Foto id="galerie-camp" class="alt">Foto · Sportcamp</Foto>
+      <Foto id="galerie-siegerehrung">Foto · Siegerehrung</Foto>
     </div>
   </section>
 
   <section class="wrap section" id="angebot">
     <div class="section-head"><div><span class="eyebrow">Unser Angebot</span><h2 class="h-l">Für jedes Alter das Richtige</h2></div></div>
     <div class="grid grid-4">
-      <a href={url('/mitmachen/dein-weg/')} class="card"><div class="ph">Foto · U8/U10</div><div class="card-body"><span class="meta">Jg. 2015–2021</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
-      <a href={url('/mitmachen/dein-weg/')} class="card"><div class="ph alt">Foto · U14/U16</div><div class="card-body"><span class="meta">Jg. 2011–2014</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
-      <a href={url('/mitmachen/dein-weg/#spass')} class="card"><div class="ph">Foto · Spaß-Gruppe</div><div class="card-body"><span class="meta">Jg. 2012–2016</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
-      <a href={url('/news/')} class="card"><div class="ph alt">Foto · Camp</div><div class="card-body"><span class="meta">In den Ferien</span><h3 class="h-s">Sportcamps</h3><p class="muted" style="flex-grow:1">[Termine und Alter folgen]</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-kinder">Foto · U8/U10</Foto><div class="card-body"><span class="meta">Jg. 2015–2021</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-schueler" class="alt">Foto · U14/U16</Foto><div class="card-body"><span class="meta">Jg. 2011–2014</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/#spass')} class="card"><Foto id="angebot-spass">Foto · Spaß-Gruppe</Foto><div class="card-body"><span class="meta">Jg. 2012–2016</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/news/')} class="card"><Foto id="angebot-camp" class="alt">Foto · Camp</Foto><div class="card-body"><span class="meta">In den Ferien</span><h3 class="h-s">Sportcamps</h3><p class="muted" style="flex-grow:1">[Termine und Alter folgen]</p><strong>Mehr →</strong></div></a>
     </div>
   </section>
 
