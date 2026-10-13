@@ -105,16 +105,26 @@ p { margin: 0; }
   .header-cta { margin-left: auto; min-height: 44px; padding: 10px 14px; font-size: 14px; }
   .menu-panel { max-height: calc(100svh - 80px); overflow-y: auto; }
 }
-@media (max-width: 759px) { .logo { font-size: 22px; gap: 8px; } .menu-toggle summary { width: 44px; height: 44px; } }
 @media (max-width: 349px) { .header-cta { display: none; } }
 
 .menu-toggle { position: relative; }
-.menu-toggle summary { list-style: none; width: 48px; height: 48px; border-radius: 999px; border: 1px solid var(--line-2); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.menu-toggle summary { list-style: none; min-width: 48px; height: 48px; padding: 0 16px 0 14px; gap: 6px; border-radius: 999px; border: 1px solid var(--line-2); display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: 700; font-size: 15px; }
 .menu-toggle summary::-webkit-details-marker { display: none; }
+@media (max-width: 759px) {
+  .logo { font-size: 22px; gap: 8px; }
+  .site-header .wrap { padding-left: 16px; padding-right: 16px; }
+  .header-cta { padding: 10px 12px; }
+  .menu-toggle summary { min-width: 44px; height: 44px; padding: 0 10px 0 8px; gap: 4px; font-size: 13px; }
+}
+/* „Menü" als Wort nur, wenn neben Logo und Probetraining-Button genug Platz ist */
+@media (max-width: 384px) { .menu-toggle summary { padding: 0; } .menu-word { display: none; } }
 .menu-panel { position: absolute; right: 0; top: 58px; z-index: 50; width: min(86vw, 340px); background: #fff; border-radius: 24px; box-shadow: 0 16px 40px rgba(22,24,26,.18); padding: 12px; display: flex; flex-direction: column; }
 .menu-panel a { padding: 14px 16px; border-radius: 14px; font-weight: 700; font-size: 18px; }
 .menu-panel a:hover { background: var(--soft); color: var(--ink); }
-.menu-panel .btn { margin-top: 8px; }
+.menu-panel .btn { margin-bottom: 4px; }
+.menu-panel .menu-label { color: var(--muted); padding: 14px 16px 2px; }
+.menu-panel .menu-label ~ .menu-label { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 16px; }
+.menu-panel a[aria-current="page"] { background: var(--soft); }
 
 /* Hero */
 .hero { position: relative; border-radius: var(--radius-lg); overflow: hidden; min-height: 560px; display: flex; align-items: flex-end; color: #fff; }
@@ -309,6 +319,7 @@ p { margin: 0; }
 .prose code { font-family: var(--mono); font-size: 0.85em; background: var(--soft); padding: 2px 6px; border-radius: 6px; }
 .nowrap { white-space: nowrap; }
 .d-inline { display: none; }
+@media (min-width: 760px) { .only-mobile { display: none !important; } }
 @media (min-width: 760px) { .d-inline { display: inline; } }
 [hidden] { display: none !important; }
 fieldset { min-width: 0; }
@@ -316,8 +327,10 @@ fieldset { min-width: 0; }
   .hide-mobile { display: none !important; }
   .hero .ph { font-size: 0; }
   .hero { min-height: 0; }
-  .hero-body { padding: 24px 20px 80px; gap: 14px; }
-  .quicklinks { margin-top: -56px; }
+  .hero-body { padding: 24px 20px 28px; gap: 14px; }
+  .hero-body .btn-row .btn { width: 100%; }
+  .hero .hero-cta-note { margin-top: -6px; display: flex; flex-wrap: wrap; align-items: center; column-gap: 14px; font-size: 15px; color: var(--soft-2); }
+  .hero-cta-note a { display: inline-flex; align-items: center; min-height: 44px; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .section-head { margin-bottom: 20px; }
   .card-body { padding: 18px 20px 22px; }
   .card-outline, .card-soft { padding: 24px 20px; }
@@ -378,8 +391,6 @@ fieldset { min-width: 0; }
   .table-cards .s-winter { grid-row: 4; color: var(--muted); }
   [data-saison="winter"] .table-cards .s-winter { grid-row: 3; color: inherit; }
   [data-saison="winter"] .table-cards .s-sommer { grid-row: 4; color: var(--muted); }
-  .quicklinks a strong { font-size: 17px; hyphens: auto; overflow-wrap: break-word; }
-  .quicklinks a { padding: 16px; }
 }
 h1, h2, h3 { hyphens: auto; overflow-wrap: break-word; }
 .form { grid-template-columns: minmax(0, 1fr); }
