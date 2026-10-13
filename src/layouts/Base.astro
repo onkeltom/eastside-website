@@ -29,6 +29,21 @@ const nav = [
   { key: 'verein', label: 'Verein', href: '/verein/' },
   { key: 'trainer', label: 'Trainer:in werden', href: '/trainer/' },
 ];
+
+// Mobiles Menü nach Aufgaben: erst was Eltern brauchen, dann der Verein.
+const menu = [
+  { label: 'MITMACHEN', links: [
+    { key: 'mitmachen', label: 'Gruppen & Trainingszeiten', href: '/mitmachen/#alle-gruppen' },
+    { key: '', label: 'Termine', href: '/news/#termine' },
+    { key: '', label: 'Dein Weg bei EASTSIDE', href: '/mitmachen/dein-weg/' },
+  ] },
+  { label: 'VEREIN', links: [
+    { key: 'erfolge', label: 'Erfolge', href: '/erfolge/' },
+    { key: 'news', label: 'News', href: '/news/' },
+    { key: 'verein', label: 'Über uns', href: '/verein/' },
+    { key: 'trainer', label: 'Trainer:in werden', href: '/trainer/' },
+  ] },
+];
 ---
 <!doctype html>
 <html lang="de" data-saison={saison}>
@@ -71,12 +86,16 @@ const nav = [
       <details class="menu-toggle">
         <summary aria-label="Menü öffnen">
           <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+          <span class="menu-word" aria-hidden="true">Menü</span>
         </summary>
         <div class="menu-panel">
-          <a href={url('/')}>Startseite</a>
-          {nav.map((n) => <a href={url(n.href)}>{n.label}</a>)}
-          <a href={url('/mitmachen/dein-weg/')}>Dein Weg bei EASTSIDE</a>
           <a href={url('/mitmachen/')} class="btn btn-neon">Probetraining anfragen</a>
+          {menu.map((gruppe) => (
+            <Fragment>
+              <span class="menu-label tag-mono">{gruppe.label}</span>
+              {gruppe.links.map((l) => <a href={url(l.href)} aria-current={l.key && active === l.key ? 'page' : undefined}>{l.label}</a>)}
+            </Fragment>
+          ))}
         </div>
       </details>
     </div>

@@ -23,17 +23,19 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
     <section class="hero" aria-label="Willkommen">
       <Foto id="hero" class="dark">Hero-Foto · Gruppenbild der ganzen Crew im Stadion</Foto>
       <div class="hero-body">
-        {top && <a class="hero-news" href={url(`/news/${top.id}/`)}><span class="tag-mono">NEU</span>{top.data.title} →</a>}
+        {top && <a class="hero-news hide-mobile" href={url(`/news/${top.id}/`)}><span class="tag-mono">NEU</span>{top.data.title} →</a>}
         <span style="font-size:clamp(16px,1.6vw,20px);font-weight:500;color:var(--soft-2)">Willkommen beim Sportverein</span>
         <h1>EAST SIDE<br />BERLIN</h1>
         <p>Dein Leichtathletikverein, in dem und mit dem du wachsen kannst – vom ersten Sprint bis zur Berliner Meisterschaft.</p>
         <div class="btn-row">
-          <a href={url('/mitmachen/')} class="btn btn-neon">Passende Gruppe finden</a>
+          <a href={url('/mitmachen/')} class="btn btn-neon hide-mobile">Passende Gruppe finden</a>
           <a href={url('/verein/')} class="btn btn-outline-light hide-mobile">Über uns</a>
+          <a href={url('/mitmachen/')} class="btn btn-neon only-mobile">Probetraining anfragen</a>
         </div>
+        <p class="hero-cta-note only-mobile"><span>3× kostenlos testen</span> <a href="#gruppen">Trainingszeiten ansehen ↓</a></p>
       </div>
     </section>
-    <nav class="quicklinks" aria-label="Schnellzugriff">
+    <nav class="quicklinks hide-mobile" aria-label="Schnellzugriff">
       <a href="#gruppen"><strong>Trainings&shy;zeiten</strong><span>Alle Gruppen mit Jahrgang und Ort</span></a>
       <a href={url('/news/#termine')}><strong>Termine</strong><span>Wettkämpfe und Vereins&shy;termine</span></a>
       <a href={url('/erfolge/')}><strong>Erfolge</strong><span>Meistertitel, Pokale, Ergebnisse</span></a>
