@@ -16,6 +16,12 @@ const pageTitle = title ? `${title} · ${verein.name}` : `${verein.name} – Lei
 // Standardmäßig an; für den Livebetrieb PREVIEW=false setzen.
 const preview = import.meta.env.PREVIEW !== 'false';
 
+// Aktuelle Trainingssaison (Winter: November–März). Wird beim Build gesetzt und im
+// Browser per Inline-Skript aktualisiert, damit eine ältere Vorschau nicht falsch liegt.
+// Elemente mit .s-sommer / .s-winter innerhalb von .saison-aktuell zeigen nur die aktuelle.
+const monat = new Date().getMonth();
+const saison = monat >= 10 || monat <= 2 ? 'winter' : 'sommer';
+
 const nav = [
   { key: 'mitmachen', label: 'Mitmachen', href: '/mitmachen/' },
   { key: 'erfolge', label: 'Erfolge', href: '/erfolge/' },
@@ -25,7 +31,7 @@ const nav = [
 ];
 ---
 <!doctype html>
-<html lang="de">
+<html lang="de" data-saison={saison}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,6 +39,7 @@ const nav = [
   <meta name="description" content={description} />
   {preview && <meta name="robots" content="noindex, nofollow" />}
   <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+  <script is:inline>(function () { var m = new Date().getMonth(); document.documentElement.dataset.saison = m >= 10 || m <= 2 ? 'winter' : 'sommer'; })();</script>
 </head>
 <body>
   <a href="#inhalt" class="visually-hidden">Zum Inhalt springen</a>
@@ -44,7 +51,7 @@ const nav = [
 
   <div class="topbar">
     <div class="wrap">
-      <span><strong>Probetraining:</strong> 3× kostenlos testen <span class="d-inline">· <strong>Ab 1. November:</strong> Winterzeiten in der Halle</span></span>
+      <span><span class="d-inline"><strong>Probetraining:</strong> 3× kostenlos testen · </span><strong>Ab 1. November:</strong> Winterzeiten in der Halle</span>
       <nav aria-label="Service">
         <a href={verein.instagram}>Instagram</a>
         <a href={`mailto:${verein.email}`}>Kontakt</a>
@@ -60,7 +67,7 @@ const nav = [
           <a href={url(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>
         ))}
       </nav>
-      <a href={url('/mitmachen/')} class="btn btn-dark header-cta">Probetraining anfragen</a>
+      <a href={url('/mitmachen/')} class="btn btn-dark header-cta"><span>Probetraining<span class="d-inline"> anfragen</span></span></a>
       <details class="menu-toggle">
         <summary aria-label="Menü öffnen">
           <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
