@@ -29,7 +29,7 @@ const looks = [
 
   <section class="wrap section grid grid-3">
     <div class="card-soft" style="display:flex;flex-direction:column;gap:10px"><b style="font-family:var(--display);font-size:44px;line-height:1">Warteliste</b><h2 class="h-s">Mit dir öffnen wir neue Gruppen</h2><p class="muted">Fast alle Gruppen sind voll. Jede neue Trainerin, jeder neue Trainer bedeutet Plätze für Kinder, die gerade warten.</p></div>
-    <div class="card-dark" style="border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;gap:10px"><b class="neon" style="font-family:var(--display);font-size:44px;line-height:1">1.</b><h2 class="h-s" style="color:#fff">Ein Team, das gewinnt</h2><p>Berliner Meistertitel in U12 und U14, Siege beim KiLa-Cup.</p><a href={url('/erfolge/')} class="neon" style="font-weight:700;margin-top:auto">Zu den Erfolgen →</a></div>
+    <div class="card-dark" style="border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;gap:10px"><b class="neon" style="font-family:var(--display);font-size:44px;line-height:1">1.</b><h2 class="h-s" style="color:#fff">Ein Team, das gewinnt</h2><p>Berliner Meistertitel in U12 und U14, Siege beim KiLa-Cup.</p><a href={url('/erfolge/')} class="neon tap" style="font-weight:700;margin-top:auto">Zu den Erfolgen →</a></div>
     <div class="card-soft" style="display:flex;flex-direction:column;gap:10px"><b style="font-family:var(--display);font-size:44px;line-height:1">{verein.gegruendet}</b><h2 class="h-s">Jung, familiär, im Aufbau</h2><p class="muted">Du gestaltest mit, statt nur Pläne abzuarbeiten. Kurze Wege, ein offenes Team, Platz für eigene Ideen.</p></div>
   </section>
 
@@ -48,7 +48,7 @@ const looks = [
         </div>
       ))}
     </div>
-    <a href={url('/mitmachen/dein-weg/')} class="link-u" style="display:inline-block;margin-top:24px">So sieht das Training je Altersstufe aus →</a>
+    <a href={url('/mitmachen/dein-weg/')} class="link-u tap" style="margin-top:16px">So sieht das Training je Altersstufe aus →</a>
   </section>
 
   <section class="wrap section grid grid-2" style="align-items:start">

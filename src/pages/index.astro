@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import gruppen from '../data/gruppen.json';
 import termine from '../data/termine.json';
+import erfolge from '../data/erfolge.json';
 import { url, formatDate } from '../lib/url';
 import Foto from '../components/Foto.astro';
 
@@ -12,6 +13,7 @@ const [top, ...rest] = news;
 const side = rest.slice(0, 2);
 const more = rest.slice(2, 5);
 const frei = gruppen.filter((g) => g.status === 'frei');
+const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
 ---
 <Base>
   <div class="wrap" style="padding:0 12px">
@@ -24,13 +26,13 @@ const frei = gruppen.filter((g) => g.status === 'frei');
         <p>Dein Leichtathletikverein, in dem und mit dem du wachsen kannst – vom ersten Sprint bis zur Berliner Meisterschaft.</p>
         <div class="btn-row">
           <a href={url('/mitmachen/')} class="btn btn-neon">Passende Gruppe finden</a>
-          <a href={url('/verein/')} class="btn btn-outline-light">Über uns</a>
+          <a href={url('/verein/')} class="btn btn-outline-light hide-mobile">Über uns</a>
         </div>
       </div>
     </section>
     <nav class="quicklinks" aria-label="Schnellzugriff">
       <a href={url('/mitmachen/')}><strong>Gruppe finden</strong><span>Nach Geburtsjahr, mit freien Plätzen</span></a>
-      <a href={url('/mitmachen/#alle-gruppen')}><strong>Trainingszeiten</strong><span>Sommer und Winter, alle Orte</span></a>
+      <a href={url('/mitmachen/#alle-gruppen')}><strong>Trainings&shy;zeiten</strong><span>Sommer und Winter, alle Orte</span></a>
       <a href={url('/erfolge/')}><strong>Erfolge</strong><span>Meistertitel, Pokale, Ergebnisse</span></a>
       <a href={url('/mitmachen/')} class="is-neon"><strong>Probetraining</strong><span>Dreimal kostenlos testen</span></a>
     </nav>
@@ -39,7 +41,7 @@ const frei = gruppen.filter((g) => g.status === 'frei');
   <section class="wrap section" id="news">
     <div class="section-head">
       <div><span class="eyebrow">News und Infos</span><h2 class="h-l">Aktuelles aus dem Verein</h2></div>
-      <a href={url('/news/')} class="link-u">Alle Beiträge →</a>
+      <a href={url('/news/')} class="link-u tap">Alle Beiträge →</a>
     </div>
     <div class="news-feature">
       {top && (
@@ -83,20 +85,20 @@ const frei = gruppen.filter((g) => g.status === 'frei');
     <div class="card-outline list-dates">
       <h3 class="h-m" style="margin-bottom:14px">Nächste Termine</h3>
       {termine.map((t) => <div class="list-row"><span class="date">{t.datum}</span><span>{t.titel}</span></div>)}
-      <a href={url('/news/#termine')} style="display:inline-block;font-weight:700;margin-top:12px">Alle Termine →</a>
+      <a href={url('/news/#termine')} class="tap" style="font-weight:700;margin-top:4px">Alle Termine →</a>
     </div>
     <div class="card-soft">
       <h3 class="h-m" style="margin-bottom:14px">Freie Plätze</h3>
       {frei.map((g) => <div class="list-row"><strong>{g.name} <span class="muted" style="font-weight:400">{g.tage}</span></strong><span class="pill pill-neon">Plätze frei</span></div>)}
       <div class="list-row"><strong>Alle anderen Gruppen</strong><span class="pill pill-white">Warteliste</span></div>
-      <a href={url('/mitmachen/')} style="display:inline-block;font-weight:700;margin-top:12px">Zum Gruppenfinder →</a>
+      <a href={url('/mitmachen/')} class="tap" style="font-weight:700;margin-top:4px">Zum Gruppenfinder →</a>
     </div>
   </section>
 
   <section class="wrap section">
     <div class="section-head">
       <h2 class="h-l">Momente aus Training und Wettkampf</h2>
-      <a href="https://instagram.com/sc_eastside/" class="link-u">Mehr auf Instagram →</a>
+      <a href="https://instagram.com/sc_eastside/" class="link-u tap">Mehr auf Instagram →</a>
     </div>
     <div class="gallery">
       <Foto id="galerie-staffel" class="alt big">Foto · Staffelübergabe</Foto>
@@ -125,9 +127,7 @@ const frei = gruppen.filter((g) => g.status === 'frei');
         <a href={url('/erfolge/')} class="btn btn-neon">Alle Erfolge ansehen →</a>
       </div>
       <div class="wins-tiles">
-        <div class="win-tile"><b>1.</b><span>Berliner Meisterschaften U14</span></div>
-        <div class="win-tile"><b>1.</b><span>Berliner Meisterschaften U12</span></div>
-        <div class="win-tile"><b>1.+2.</b><span>KiLa-Süd-Cup</span></div>
+        {highlights.map((e) => <div class="win-tile"><b>{e.platz}</b><span>{e.wettkampf} {e.klasse}</span></div>)}
       </div>
     </div>
   </section>

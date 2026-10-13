@@ -44,7 +44,7 @@ const nav = [
 
   <div class="topbar">
     <div class="wrap">
-      <span><strong>Probetraining:</strong> 3× kostenlos testen <span class="d-inline">· <strong>Ab 1. November:</strong> Winterzeiten in der Halle</span></span>
+      <span><span class="d-inline"><strong>Probetraining:</strong> 3× kostenlos testen · </span><strong>Ab 1. November:</strong> Winterzeiten in der Halle</span>
       <nav aria-label="Service">
         <a href={verein.instagram}>Instagram</a>
         <a href={`mailto:${verein.email}`}>Kontakt</a>
@@ -60,7 +60,7 @@ const nav = [
           <a href={url(n.href)} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>
         ))}
       </nav>
-      <a href={url('/mitmachen/')} class="btn btn-dark header-cta">Probetraining anfragen</a>
+      <a href={url('/mitmachen/')} class="btn btn-dark header-cta"><span>Probetraining<span class="d-inline"> anfragen</span></span></a>
       <details class="menu-toggle">
         <summary aria-label="Menü öffnen">
           <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
