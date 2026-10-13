@@ -12,10 +12,13 @@ const news = (await getCollection('news', ({ data }) => !data.draft))
 const [top, ...rest] = news;
 const side = rest.slice(0, 2);
 const more = rest.slice(2, 5);
-const frei = gruppen.filter((g) => g.status === 'frei');
+const jg = (j: number[]) => `${Math.min(...j)}–${Math.max(...j)}`;
+// „wie im Sommer (ganzjährig gleich)" → eine Zeit für beide Saisons
+const ganzjaehrig = (g: (typeof gruppen)[number]) => g.winter.startsWith('wie im Sommer');
 const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
 ---
 <Base>
+  <div class="home">
   <div class="wrap" style="padding:0 12px">
     <section class="hero" aria-label="Willkommen">
       <Foto id="hero" class="dark">Hero-Foto · Gruppenbild der ganzen Crew im Stadion</Foto>
@@ -31,14 +34,14 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
       </div>
     </section>
     <nav class="quicklinks" aria-label="Schnellzugriff">
-      <a href={url('/mitmachen/')}><strong>Gruppe finden</strong><span>Nach Geburtsjahr, mit freien Plätzen</span></a>
-      <a href={url('/mitmachen/#alle-gruppen')}><strong>Trainings&shy;zeiten</strong><span>Sommer und Winter, alle Orte</span></a>
+      <a href="#gruppen"><strong>Trainings&shy;zeiten</strong><span>Alle Gruppen mit Jahrgang und Ort</span></a>
+      <a href={url('/news/#termine')}><strong>Termine</strong><span>Wettkämpfe und Vereins&shy;termine</span></a>
       <a href={url('/erfolge/')}><strong>Erfolge</strong><span>Meistertitel, Pokale, Ergebnisse</span></a>
-      <a href={url('/mitmachen/')} class="is-neon"><strong>Probetraining</strong><span>Dreimal kostenlos testen</span></a>
+      <a href={url('/mitmachen/#anfrage')} class="is-neon"><strong>Probetraining</strong><span>Dreimal kostenlos testen</span></a>
     </nav>
   </div>
 
-  <section class="wrap section" id="news">
+  <section class="wrap section home-news" id="news">
     <div class="section-head">
       <div><span class="eyebrow">News und Infos</span><h2 class="h-l">Aktuelles aus dem Verein</h2></div>
       <a href={url('/news/')} class="link-u tap">Alle Beiträge →</a>
@@ -81,21 +84,32 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
     )}
   </section>
 
-  <section class="wrap section grid grid-2">
-    <div class="card-outline list-dates">
-      <h3 class="h-m" style="margin-bottom:14px">Nächste Termine</h3>
-      {termine.map((t) => <div class="list-row"><span class="date">{t.datum}</span><span>{t.titel}</span></div>)}
-      <a href={url('/news/#termine')} class="tap" style="font-weight:700;margin-top:4px">Alle Termine →</a>
-    </div>
-    <div class="card-soft">
-      <h3 class="h-m" style="margin-bottom:14px">Freie Plätze</h3>
-      {frei.map((g) => <div class="list-row"><strong>{g.name} <span class="muted" style="font-weight:400">{g.tage}</span></strong><span class="pill pill-neon">Plätze frei</span></div>)}
-      <div class="list-row"><strong>Alle anderen Gruppen</strong><span class="pill pill-white">Warteliste</span></div>
-      <a href={url('/mitmachen/')} class="tap" style="font-weight:700;margin-top:4px">Zum Gruppenfinder →</a>
+  <section class="wrap section home-gruppen" id="gruppen">
+    <div class="gruppen-termine">
+      <div class="card-soft saison-aktuell">
+        <div class="gruppen-head">
+          <h2 class="h-m">Gruppen &amp; Trainings&shy;zeiten</h2>
+          <span class="pill pill-white"><span class="s-sommer">Sommer · April–Oktober</span><span class="s-winter">Winter · November–März</span></span>
+        </div>
+        {gruppen.map((g) => (
+          <a class="gruppe-row" href={url(`/mitmachen/?jahr=${Math.max(...g.jahrgaenge)}#ergebnis`)}>
+            <span><strong>{g.name}</strong> <span class="muted nowrap">Jg. {jg(g.jahrgaenge)}</span></span>
+            <span class={`pill ${g.status === 'frei' ? 'pill-neon' : 'pill-white'}`}>{g.status === 'frei' ? 'Plätze frei' : 'Warteliste'}</span>
+            <span class="gruppe-zeit">{ganzjaehrig(g) ? g.sommer : <Fragment><span class="s-sommer">{g.sommer}</span><span class="s-winter">{g.winter}</span></Fragment>}</span>
+          </a>
+        ))}
+        <p class="muted gruppen-hinweis">Gruppe voll? Auf die Warteliste setzen – oder als <a href={url('/trainer/')} class="link-u">Trainer:in</a> helfen, damit neue Gruppen entstehen. In den Schulferien kein Training.</p>
+        <a href={url('/mitmachen/')} class="tap" style="font-weight:700">Zum Gruppenfinder →</a>
+      </div>
+      <div class="card-outline list-dates">
+        <h3 class="h-m" style="margin-bottom:14px">Nächste Termine</h3>
+        {termine.map((t) => <div class="list-row"><span class="date">{t.datum}</span><span>{t.titel}</span></div>)}
+        <a href={url('/news/#termine')} class="tap" style="font-weight:700;margin-top:4px">Alle Termine →</a>
+      </div>
     </div>
   </section>
 
-  <section class="wrap section">
+  <section class="wrap section home-galerie">
     <div class="section-head">
       <h2 class="h-l">Momente aus Training und Wettkampf</h2>
       <a href="https://instagram.com/sc_eastside/" class="link-u tap">Mehr auf Instagram →</a>
@@ -109,9 +123,9 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
     </div>
   </section>
 
-  <section class="wrap section" id="angebot">
+  <section class="wrap section home-angebot" id="angebot">
     <div class="section-head"><div><span class="eyebrow">Unser Angebot</span><h2 class="h-l">Für jedes Alter das Richtige</h2></div></div>
-    <div class="grid grid-4">
+    <div class="grid grid-4 angebot-list">
       <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-kinder">Foto · U8/U10</Foto><div class="card-body"><span class="meta">Jg. 2015–2021</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
       <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-schueler" class="alt">Foto · U14/U16</Foto><div class="card-body"><span class="meta">Jg. 2011–2014</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
       <a href={url('/mitmachen/dein-weg/#spass')} class="card"><Foto id="angebot-spass">Foto · Spaß-Gruppe</Foto><div class="card-body"><span class="meta">Jg. 2012–2016</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
@@ -119,7 +133,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
     </div>
   </section>
 
-  <section class="wrap section">
+  <section class="wrap section home-erfolge">
     <div class="card-dark wins">
       <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
         <span class="pill pill-neon tag-mono">ERFOLGE</span>
@@ -132,8 +146,9 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
     </div>
   </section>
 
-  <section class="wrap section" id="partner">
+  <section class="wrap section home-partner" id="partner">
     <h2 class="h-s" style="margin-bottom:20px">Danke an unsere Partner</h2>
     <div class="partners"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
   </section>
+  </div>
 </Base>
