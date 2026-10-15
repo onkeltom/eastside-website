@@ -45,6 +45,7 @@ Offen / noch zu gestalten: eigene Seiten für Beiträge & Mitgliedschaft, Sportc
 - `src/layouts/Base.astro` – Kopf, Hauptmenü (mobil als `<details>`-Menü), Footer, Vorschau-Hinweis
 - `src/styles/global.css` – gesamte Gestaltung, Design-Tokens in `:root`
 - `src/lib/url.ts` – `url()` für alle internen Links (wegen Unterpfad auf GitHub Pages) – **immer verwenden, nie `/pfad` hart codieren**
+- `src/lib/saison.ts` – Saison, Saisonwechsel-Hinweis und Jahrgänge. Gruppen und Stufen speichern das **Alter** (DLV-Altersklassen, Stichtag 1. Januar), die Jahrgänge werden daraus berechnet – nie Jahrgänge von Hand eintragen. Saisonbeginn in `verein.json` → `saison`. Die Vorschau wird täglich neu gebaut (für Cloudflare Pages später einen Deploy-Hook mit Zeitplan einrichten).
 - `src/content/news/*.md` – Beiträge (Schema in `src/content.config.ts`)
 - `src/data/*.json` – Gruppen, Erfolge, Termine, Stufen/Trainerrollen, Vereinsdaten
 - `public/admin/` – Sveltia CMS (Konfiguration noch ungetestet, v. a. JSON-Dateien mit `root: true`-Listen)

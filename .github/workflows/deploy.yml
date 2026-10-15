@@ -4,6 +4,9 @@ name: Vorschau auf GitHub Pages
 on:
   push:
     branches: [main]
+  # Täglich neu bauen, damit Saisonhinweis und Jahrgänge auch ohne neue Commits stimmen.
+  schedule:
+    - cron: '17 3 * * *'
   workflow_dispatch:
 
 permissions:

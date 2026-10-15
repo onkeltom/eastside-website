@@ -1,10 +1,10 @@
 [
-  { "stufe": "U8", "phase": "Entdecken", "jahrgaenge": "2019–2021", "training": "2× pro Woche, je 60 Min.", "inhalte": "Laufen, Springen, Werfen spielerisch, Koordination", "wettkaempfe": "Spielerische Angebote, Vereinsevents", "erwartung": "Freude, Neugier, regelmäßig kommen",
+  { "stufe": "U8", "phase": "Entdecken", "alter": [5, 7], "training": "2× pro Woche, je 60 Min.", "inhalte": "Laufen, Springen, Werfen spielerisch, Koordination", "wettkaempfe": "Spielerische Angebote, Vereinsevents", "erwartung": "Freude, Neugier, regelmäßig kommen",
     "rolle": "Spielleitung", "rolle_erwartung": "Freude vermitteln, Gruppen sicher führen, Eltern ansprechen" },
-  { "stufe": "U10", "phase": "Ausprobieren", "jahrgaenge": "2017–2018", "training": "2–3× pro Woche, 75–90 Min.", "inhalte": "Vielseitigkeit, erste Technik in Spielformen", "wettkaempfe": "KiLa-Cup – Kinderleichtathletik im Team", "erwartung": "Regelmäßigkeit, Teamgeist",
+  { "stufe": "U10", "phase": "Ausprobieren", "alter": [8, 9], "training": "2–3× pro Woche, 75–90 Min.", "inhalte": "Vielseitigkeit, erste Technik in Spielformen", "wettkaempfe": "KiLa-Cup – Kinderleichtathletik im Team", "erwartung": "Regelmäßigkeit, Teamgeist",
     "rolle": "Motivation & Vielseitigkeit", "rolle_erwartung": "Training in Spielformen planen, beim KiLa-Cup betreuen" },
-  { "stufe": "U12", "phase": "Lernen", "jahrgaenge": "2015–2016", "training": "3× pro Woche, 75–90 Min.", "inhalte": "Technik-Grundlagen, Mehrkampf", "wettkaempfe": "Berliner Meisterschaften U12 und weitere", "erwartung": "Konzentration, Lust zu üben",
+  { "stufe": "U12", "phase": "Lernen", "alter": [10, 11], "training": "3× pro Woche, 75–90 Min.", "inhalte": "Technik-Grundlagen, Mehrkampf", "wettkaempfe": "Berliner Meisterschaften U12 und weitere", "erwartung": "Konzentration, Lust zu üben",
     "rolle": "Technik-Coach", "rolle_erwartung": "Technikwissen, Wettkampfvorbereitung, Betreuung bei Meisterschaften" },
-  { "stufe": "U14+", "phase": "Wachsen", "jahrgaenge": "2011–2014", "training": "4× pro Woche, 90–120 Min.", "inhalte": "Strukturiertes Grundlagentraining, Disziplinen, Leistung", "wettkaempfe": "Berliner Meisterschaften U14 und mehr", "erwartung": "Verlässlichkeit, Eigenverantwortung, eigene Ziele",
+  { "stufe": "U14+", "phase": "Wachsen", "alter": [12, 15], "training": "4× pro Woche, 90–120 Min.", "inhalte": "Strukturiertes Grundlagentraining, Disziplinen, Leistung", "wettkaempfe": "Berliner Meisterschaften U14 und mehr", "erwartung": "Verlässlichkeit, Eigenverantwortung, eigene Ziele",
     "rolle": "Coach & Mentor", "rolle_erwartung": "Individuelle Ziele, Leistungsplanung, mehr Zeit und Qualifikation" }
 ]

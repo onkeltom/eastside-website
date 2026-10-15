@@ -54,14 +54,14 @@ collections:
         label: Gruppen & freie Plätze
         file: src/data/gruppen.json
         fields:
-          - name: items
+          - { name: stand, label: "Platzstatus geprüft am (TT.MM.JJJJ)", widget: string }
+          - name: gruppen
             label: Gruppen
             widget: list
-            root: true
             fields:
               - { name: id, label: Kürzel, widget: string }
               - { name: name, label: Name, widget: string }
-              - { name: jahrgaenge, label: Jahrgänge, widget: list, field: { name: jahr, label: Jahr, widget: number, value_type: int } }
+              - { name: alter, label: "Alter von–bis (das Alter, das die Kinder im laufenden Jahr erreichen; Jahrgänge werden daraus berechnet)", widget: list, field: { name: jahre, label: Alter, widget: number, value_type: int } }
               - { name: status, label: Status, widget: select, options: [{ label: "Plätze frei", value: frei }, { label: Warteliste, value: warteliste }] }
               - { name: stufe, label: Stufe, widget: string }
               - { name: sommer, label: "Zeiten Sommer", widget: string }

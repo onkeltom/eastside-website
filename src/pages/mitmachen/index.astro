@@ -1,30 +1,37 @@
 ---
 import Base from '../../layouts/Base.astro';
-import gruppen from '../../data/gruppen.json';
+import gruppenDaten from '../../data/gruppen.json';
 import { url } from '../../lib/url';
+import { jahrgaenge, jahrgangText, saisonMonate } from '../../lib/saison';
 
-const jahre = Array.from({ length: 11 }, (_, i) => 2011 + i);
-const start = 2017;
+const { gruppen, stand } = gruppenDaten;
+// Alle Jahrgänge, für die es eine Gruppe gibt – im Browser mit dem aktuellen Jahr neu berechnet.
+const alleJahre = (jahr?: number) => [...new Set(gruppen.flatMap((g) => jahrgaenge(g.alter, jahr)))].sort((a, b) => a - b);
+const jahre = alleJahre();
+const sommer = saisonMonate('sommer');
+const winter = saisonMonate('winter');
 ---
 <Base title="Mitmachen – Gruppenfinder" active="mitmachen">
   <section class="wrap" style="padding-top:48px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px">
     <span class="pill pill-soft">Gruppenfinder</span>
-    <h1 class="h-xl">Welche Gruppe passt<br />zu <span class="mark">deinem Kind?</span></h1>
+    <h1 class="h-xl">Welche Gruppe passt zu <span class="mark">deinem Kind?</span></h1>
     <p class="lead" style="max-width:640px">Wähle das Geburtsjahr. Du siehst sofort Trainingszeiten, Ort und ob gerade ein Platz frei ist.</p>
   </section>
 
   <section class="wrap section" style="padding-top:40px">
     <div class="finder-box">
       <h2 class="h-s" id="jahr-label">Geburtsjahr deines Kindes</h2>
-      <div class="chips" role="group" aria-labelledby="jahr-label">
-        {jahre.map((j) => <button type="button" class="chip" data-year={j} aria-pressed={j === start ? 'true' : 'false'}>{j}</button>)}
+      <div class="chips" role="group" aria-labelledby="jahr-label" id="chips">
+        {jahre.map((j) => <button type="button" class="chip" data-year={j} aria-pressed="false">{j}</button>)}
       </div>
     </div>
   </section>
 
   <section class="wrap section" style="padding-top:40px" aria-live="polite" id="ergebnis">
-    <h2 class="h-s" style="margin-bottom:20px">Passend für Jahrgang <span id="jahr-out">{start}</span></h2>
+    <h2 class="h-s" style="margin-bottom:20px" id="ergebnis-titel" hidden>Passend für Jahrgang <span id="jahr-out"></span></h2>
+    <p class="muted" id="ergebnis-leer">Wähle oben das Geburtsjahr – dann siehst du hier die passenden Gruppen. Alle Gruppen stehen auch <a href="#alle-gruppen" class="link-u">weiter unten</a>.</p>
     <div class="grid grid-2" id="treffer"></div>
+    <p class="muted" style="margin-top:14px;font-size:15px">Platzstatus: Stand {stand}</p>
   </section>
 
   <section class="wrap section" id="anfrage">
@@ -34,8 +41,8 @@ const start = 2017;
         <p class="muted">Dreimal kostenlos testen. Wir melden uns mit einem Termin – oder, wenn die Gruppe voll ist, sobald ein Platz frei wird.</p>
       </div>
       <form class="form two" id="anfrage-form">
-        <label>Gruppe<select name="gruppe" id="gruppe-select">{gruppen.map((g) => <option value={g.id}>{g.name}</option>)}</select></label>
-        <label>Geburtsjahr des Kindes<input name="jahr" id="jahr-input" inputmode="numeric" value={start} /></label>
+        <label>Gruppe<select name="gruppe" id="gruppe-select" required><option value="">Bitte wählen</option>{gruppen.map((g) => <option value={g.id}>{g.name}</option>)}</select></label>
+        <label>Geburtsjahr des Kindes<input name="jahr" id="jahr-input" inputmode="numeric" /></label>
         <label>Name (Elternteil)<input name="name" required autocomplete="name" /></label>
         <label>E-Mail<input type="email" name="email" required autocomplete="email" /></label>
         <label class="check full"><input type="checkbox" required /><span>Ich bin einverstanden, dass der Verein meine Angaben zur Bearbeitung der Anfrage speichert. [Datenschutzhinweis folgt]</span></label>
@@ -64,21 +71,21 @@ const start = 2017;
     <h2 class="h-l" style="margin-bottom:24px">Alle Gruppen und Trainingszeiten</h2>
     <div class="table-wrap">
       <table class="table table-cards">
-        <thead><tr><th>Gruppe</th><th>Jahrgänge</th><th>Sommer (Apr–Okt)</th><th>Winter (Nov–Mär)</th><th>Status</th></tr></thead>
+        <thead><tr><th>Gruppe</th><th>Jahrgänge</th><th>Sommer ({sommer.kurz})</th><th>Winter ({winter.kurz})</th><th>Status</th></tr></thead>
         <tbody>
           {gruppen.map((g) => (
             <tr>
               <td class="tc-name"><strong>{g.name}</strong></td>
-              <td class="tc-jg">{Math.min(...g.jahrgaenge)}–{Math.max(...g.jahrgaenge)}</td>
-              <td class="s-sommer" data-label="Sommer (Apr–Okt)">{g.sommer}</td>
-              <td class="s-winter" data-label="Winter (Nov–Mär)">{g.winter}</td>
+              <td class="tc-jg" data-alter={g.alter.join(',')}>{jahrgangText(g.alter)}</td>
+              <td class="s-sommer" data-label={`Sommer (${sommer.kurz})`}>{g.sommer}</td>
+              <td class="s-winter" data-label={`Winter (${winter.kurz})`}>{g.winter}</td>
               <td class="tc-status"><span class={`pill ${g.status === 'frei' ? 'pill-neon' : 'pill-white'}`}>{g.status === 'frei' ? 'Plätze frei' : 'Warteliste'}</span></td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    <p class="muted" style="margin-top:14px">In den Berliner Schulferien findet kein Training statt.</p>
+    <p class="muted" style="margin-top:14px">In den Berliner Schulferien findet kein Training statt. Platzstatus: Stand {stand}.</p>
   </section>
 
   <section class="wrap section">
@@ -91,13 +98,25 @@ const start = 2017;
     </div>
   </section>
 
-  <script type="application/json" id="gruppen-data" set:html={JSON.stringify(gruppen)}></script>
+  <script type="application/json" id="gruppen-data" set:html={JSON.stringify({ gruppen, sommer: sommer.lang, winter: winter.lang })}></script>
 </Base>
 
 <script>
-  type Gruppe = { id: string; name: string; jahrgaenge: number[]; status: string; sommer: string; winter: string; trainer: string };
-  const gruppen: Gruppe[] = JSON.parse(document.getElementById('gruppen-data')!.textContent || '[]');
-  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.chip[data-year]'));
+  import { jahrgaenge, jahrgangText } from '../../lib/saison';
+
+  type Gruppe = { id: string; name: string; alter: number[]; status: string; sommer: string; winter: string; trainer: string };
+  const daten = JSON.parse(document.getElementById('gruppen-data')!.textContent || '{}');
+  const gruppen: Gruppe[] = daten.gruppen || [];
+
+  // Jahrgänge mit dem Jahr des Besuchs neu berechnen, falls der letzte Build aus dem Vorjahr stammt.
+  const jahre = [...new Set(gruppen.flatMap((g) => jahrgaenge(g.alter)))].sort((a, b) => a - b);
+  const chipBox = document.getElementById('chips')!;
+  if (chipBox.querySelector('.chip')?.getAttribute('data-year') !== String(jahre[0])) {
+    chipBox.innerHTML = jahre.map((j) => `<button type="button" class="chip" data-year="${j}" aria-pressed="false">${j}</button>`).join('');
+    document.querySelectorAll<HTMLElement>('.tc-jg[data-alter]').forEach((td) => { td.textContent = jahrgangText(td.dataset.alter!.split(',').map(Number)); });
+  }
+
+  const chips = Array.from(chipBox.querySelectorAll<HTMLButtonElement>('.chip[data-year]'));
   const out = document.getElementById('treffer')!;
   const jahrOut = document.getElementById('jahr-out')!;
   const select = document.getElementById('gruppe-select') as HTMLSelectElement;
@@ -117,8 +136,12 @@ const start = 2017;
   function render(year: number) {
     jahrOut.textContent = String(year);
     jahrInput.value = String(year);
+    document.getElementById('ergebnis-titel')!.hidden = false;
+    document.getElementById('ergebnis-leer')!.hidden = true;
     chips.forEach((c) => c.setAttribute('aria-pressed', String(Number(c.dataset.year) === year)));
-    const fits = gruppen.filter((g) => g.jahrgaenge.includes(year));
+    const fits = gruppen.filter((g) => jahrgaenge(g.alter).includes(year));
+    // Nur vorauswählen, wenn es eindeutig ist – sonst wählen Eltern über die Buttons in den Treffern.
+    select.value = fits.length === 1 ? fits[0].id : '';
     out.innerHTML = fits.map((g) => {
       const open = g.status === 'frei';
       const alt = fits.find((o) => o.status === 'frei' && o.id !== g.id);
@@ -126,12 +149,12 @@ const start = 2017;
       return `
         <article class="result ${open ? '' : 'is-wait'}">
           <div class="result-head">
-            <div><h3>${esc(g.name)}</h3><span class="muted">Jahrgänge ${Math.min(...g.jahrgaenge)}–${Math.max(...g.jahrgaenge)}</span></div>
+            <div><h3>${esc(g.name)}</h3><span class="muted">Jahrgänge ${jahrgangText(g.alter)}</span></div>
             <span class="pill ${open ? 'pill-neon' : 'pill-white'}"><span class="dot ${open ? '' : 'dot-muted'}"></span>${open ? 'Plätze frei' : 'Warteliste'}</span>
           </div>
           <div class="times">
-            <div class="time-box s-sommer"><small>Sommer (April bis Oktober)</small>${esc(g.sommer)}</div>
-            <div class="time-box s-winter"><small>Winter (November bis März)</small>${esc(g.winter)}</div>
+            <div class="time-box s-sommer"><small>Sommer (${esc(daten.sommer)})</small>${esc(g.sommer)}</div>
+            <div class="time-box s-winter"><small>Winter (${esc(daten.winter)})</small>${esc(g.winter)}</div>
           </div>
           <span class="muted" style="font-size:14px">Trainer:in: ${esc(g.trainer)} · In den Schulferien kein Training</span>
           ${open
@@ -152,5 +175,6 @@ const start = 2017;
     e.preventDefault();
     document.getElementById('form-note')!.hidden = false;
   });
-  render(Number(new URLSearchParams(location.search).get('jahr')) || 2017);
+  const jahrAusLink = Number(new URLSearchParams(location.search).get('jahr'));
+  if (jahre.includes(jahrAusLink)) render(jahrAusLink);
 </script>

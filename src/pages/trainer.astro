@@ -57,7 +57,7 @@ const looks = [
       <p class="lead">Du musst kein Profi sein. Wichtig sind Freude an der Arbeit mit Kindern und Verlässlichkeit.</p>
     </div>
     <div class="grid grid-2" style="gap:14px">
-      <div class="card-outline" style="padding:22px"><h3 class="h-s">Aufwandsentschädigung</h3><p class="muted">[Höhe und Form zu klären]</p></div>
+      <div class="card-outline" style="padding:22px"><h3 class="h-s">Aufwands&shy;entschädigung</h3><p class="muted">[Höhe und Form zu klären]</p></div>
       <div class="card-outline" style="padding:22px"><h3 class="h-s">Aus- und Fortbildung</h3><p class="muted">[z. B. Übernahme der Lizenzkosten – zu klären]</p></div>
       <div class="card-outline" style="padding:22px"><h3 class="h-s">Einarbeitung im Team</h3><p class="muted">Du startest an der Seite erfahrener Trainer:innen.</p></div>
       <div class="card-outline" style="padding:22px"><h3 class="h-s">Feste Zeiten, freie Ferien</h3><p class="muted">Training nachmittags, in den Schulferien trainingsfrei.</p></div>
@@ -95,6 +95,7 @@ const looks = [
         <label>Telefon (optional)<input type="tel" name="tel" autocomplete="tel" /></label>
         <label>Interesse an<select name="stufe"><option>Noch offen</option><option>U8</option><option>U10</option><option>U12</option><option>U14+</option><option>Spaß-Gruppe</option></select></label>
         <label class="full">Erfahrung (Sport, Lizenz, Arbeit mit Kindern)<textarea name="erfahrung" rows="3"></textarea></label>
+        <label class="check full"><input type="checkbox" name="einwilligung" required /><span>Ich bin einverstanden, dass der Verein meine Angaben speichert, um mit mir Kontakt aufzunehmen. [Datenschutzhinweis folgt]</span></label>
         <button type="submit" class="btn btn-neon full">Absenden</button>
         <p class="notice full" id="trainer-note" hidden>Vorschau: Das Formular ist noch nicht angeschlossen. Bitte vorerst per E-Mail an {verein.email}.</p>
       </form>

@@ -1,18 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import gruppen from '../data/gruppen.json';
+import gruppenDaten from '../data/gruppen.json';
 import termine from '../data/termine.json';
 import erfolge from '../data/erfolge.json';
 import { url, formatDate } from '../lib/url';
 import Foto from '../components/Foto.astro';
+import { jahrgaenge, jahrgangText, saisonMonate } from '../lib/saison';
 
 const news = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const [top, ...rest] = news;
 const side = rest.slice(0, 2);
 const more = rest.slice(2, 5);
-const jg = (j: number[]) => `${Math.min(...j)}–${Math.max(...j)}`;
+const { gruppen, stand } = gruppenDaten;
+// Altersbereich über mehrere Stufen, z. B. Kinderleichtathletik = U8 bis U12
+const alterVon = (stufen: string[]) => { const a = gruppen.filter((g) => stufen.includes(g.stufe)).flatMap((g) => g.alter); return [Math.min(...a), Math.max(...a)]; };
 // „wie im Sommer (ganzjährig gleich)" → eine Zeit für beide Saisons
 const ganzjaehrig = (g: (typeof gruppen)[number]) => g.winter.startsWith('wie im Sommer');
 const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
@@ -91,16 +94,16 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
       <div class="card-soft saison-aktuell">
         <div class="gruppen-head">
           <h2 class="h-m">Gruppen &amp; Trainings&shy;zeiten</h2>
-          <span class="pill pill-white"><span class="s-sommer">Sommer · April–Oktober</span><span class="s-winter">Winter · November–März</span></span>
+          <span class="pill pill-white"><span class="s-sommer">Sommer · {saisonMonate('sommer').strich}</span><span class="s-winter">Winter · {saisonMonate('winter').strich}</span></span>
         </div>
         {gruppen.map((g) => (
-          <a class="gruppe-row" href={url(`/mitmachen/?jahr=${Math.max(...g.jahrgaenge)}#ergebnis`)}>
-            <span><strong>{g.name}</strong> <span class="muted nowrap">Jg. {jg(g.jahrgaenge)}</span></span>
+          <a class="gruppe-row" href={url(`/mitmachen/?jahr=${Math.max(...jahrgaenge(g.alter))}#ergebnis`)}>
+            <span><strong>{g.name}</strong> <span class="muted nowrap">Jg. {jahrgangText(g.alter)}</span></span>
             <span class={`pill ${g.status === 'frei' ? 'pill-neon' : 'pill-white'}`}>{g.status === 'frei' ? 'Plätze frei' : 'Warteliste'}</span>
             <span class="gruppe-zeit">{ganzjaehrig(g) ? g.sommer : <Fragment><span class="s-sommer">{g.sommer}</span><span class="s-winter">{g.winter}</span></Fragment>}</span>
           </a>
         ))}
-        <p class="muted gruppen-hinweis">Gruppe voll? Auf die Warteliste setzen – oder als <a href={url('/trainer/')} class="link-u">Trainer:in</a> helfen, damit neue Gruppen entstehen. In den Schulferien kein Training.</p>
+        <p class="muted gruppen-hinweis">Gruppe voll? Auf die Warteliste setzen – oder als <a href={url('/trainer/')} class="link-u">Trainer:in</a> helfen, damit neue Gruppen entstehen. In den Schulferien kein Training. Platzstatus: Stand {stand}.</p>
         <a href={url('/mitmachen/')} class="tap" style="font-weight:700">Zum Gruppenfinder →</a>
       </div>
       <div class="card-outline list-dates">
@@ -128,9 +131,9 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
   <section class="wrap section home-angebot" id="angebot">
     <div class="section-head"><div><span class="eyebrow">Unser Angebot</span><h2 class="h-l">Für jedes Alter das Richtige</h2></div></div>
     <div class="grid grid-4 angebot-list">
-      <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-kinder">Foto · U8/U10</Foto><div class="card-body"><span class="meta">Jg. 2015–2021</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
-      <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-schueler" class="alt">Foto · U14/U16</Foto><div class="card-body"><span class="meta">Jg. 2011–2014</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
-      <a href={url('/mitmachen/dein-weg/#spass')} class="card"><Foto id="angebot-spass">Foto · Spaß-Gruppe</Foto><div class="card-body"><span class="meta">Jg. 2012–2016</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-kinder">Foto · U8/U10</Foto><div class="card-body"><span class="meta">Jg. {jahrgangText(alterVon(['U8', 'U10', 'U12']))}</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-schueler" class="alt">Foto · U14/U16</Foto><div class="card-body"><span class="meta">Jg. {jahrgangText(alterVon(['U14+']))}</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/dein-weg/#spass')} class="card"><Foto id="angebot-spass">Foto · Spaß-Gruppe</Foto><div class="card-body"><span class="meta">Jg. {jahrgangText(alterVon(['Spaß']))}</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
       <a href={url('/news/')} class="card"><Foto id="angebot-camp" class="alt">Foto · Camp</Foto><div class="card-body"><span class="meta">In den Ferien</span><h3 class="h-s">Sportcamps</h3><p class="muted" style="flex-grow:1">[Termine und Alter folgen]</p><strong>Mehr →</strong></div></a>
     </div>
   </section>

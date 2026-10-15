@@ -5,5 +5,12 @@
   "email": "sc.east.side2023@gmail.com",
   "instagram": "https://instagram.com/sc_eastside/",
   "gegruendet": 2022,
-  "wettkaempfe_pro_jahr": [ { "jahr": "2023", "anzahl": 2 }, { "jahr": "2024", "anzahl": 8 }, { "jahr": "2025", "anzahl": 14 }, { "jahr": "2026 bisher", "anzahl": 13 } ]
+  "wettkaempfe_pro_jahr": [ { "jahr": "2023", "anzahl": 2 }, { "jahr": "2024", "anzahl": 8 }, { "jahr": "2025", "anzahl": 14 }, { "jahr": "2026 bisher", "anzahl": 13 } ],
+  "saison": {
+    "sommer_ab": "04-01",
+    "winter_ab": "11-01",
+    "hinweis_tage_vorher": 42,
+    "hinweis_sommer": "Sommer-Trainingszeiten",
+    "hinweis_winter": "Winterzeiten in der Halle"
+  }
 }

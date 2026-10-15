@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import verein from '../data/verein.json';
 import { url } from '../lib/url';
+import { saisonAm, naechsterWechsel } from '../lib/saison';
 
 interface Props {
   title?: string;
@@ -16,11 +17,13 @@ const pageTitle = title ? `${title} · ${verein.name}` : `${verein.name} – Lei
 // Standardmäßig an; für den Livebetrieb PREVIEW=false setzen.
 const preview = import.meta.env.PREVIEW !== 'false';
 
-// Aktuelle Trainingssaison (Winter: November–März). Wird beim Build gesetzt und im
+// Aktuelle Trainingssaison (Beginn in verein.json → saison). Wird beim Build gesetzt und im
 // Browser per Inline-Skript aktualisiert, damit eine ältere Vorschau nicht falsch liegt.
 // Elemente mit .s-sommer / .s-winter innerhalb von .saison-aktuell zeigen nur die aktuelle.
-const monat = new Date().getMonth();
-const saison = monat >= 10 || monat <= 2 ? 'winter' : 'sommer';
+const saison = saisonAm();
+const { sommer_ab, winter_ab } = verein.saison;
+// Hinweis auf den nächsten Saisonwechsel, nur in den Wochen davor (der tägliche Build hält ihn aktuell).
+const wechsel = naechsterWechsel();
 
 const nav = [
   { key: 'mitmachen', label: 'Mitmachen', href: '/mitmachen/' },
@@ -32,12 +35,12 @@ const nav = [
 
 // Mobiles Menü nach Aufgaben: erst was Eltern brauchen, dann der Verein.
 const menu = [
-  { label: 'MITMACHEN', links: [
+  { label: 'Mitmachen', links: [
     { key: 'mitmachen', label: 'Gruppen & Trainingszeiten', href: '/mitmachen/#alle-gruppen' },
     { key: '', label: 'Termine', href: '/news/#termine' },
     { key: '', label: 'Dein Weg bei EASTSIDE', href: '/mitmachen/dein-weg/' },
   ] },
-  { label: 'VEREIN', links: [
+  { label: 'Verein', links: [
     { key: 'erfolge', label: 'Erfolge', href: '/erfolge/' },
     { key: 'news', label: 'News', href: '/news/' },
     { key: 'verein', label: 'Über uns', href: '/verein/' },
@@ -54,7 +57,7 @@ const menu = [
   <meta name="description" content={description} />
   {preview && <meta name="robots" content="noindex, nofollow" />}
   <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
-  <script is:inline>(function () { var m = new Date().getMonth(); document.documentElement.dataset.saison = m >= 10 || m <= 2 ? 'winter' : 'sommer'; })();</script>
+  <script is:inline define:vars={{ sommer_ab, winter_ab }}>(function () { var d = new Date(), t = (d.getMonth() + 1) * 100 + d.getDate(), n = function (s) { return Number(s.replace('-', '')); }; document.documentElement.dataset.saison = t >= n(sommer_ab) && t < n(winter_ab) ? 'sommer' : 'winter'; })();</script>
 </head>
 <body>
   <a href="#inhalt" class="visually-hidden">Zum Inhalt springen</a>
@@ -66,7 +69,9 @@ const menu = [
 
   <div class="topbar">
     <div class="wrap">
-      <span><span class="d-inline"><strong>Probetraining:</strong> 3× kostenlos testen · </span><strong>Ab 1. November:</strong> Winterzeiten in der Halle</span>
+      {wechsel
+        ? <span><span class="d-inline"><strong>Probetraining:</strong> 3× kostenlos testen · </span><strong>Ab {wechsel.ab}:</strong> {wechsel.hinweis}</span>
+        : <span><strong>Probetraining:</strong> 3× kostenlos testen</span>}
       <nav aria-label="Service">
         <a href={verein.instagram}>Instagram</a>
         <a href={`mailto:${verein.email}`}>Kontakt</a>
@@ -92,7 +97,7 @@ const menu = [
           <a href={url('/mitmachen/')} class="btn btn-neon">Probetraining anfragen</a>
           {menu.map((gruppe) => (
             <Fragment>
-              <span class="menu-label tag-mono">{gruppe.label}</span>
+              <span class="menu-label">{gruppe.label}</span>
               {gruppe.links.map((l) => <a href={url(l.href)} aria-current={l.key && active === l.key ? 'page' : undefined}>{l.label}</a>)}
             </Fragment>
           ))}

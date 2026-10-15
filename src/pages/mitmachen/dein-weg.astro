@@ -1,7 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import stufen from '../../data/stufen.json';
+import gruppenDaten from '../../data/gruppen.json';
 import { url } from '../../lib/url';
+import { jahrgangText } from '../../lib/saison';
+
+const spass = gruppenDaten.gruppen.find((g) => g.id === 'spass')!;
 
 const look = [
   { bg: 'var(--soft)', fg: 'var(--ink)', size: [84, 120], font: [24, 30] },
@@ -29,7 +33,7 @@ const look = [
           {i < stufen.length - 1 && <div class="step-line"></div>}
         </div>
         <div class="step-card">
-          <div><small>Training</small>{s.training}<div class="muted" style="font-size:14px;margin-top:4px">Jg. {s.jahrgaenge}</div></div>
+          <div><small>Training</small>{s.training}<div class="muted" style="font-size:14px;margin-top:4px">Jg. {jahrgangText(s.alter)}</div></div>
           <div><small>Was wir trainieren</small>{s.inhalte}</div>
           <div><small>Wettkämpfe</small>{s.wettkaempfe}</div>
           <div><small>Was wir uns wünschen</small><strong>{s.erwartung}</strong></div>
@@ -42,7 +46,7 @@ const look = [
     <div style="border:2px dashed #9aa092;border-radius:var(--radius-lg);padding:32px;display:grid;gap:20px;align-items:center" class="spass">
       <div style="display:flex;flex-direction:column;gap:10px">
         <h2 class="h-m">Spaß-Gruppe: einfach Freude an Bewegung</h2>
-        <p class="lead">Für alle, die sich gerne bewegen und Teil unserer Gemeinschaft sein wollen – ganz bewusst ohne Wettkampfehrgeiz. Jahrgänge 2012–2016, einmal pro Woche mittwochs, keine Wettkämpfe.</p>
+        <p class="lead">Für alle, die sich gerne bewegen und Teil unserer Gemeinschaft sein wollen – ganz bewusst ohne Wettkampfehrgeiz. Jahrgänge {jahrgangText(spass.alter)}, einmal pro Woche mittwochs, keine Wettkämpfe.</p>
       </div>
       <a href={url('/mitmachen/?jahr=2014')} class="btn btn-neon" style="justify-self:start">Plätze frei →</a>
     </div>
