@@ -96,7 +96,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
         </div>
         {gruppen.map((g) => (
           <a class="gruppe-row" href={url(`/mitmachen/?jahr=${Math.max(...g.jahrgaenge)}#ergebnis`)}>
-            <span><strong>{g.name}</strong> <span class="muted nowrap">Jg. {jg(g.jahrgaenge)}</span></span>
+            <span><strong>{g.name}</strong> <span class="muted nowrap">Jg. {jg(g.jahrgaenge)}</span>{'hinweis' in g && !g.hinweis.startsWith('[') && <span class="muted" style="display:block;font-size:14px">{g.hinweis}</span>}</span>
             <span class={`pill ${g.status === 'frei' ? 'pill-neon' : 'pill-white'}`}>{g.status === 'frei' ? 'Plätze frei' : 'Warteliste'}</span>
             <span class="gruppe-zeit">{ganzjaehrig(g) ? g.sommer : <Fragment><span class="s-sommer">{g.sommer}</span><span class="s-winter">{g.winter}</span></Fragment>}</span>
           </a>
@@ -132,7 +132,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
       <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-kinder">Foto · U8/U10</Foto><div class="card-body"><span class="meta">Jg. 2015–2021</span><h3 class="h-s">Kinderleichtathletik</h3><p class="muted" style="flex-grow:1">Laufen, springen, werfen – spielerisch und vielseitig, U8 bis U12.</p><strong>Mehr →</strong></div></a>
       <a href={url('/mitmachen/dein-weg/')} class="card"><Foto id="angebot-schueler" class="alt">Foto · U14/U16</Foto><div class="card-body"><span class="meta">Jg. 2011–2014</span><h3 class="h-s">Schülerleichtathletik</h3><p class="muted" style="flex-grow:1">Strukturiertes Training und Wettkämpfe für alle, die mehr wollen.</p><strong>Mehr →</strong></div></a>
       <a href={url('/mitmachen/dein-weg/#spass')} class="card"><Foto id="angebot-spass">Foto · Spaß-Gruppe</Foto><div class="card-body"><span class="meta">Jg. 2012–2016</span><h3 class="h-s">Spaß-Gruppe</h3><p class="muted" style="flex-grow:1">Freude an Bewegung, ganz ohne Wettkampfehrgeiz.</p><strong>Mehr →</strong></div></a>
-      <a href={url('/news/')} class="card"><Foto id="angebot-camp" class="alt">Foto · Camp</Foto><div class="card-body"><span class="meta">In den Ferien</span><h3 class="h-s">Sportcamps</h3><p class="muted" style="flex-grow:1">[Termine und Alter folgen]</p><strong>Mehr →</strong></div></a>
+      <a href={url('/mitmachen/#camps')} class="card"><Foto id="angebot-camp" class="alt">Foto · Camp</Foto><div class="card-body"><span class="meta">In den Ferien</span><h3 class="h-s">Sportcamps</h3><p class="muted" style="flex-grow:1">Viel Sport, Spaß und Spiel in den Ferien – Mittagessen inklusive. [Termine folgen]</p><strong>Mehr →</strong></div></a>
     </div>
   </section>
 
