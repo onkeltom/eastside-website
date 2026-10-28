@@ -42,6 +42,7 @@ const menu = [
     { key: 'news', label: 'News', href: '/news/' },
     { key: 'verein', label: 'Über uns', href: '/verein/' },
     { key: 'trainer', label: 'Trainer:in werden', href: '/trainer/' },
+    { key: '', label: 'Kinderschutz', href: '/kinderschutz/' },
   ] },
 ];
 ---
@@ -125,6 +126,7 @@ const menu = [
           <a href={url('/erfolge/')}>Erfolge</a>
           <a href={url('/trainer/')}>Trainer:in werden</a>
           <a href={url('/verein/#partner')}>Partner &amp; Sponsoren</a>
+          <a href={url('/kinderschutz/')}>Kinderschutz</a>
           <a href={url('/erfolge/melden/')}>Erfolg melden (Trainer:innen)</a>
         </nav>
         <nav aria-label="Kontakt">
@@ -135,7 +137,7 @@ const menu = [
       </div>
       <div class="footer-bottom">
         <span>{verein.name}</span>
-        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> · <a href={url('/verein/satzung/')}>Satzung</a></span>
+        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> · <a href={url('/kinderschutz/')}>Kinderschutz</a> · <a href={url('/verein/satzung/')}>Satzung</a></span>
       </div>
     </div>
   </footer>

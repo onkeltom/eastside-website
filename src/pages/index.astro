@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import gruppen from '../data/gruppen.json';
 import termine from '../data/termine.json';
 import erfolge from '../data/erfolge.json';
+import ks from '../data/kinderschutz.json';
 import { url, formatDate } from '../lib/url';
 import Foto from '../components/Foto.astro';
 
@@ -148,9 +149,29 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
     </div>
   </section>
 
+  <section class="wrap section home-kinderschutz" id="kinderschutz">
+    <div class="card-outline ks-home">
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <span class="eyebrow">Kinderschutz</span>
+        <h2 class="h-m">Kinderschutz ist bei uns Chefsache.</h2>
+        <p class="muted">{ks.kurz} Alle, die bei uns mit Kindern arbeiten, verpflichten sich zu unserem Ehrenkodex.</p>
+        <a href={url('/kinderschutz/')} class="link-u tap">Mehr zum Kinderschutz →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <strong>Deine Ansprechpersonen</strong>
+        {ks.ansprechpersonen.map((p) => <span class="muted">{p.name} · {p.email}</span>)}
+      </div>
+    </div>
+  </section>
+
   <section class="wrap section home-partner" id="partner">
     <h2 class="h-s" style="margin-bottom:20px">Danke an unsere Partner</h2>
     <div class="partners"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
   </section>
   </div>
 </Base>
+
+<style>
+  .ks-home { display: grid; gap: 24px; }
+  @media (min-width: 900px) { .ks-home { grid-template-columns: 2fr 1fr; align-items: center; } }
+</style>

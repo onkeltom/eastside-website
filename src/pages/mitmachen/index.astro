@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import gruppen from '../../data/gruppen.json';
 import { url } from '../../lib/url';
+import ks from '../../data/kinderschutz.json';
 
 const jahre = Array.from({ length: 11 }, (_, i) => 2011 + i);
 const start = 2017;
@@ -44,6 +45,7 @@ const start = 2017;
           <span class="notice" id="form-note" hidden>Vorschau: Das Formular ist noch nicht angeschlossen, es wurde nichts gesendet. Bitte vorerst per E-Mail an sc.east.side2023@gmail.com.</span>
         </div>
       </form>
+      <p class="muted" style="font-size:15px;border-top:1px solid var(--line);padding-top:16px"><strong style="color:var(--ink)">Kinderschutz:</strong> {ks.kurz} Alle Trainer:innen verpflichten sich zu unserem Ehrenkodex. <a href={url('/kinderschutz/')} class="link-u">Mehr erfahren</a></p>
     </div>
   </section>
 
@@ -87,6 +89,7 @@ const start = 2017;
       <div class="card-soft"><h3 class="h-s">Was kostet die Mitgliedschaft?</h3><p class="muted" style="margin-top:6px">[Beitrag laut Beitragsordnung] – die drei Probetrainings sind kostenlos.</p></div>
       <div class="card-soft"><h3 class="h-s">Was muss mein Kind mitbringen?</h3><p class="muted" style="margin-top:6px">Sportkleidung, Turnschuhe, Trinkflasche – im Winter Hallenschuhe.</p></div>
       <div class="card-soft"><h3 class="h-s">Wird in den Ferien trainiert?</h3><p class="muted" style="margin-top:6px">Nein, in den Berliner Schulferien findet kein Training statt. Dafür gibt es Camps.</p></div>
+      <div class="card-soft"><h3 class="h-s">Wie schützt ihr die Kinder?</h3><p class="muted" style="margin-top:6px">Kinderschutz ist bei uns Chefsache: Ehrenkodex für alle Trainer:innen, feste Ansprechpersonen und offene Worte. <a href={url('/kinderschutz/')} class="link-u">Zum Kinderschutz</a></p></div>
       <div class="card-soft"><h3 class="h-s">Muss mein Kind an Wettkämpfen teilnehmen?</h3><p class="muted" style="margin-top:6px">Nein. Wer einfach Spaß an Bewegung hat, ist in der <a href={url('/mitmachen/dein-weg/#spass')} class="link-u">Spaß-Gruppe</a> genau richtig.</p></div>
     </div>
   </section>

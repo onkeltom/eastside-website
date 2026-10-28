@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import ks from '../data/kinderschutz.json';
+import { url } from '../lib/url';
+---
+<Base title="Kinderschutz" description={ks.kurz}>
+  <section class="wrap page-head">
+    <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+      <span class="pill pill-soft">Kinderschutz</span>
+      <h1 class="h-xl">Kinder sollen bei uns <span class="mark">sicher sein.</span></h1>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      {ks.haltung.map((t, i) => <p class={i === 0 ? 'lead' : 'muted'}>{t}</p>)}
+    </div>
+  </section>
+
+  <section class="wrap section" id="ansprechpersonen">
+    <h2 class="h-l" style="margin-bottom:8px">Deine Ansprechpersonen</h2>
+    <p class="lead" style="margin-bottom:24px;max-width:720px">{ks.ansprech_hinweis}</p>
+    <div class="grid grid-2">
+      {ks.ansprechpersonen.map((p, i) => (
+        <div class="card-outline ks-person">
+          <div class={`ph ${i % 2 ? 'alt' : ''}`}>Foto</div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <h3 class="h-s">{p.name}</h3>
+            <span class="muted">{p.rolle}</span>
+            {p.email.includes('@') ? <a href={`mailto:${p.email}`} class="link-u tap">{p.email}</a> : <span class="tap">{p.email}</span>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section" id="ehrenkodex">
+    <div class="card-soft" style="display:flex;flex-direction:column;gap:12px;max-width:820px">
+      <h2 class="h-m">Unser Ehrenkodex</h2>
+      <p>{ks.ehrenkodex.text}</p>
+      <p><strong>{ks.ehrenkodex.hinweis}</strong></p>
+    </div>
+  </section>
+
+  <section class="wrap section" id="massnahmen">
+    <h2 class="h-l" style="margin-bottom:24px">Was wir tun</h2>
+    <div class="ks-list">
+      {ks.massnahmen.map((m) => (
+        <div class="ks-row">
+          <div><strong>{m.titel}</strong><p class="muted">{m.text}</p></div>
+          <span class={`pill ${m.status === 'umgesetzt' ? 'pill-neon' : 'pill-soft'}`}>{m.status === 'umgesetzt' ? 'Umgesetzt' : 'In Vorbereitung'}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section grid grid-2" style="align-items:start" id="hilfe">
+    <div class="card-outline" style="display:flex;flex-direction:column;gap:14px">
+      <h2 class="h-m">Hilfe von außen</h2>
+      <p class="muted">Du möchtest lieber mit jemandem außerhalb des Vereins sprechen? Diese Stellen helfen weiter.</p>
+      {ks.hilfe.map((h) => (
+        <div class="list-row" style="flex-direction:column;align-items:flex-start;gap:2px">
+          <strong>{h.name}</strong>
+          <span class="muted" style="font-size:15px">{h.text}</span>
+          {h.tel && <a href={`tel:${h.tel.replace(/\s/g, '')}`} class="link-u tap">{h.tel}</a>}
+          {h.url && <a href={h.url} class="link-u tap">Zur Website ↗</a>}
+        </div>
+      ))}
+      <p class="muted" style="font-size:14px">{ks.hilfe_hinweis}</p>
+    </div>
+    <div class="card-soft" style="display:flex;flex-direction:column;gap:12px">
+      <h2 class="h-s">Downloads</h2>
+      <p class="muted">{ks.downloads}</p>
+      <h2 class="h-s" style="margin-top:12px">Fragen?</h2>
+      <p class="muted">Schreib den Ansprechpersonen oder dem Verein: <a href={url('/verein/#team')} class="link-u">Team &amp; Vorstand</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ks-person { display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: center; padding: 20px; }
+  .ks-person .ph { aspect-ratio: 1; border-radius: 20px; min-height: 0; font-size: 13px; }
+  .ks-list { display: flex; flex-direction: column; border-top: 2px solid var(--ink); }
+  .ks-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .ks-row p { margin-top: 2px; font-size: 15px; }
+  .ks-row .pill { flex-shrink: 0; }
+</style>

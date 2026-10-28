@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import verein from '../data/verein.json';
 import { url } from '../lib/url';
+import ks from '../data/kinderschutz.json';
 ---
 <Base title="Verein" active="verein">
   <section class="wrap page-head">
@@ -25,7 +26,11 @@ import { url } from '../lib/url';
       {verein.team.map((p, i) => (
         <div class="card"><div class={`ph ${i % 2 ? 'alt' : ''}`}>Foto</div><div class="card-body"><h3 class="h-s">{p.name}</h3><p class="meta">{p.rolle}</p>{p.text && <p class="muted" style="font-size:15px">{p.text}</p>}</div></div>
       ))}
+      {ks.ansprechpersonen.map((p, i) => (
+        <a href={url('/kinderschutz/')} class="card"><div class={`ph ${i % 2 ? '' : 'alt'}`}>Foto</div><div class="card-body"><h3 class="h-s">{p.name}</h3><p class="meta">{p.rolle}</p><p class="muted" style="font-size:15px">{p.email}</p></div></a>
+      ))}
     </div>
+    <p class="muted" style="margin-top:16px">Kinderschutz ist bei uns Chefsache. <a href={url('/kinderschutz/')} class="link-u">Was wir dafür tun →</a></p>
     <div class="card-soft" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline">
       <h3 class="h-s">Vorstand</h3>
       {verein.vorstand.map((v) => <span><strong>{v.name}</strong> <span class="muted">· {v.rolle}</span></span>)}
