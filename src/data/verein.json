@@ -1,9 +1,95 @@
 {
   "name": "EAST SIDE BERLIN e.V.",
+  "name_register": "SC East Side Berlin e.V.",
   "kurz": "EASTSIDE",
   "claim": "Dein Leichtathletikverein, in dem und mit dem du wachsen kannst.",
   "email": "sc.east.side2023@gmail.com",
   "instagram": "https://instagram.com/sc_eastside/",
   "gegruendet": 2022,
-  "wettkaempfe_pro_jahr": [ { "jahr": "2023", "anzahl": 2 }, { "jahr": "2024", "anzahl": 8 }, { "jahr": "2025", "anzahl": 14 }, { "jahr": "2026 bisher", "anzahl": 13 } ]
+  "gegruendet_am": "21.12.2022",
+  "adresse": [
+    "Atzpodienstr. 24a",
+    "10365 Berlin"
+  ],
+  "register": {
+    "gericht": "Amtsgericht Berlin-Charlottenburg",
+    "nummer": "VR 40164 B"
+  },
+  "bank": {
+    "inhaber": "SC East Side Berlin e.V.",
+    "iban": "DE77 8306 5408 0005 3306 53",
+    "bic": "GENO DEF1 SLR",
+    "bank": "VR-Bank Altenburger Land eG"
+  },
+  "vorstand": [
+    {
+      "name": "Dejvid Kolić",
+      "rolle": "Vorsitzender"
+    },
+    {
+      "name": "Michael Kolić",
+      "rolle": "Stellv. Vorsitzender"
+    },
+    {
+      "name": "Dipl.-Ing. Sandra Kolić",
+      "rolle": "Kassenwartin"
+    }
+  ],
+  "team": [
+    {
+      "name": "Dejvid Kolić",
+      "rolle": "Gründer, Präsident und Cheftrainer",
+      "text": "Aus Pula, Kroatien. Ein Leben im Sport – Fußball, Basketball, Handball, Schach und Leichtathletik –, gekrönt 2016 mit einem Master in Sportwissenschaft in Sarajevo zum Thema Kinderleichtathletik. Im Studium aktiver Läufer, trainiert von einigen der größten kroatischen und bosnischen Trainer und Läufer. Außerdem Basketball-Schiedsrichter [Ligen prüfen: 2. Bundesliga Damen & 1. Regionalliga Herren oder 1. Bundesliga Damen & 2. Bundesliga Herren]."
+    },
+    {
+      "name": "Michael Kolić",
+      "rolle": "Mitgründer, Unterstützer und Trainerassistent",
+      "text": "Aus Pula, Kroatien. Erst mehr als fünf Jahre Fußball, dann Handball – mit 16 Jahren spielte er in der 1. kroatischen Handballliga gegen einige der besten Spieler der Welt wie Ivano Balić. Sport ist für ihn mehr als eine Aktivität: ein Lebensstil."
+    },
+    {
+      "name": "Sandra Kolić",
+      "rolle": "Kassenwartin (Vorstand)",
+      "text": ""
+    },
+    {
+      "name": "Tarik",
+      "rolle": "Trainer [Gruppe/Rolle]",
+      "text": ""
+    }
+  ],
+  "orte": [
+    {
+      "name": "Stadion Friedrichsfelde / Zachert-Sportplatz",
+      "adresse": "Zachertstraße 30–50, 10315 Berlin",
+      "wann": "Sommer (April–Oktober)"
+    },
+    {
+      "name": "Lew-Tolstoi-Grundschule (neue Sporthalle)",
+      "adresse": "Römerweg 120, 10318 Berlin",
+      "wann": "Winter (November–März)"
+    },
+    {
+      "name": "Sportforum",
+      "adresse": "[Adresse]",
+      "wann": "U14/U16"
+    }
+  ],
+  "wettkaempfe_pro_jahr": [
+    {
+      "jahr": "2023",
+      "anzahl": 2
+    },
+    {
+      "jahr": "2024",
+      "anzahl": 8
+    },
+    {
+      "jahr": "2025",
+      "anzahl": 14
+    },
+    {
+      "jahr": "2026 bisher",
+      "anzahl": 13
+    }
+  ]
 }

@@ -1,11 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
+import verein from '../data/verein.json';
 ---
 <Base title="Impressum">
   <section class="wrap" style="padding-top:48px">
     <div class="prose">
       <h1 class="h-l">Impressum</h1>
-      <p>[Text wird aus der bisherigen Website übernommen und vor dem Start geprüft.]</p>
+      <p class="notice">Übernommen von der bisherigen Website. Vor dem Start rechtlich prüfen lassen, u. a. Angabe nach § 5 DDG ergänzen und Vereinsname klären.</p>
+
+      <h2>Angaben gemäß § 18 Abs. 2 Medienstaatsvertrag</h2>
+      <p>
+        {verein.name_register}<br />
+        {verein.vorstand[0].name}<br />
+        {verein.adresse.map((z) => <Fragment>{z}<br /></Fragment>)}
+        Deutschland
+      </p>
+
+      <h3>Vertreten durch</h3>
+      <p>Vorstand im Sinne § 26 BGB (jeweils einzeln vertretungsberechtigt):<br />
+        {verein.vorstand.map((v) => <Fragment>{v.rolle}: {v.name}<br /></Fragment>)}
+      </p>
+
+      <h3>Registereintrag</h3>
+      <p>Registergericht: {verein.register.gericht}<br />Registernummer: {verein.register.nummer}</p>
+
+      <h3>Bankkonto</h3>
+      <p>Name: {verein.bank.inhaber}<br />IBAN: {verein.bank.iban}<br />BIC: {verein.bank.bic}<br />Bank: {verein.bank.bank}</p>
+
+      <h3>Kontakt</h3>
+      <p><a href={`mailto:${verein.email}`}>{verein.email}</a></p>
+
+      <h3>Haftungsausschluss</h3>
+      <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Auf den Inhalt und die Gestaltung der verlinkten Seiten und deren Unterseiten haben wir keinerlei Einfluss. Hier sind ausschließlich deren Betreiber verantwortlich.</p>
     </div>
   </section>
 </Base>

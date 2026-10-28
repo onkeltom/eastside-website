@@ -7,24 +7,29 @@ import { url } from '../lib/url';
   <section class="wrap page-head">
     <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
       <span class="pill pill-soft">Über uns</span>
-      <h1 class="h-xl">Ein junger Verein mit <span class="mark">großen Zielen.</span></h1>
+      <h1 class="h-xl">Kleines Team mit <span class="mark">großem Herz.</span></h1>
     </div>
-    <p class="lead">EAST SIDE BERLIN e.V. wurde am 21. Dezember 2022 gegründet. Wir fördern Talente, machen Lust auf Bewegung und sind offen für alle aus dem Kiez, die beim Training und bei Wettkämpfen ein bisschen mehr wollen.</p>
+    <p class="lead">EAST SIDE BERLIN ist ein kleiner Familienverein, gegründet am {verein.gegruendet_am}. Wir fördern Sport, gesunde Gewohnheiten und einen aktiven Lebensstil – mit Schwerpunkt auf dem Kindersport. Bei uns können Kinder aktiv sein, Neues lernen, Spaß haben und Freundschaften schließen. Ob einfach bewegen oder Wettkämpfe: Unsere Türen sind für alle offen.</p>
   </section>
 
-  <section class="wrap section grid grid-3">
-    <div class="card-soft"><h2 class="h-s">Talentförderung</h2><p class="muted" style="margin-top:6px">[Kurztext: wie wir Talente erkennen und begleiten]</p></div>
-    <div class="card-soft"><h2 class="h-s">Freude an Bewegung</h2><p class="muted" style="margin-top:6px">[Kurztext: Spaß als Grundlage für jedes Training]</p></div>
-    <div class="card-soft"><h2 class="h-s">Offen für den Kiez</h2><p class="muted" style="margin-top:6px">[Kurztext: Gemeinschaft, Vielfalt als Selbstverständnis]</p></div>
+  <section class="wrap section grid grid-4">
+    <div class="card-soft"><h2 class="h-s">Etwas für jeden</h2><p class="muted" style="margin-top:6px">Spiele, Wettkämpfe, Sportcamps und jede Menge Spaß – ob Spaß-Gruppe oder Berliner Meisterschaft.</p></div>
+    <div class="card-soft"><h2 class="h-s">Ausgebildete Trainer:innen</h2><p class="muted" style="margin-top:6px">Langjährige Erfahrung in vielen Sportarten, Training angepasst an die Bedürfnisse der Kinder.</p></div>
+    <div class="card-soft"><h2 class="h-s">Dreimal kostenlos testen</h2><p class="muted" style="margin-top:6px">Drei kostenlose Probetrainings und nur ein Monat Kündigungsfrist.</p></div>
+    <div class="card-soft"><h2 class="h-s">Familienstimmung</h2><p class="muted" style="margin-top:6px">Wir sind ein kleiner Familienverein – und die Familie steht immer an erster Stelle.</p></div>
   </section>
 
   <section class="wrap section" id="team">
     <h2 class="h-l" style="margin-bottom:24px">Team &amp; Vorstand</h2>
     <div class="grid grid-4">
-      <div class="card"><div class="ph">Foto</div><div class="card-body"><h3 class="h-s">Dejvid Kolić</h3><p class="muted">Gründer, Präsident und Cheftrainer</p></div></div>
-      <div class="card"><div class="ph alt">Foto</div><div class="card-body"><h3 class="h-s">Michael Kolić</h3><p class="muted">Mitgründer und Co-Trainer</p></div></div>
-      <div class="card"><div class="ph">Foto</div><div class="card-body"><h3 class="h-s">[Name]</h3><p class="muted">[Rolle]</p></div></div>
-      <div class="card"><div class="ph alt">Foto</div><div class="card-body"><h3 class="h-s">[Name]</h3><p class="muted">[Rolle]</p></div></div>
+      {verein.team.map((p, i) => (
+        <div class="card"><div class={`ph ${i % 2 ? 'alt' : ''}`}>Foto</div><div class="card-body"><h3 class="h-s">{p.name}</h3><p class="meta">{p.rolle}</p>{p.text && <p class="muted" style="font-size:15px">{p.text}</p>}</div></div>
+      ))}
+    </div>
+    <div class="card-soft" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline">
+      <h3 class="h-s">Vorstand</h3>
+      {verein.vorstand.map((v) => <span><strong>{v.name}</strong> <span class="muted">· {v.rolle}</span></span>)}
+      <a href={url('/verein/satzung/')} class="link-u tap" style="margin-left:auto">Satzung lesen →</a>
     </div>
   </section>
 
@@ -52,9 +57,9 @@ import { url } from '../lib/url';
     <div class="partners" style="margin-top:24px"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
   </section>
 
-  <section class="wrap section" id="satzung">
+  <section class="wrap section" id="downloads">
     <div class="card-soft" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center">
-      <div><h2 class="h-s">Presse &amp; Downloads</h2><p class="muted">Satzung, Beitragsordnung, Logos, Fotos für die Presse [Dateien folgen]</p></div>
+      <div><h2 class="h-s">Presse &amp; Downloads</h2><p class="muted"><a href={url('/verein/satzung/')} class="link-u">Satzung</a> · Beitragsordnung, Logos, Fotos für die Presse [Dateien folgen]</p></div>
       <a href={url('/erfolge/')} class="btn btn-outline">Erfolge ansehen</a>
     </div>
   </section>

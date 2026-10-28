@@ -1,11 +1,28 @@
 ---
 import Base from '../layouts/Base.astro';
+import verein from '../data/verein.json';
+
+// Gliederung der Datenschutzerklärung. Die bisherige Website hatte keine eigene
+// Datenschutzerklärung – die Texte müssen neu geschrieben und geprüft werden.
+const abschnitte = [
+  { titel: 'Verantwortlicher', text: `${verein.name_register}, vertreten durch den Vorstand. Kontakt: ${verein.email}. [Anschrift wie im Impressum – Text folgt, prüfen lassen]` },
+  { titel: 'Hosting', text: '[Text folgt – Vorschau auf GitHub Pages, Livebetrieb geplant auf Cloudflare Pages; prüfen lassen]' },
+  { titel: 'Server-Logdateien', text: '[Text folgt – welche Zugriffsdaten der Hoster speichert und wie lange; prüfen lassen]' },
+  { titel: 'Schriften', text: 'Alle Schriften werden von unserem eigenen Server ausgeliefert. Es werden keine Google Fonts nachgeladen. [prüfen lassen]' },
+  { titel: 'Kontakt per E-Mail', text: '[Text folgt – prüfen lassen]' },
+  { titel: 'Formulare (Probetraining, Warteliste, Camps)', text: '[Text folgt, sobald die Formulare angeschlossen sind – nur Anbieter mit Servern in der EU; prüfen lassen]' },
+  { titel: 'Fotos von Kindern', text: '[Text folgt – Veröffentlichung nur mit Einwilligung der Eltern, Widerruf; prüfen lassen]' },
+  { titel: 'Links zu Instagram und anderen Seiten', text: '[Text folgt – prüfen lassen]' },
+  { titel: 'Fotos in der Vorschau', text: '[Nur Vorschau: Fotos werden von der bisherigen Website sc-eastside.de geladen. Entfällt im Livebetrieb.]' },
+  { titel: 'Deine Rechte', text: '[Text folgt – Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Beschwerde bei der Berliner Beauftragten für Datenschutz; prüfen lassen]' },
+];
 ---
 <Base title="Datenschutz">
   <section class="wrap" style="padding-top:48px">
     <div class="prose">
       <h1 class="h-l">Datenschutz</h1>
-      <p>[Text wird aus der bisherigen Website übernommen und vor dem Start geprüft.]</p>
+      <p class="notice">Entwurf der Gliederung. Die bisherige Website hatte keine eigene Datenschutzerklärung – die Texte werden neu geschrieben und vor dem Start rechtlich geprüft.</p>
+      {abschnitte.map((a) => <Fragment><h2>{a.titel}</h2><p>{a.text}</p></Fragment>)}
     </div>
   </section>
 </Base>
