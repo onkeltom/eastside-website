@@ -4,6 +4,7 @@ import verein from '../data/verein.json';
 import { url } from '../lib/url';
 import ks from '../data/kinderschutz.json';
 import beitraege from '../data/beitraege.json';
+import partner from '../data/partner.json';
 ---
 <Base title="Verein" active="verein">
   <section class="wrap page-head">
@@ -61,7 +62,25 @@ import beitraege from '../data/beitraege.json';
         <div class="win-tile"><span>[Partnerpaket 3: Material- oder Geldspende]</span></div>
       </div>
     </div>
-    <div class="partners" style="margin-top:24px"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
+    <h3 class="h-s" style="margin:28px 0 14px">Danke an unsere Freunde und Partner, die an unserer Seite stehen</h3>
+    <div class="partners">{partner.map((p) => <a href={p.url}>{p.logo ? <img src={p.logo} alt={p.name} /> : p.name}</a>)}</div>
+  </section>
+
+  <section class="wrap section grid grid-2" style="align-items:start" id="spenden">
+    <div class="card-soft" style="display:flex;flex-direction:column;gap:12px">
+      <h2 class="h-m">Spenden</h2>
+      <p>Egal ob klein oder groß, einmalig oder regelmäßig: Jede Spende hilft – und ist ein ganz persönlicher Beitrag für Kinder und Jugendliche.</p>
+      <p class="muted">Schreib uns nach der Überweisung gern deine Kontaktdaten an <a href={`mailto:${verein.email}?subject=Spende`} class="link-u">{verein.email}</a>, damit wir uns bedanken und dir am Jahresende eine Spendenbescheinigung schicken können. [Gemeinnützigkeit und Spendenbescheinigung prüfen]</p>
+      <p><strong>{verein.bank.inhaber}</strong><br />IBAN: {verein.bank.iban}<br />BIC: {verein.bank.bic}<br />{verein.bank.bank}</p>
+    </div>
+    <div class="card-outline" style="display:flex;flex-direction:column;gap:12px" id="vereinskleidung">
+      <h2 class="h-m">Vereinskleidung</h2>
+      <p class="muted">{verein.vereinskleidung.bestellen} {verein.vereinskleidung.hinweis}</p>
+      {verein.vereinskleidung.artikel.map((a) => (
+        <div class="list-row"><span><strong>{a.name}</strong>{a.groessen && <span class="muted" style="display:block;font-size:14px">Größen: {a.groessen}</span>}</span><span>{a.preis || '[Preis]'}</span></div>
+      ))}
+      <a href={`mailto:${verein.email}?subject=Vereinskleidung`} class="link-u tap">Per E-Mail bestellen →</a>
+    </div>
   </section>
 
   <section class="wrap section" id="downloads">

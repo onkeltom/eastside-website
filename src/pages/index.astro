@@ -5,6 +5,7 @@ import gruppen from '../data/gruppen.json';
 import termine from '../data/termine.json';
 import erfolge from '../data/erfolge.json';
 import ks from '../data/kinderschutz.json';
+import partner from '../data/partner.json';
 import { url, formatDate } from '../lib/url';
 import Foto from '../components/Foto.astro';
 
@@ -166,7 +167,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
 
   <section class="wrap section home-partner" id="partner">
     <h2 class="h-s" style="margin-bottom:20px">Danke an unsere Partner</h2>
-    <div class="partners"><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div><div>[Logo]</div></div>
+    <div class="partners">{partner.map((p) => <a href={p.url}>{p.logo ? <img src={p.logo} alt={p.name} /> : p.name}</a>)}<a href={url('/verein/#partner')}>Partner werden →</a></div>
   </section>
   </div>
 </Base>

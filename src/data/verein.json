@@ -74,6 +74,47 @@
       "wann": "U14/U16"
     }
   ],
+  "vereinskleidung": {
+    "hinweis": "[Noch aktuell? → Dejvid]",
+    "bestellen": "Bestellung per E-Mail oder direkt bei unseren Trainer:innen.",
+    "artikel": [
+      {
+        "name": "Kinder-T-Shirt",
+        "groessen": "128 / 140 / 152 / 164",
+        "preis": "15 €"
+      },
+      {
+        "name": "Kinder-Premium-Hoodie",
+        "groessen": "",
+        "preis": ""
+      },
+      {
+        "name": "Damen-BIO-Hoodie",
+        "groessen": "XS / S / M",
+        "preis": ""
+      },
+      {
+        "name": "Damen-Premium-Hoodie",
+        "groessen": "S / M / L",
+        "preis": ""
+      },
+      {
+        "name": "Herren-BIO-Hoodie",
+        "groessen": "XS / S / M / L / XL",
+        "preis": ""
+      },
+      {
+        "name": "Herren-Premium-Hoodie",
+        "groessen": "S / M / L",
+        "preis": ""
+      },
+      {
+        "name": "Sportbeutel",
+        "groessen": "",
+        "preis": ""
+      }
+    ]
+  },
   "wettkaempfe_pro_jahr": [
     {
       "jahr": "2023",
