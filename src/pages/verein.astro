@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import verein from '../data/verein.json';
 import { url } from '../lib/url';
 import ks from '../data/kinderschutz.json';
+import beitraege from '../data/beitraege.json';
 ---
 <Base title="Verein" active="verein">
   <section class="wrap page-head">
@@ -41,7 +42,8 @@ import ks from '../data/kinderschutz.json';
   <section class="wrap section" id="beitraege">
     <div class="card-outline" style="display:flex;flex-direction:column;gap:10px">
       <h2 class="h-m">Mitgliedschaft &amp; Beiträge</h2>
-      <p class="muted">[Beiträge laut Beitragsordnung, Ermäßigungen, Kündigungsfrist]. Drei Probetrainings sind kostenlos.</p>
+      <p class="muted">{beitraege.tarife[0].monat} im Monat ({beitraege.tarife[0].jahr} im Jahr), Geschwisterkinder {beitraege.tarife[1].monat}. Einmalig {beitraege.aufnahmegebuehr} Aufnahmegebühr, ein Monat Kündigungsfrist. Drei Probetrainings sind kostenlos.</p>
+      <a href={url('/mitmachen/mitgliedschaft/')} class="link-u tap" style="align-self:flex-start">Beiträge &amp; Mitgliedsantrag →</a>
     </div>
   </section>
 

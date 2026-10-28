@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro';
+import beitraege from '../../data/beitraege.json';
+import verein from '../../data/verein.json';
+import { url } from '../../lib/url';
+---
+<Base title="Beiträge & Mitgliedschaft" active="mitmachen">
+  <section class="wrap page-head">
+    <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+      <span class="pill pill-soft">Beiträge &amp; Mitgliedschaft</span>
+      <h1 class="h-xl">Erst testen, <span class="mark">dann Mitglied werden.</span></h1>
+    </div>
+    <p class="lead">Die ersten drei Trainings sind kostenlos. Wenn es passt, wirst du mit dem Mitgliedsantrag Teil von EASTSIDE.</p>
+  </section>
+
+  <section class="wrap section" id="beitraege">
+    <div class="section-head">
+      <h2 class="h-l">Beiträge</h2>
+      <span class="muted">Beitragsordnung ab {beitraege.gueltig_ab}</span>
+    </div>
+    <div class="grid grid-2">
+      {beitraege.tarife.map((t, i) => (
+        <div class={i === 0 ? 'card-outline' : 'card-soft'} style="display:flex;flex-direction:column;gap:10px">
+          <h3 class="h-s">{t.name}</h3>
+          <p class="muted">{t.fuer}</p>
+          <p><b style="font-family:var(--display);font-size:40px;line-height:1">{t.monat}</b> <span class="muted">pro Monat</span></p>
+          <p class="muted">oder {t.jahr} pro Jahr</p>
+        </div>
+      ))}
+    </div>
+    <div class="card-soft" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px 32px">
+      <span><strong>Aufnahmegebühr:</strong> {beitraege.aufnahmegebuehr} einmalig</span>
+      <span><strong>Probetraining:</strong> {beitraege.probetraining}</span>
+    </div>
+    <ul class="check-list" style="margin-top:20px">
+      {beitraege.inklusive.map((x) => <li>{x}</li>)}
+    </ul>
+  </section>
+
+  <section class="wrap section" id="antrag">
+    <h2 class="h-l" style="margin-bottom:24px">So wirst du Mitglied</h2>
+    <div class="grid grid-3">
+      {beitraege.schritte.map((s, i) => (
+        <div style="display:flex;flex-direction:column;gap:10px"><span class="medal gold">{i + 1}</span><h3 class="h-s">{s.titel}</h3><p class="muted">{s.text}</p></div>
+      ))}
+    </div>
+    <div class="btn-row" style="margin-top:24px">
+      <a href={beitraege.antrag_url} class="btn btn-dark">Mitgliedsantrag (PDF) ↓</a>
+      <a href={url('/mitmachen/')} class="btn btn-outline">Erst Probetraining anfragen</a>
+    </div>
+    <p class="muted" style="margin-top:10px;font-size:14px">{beitraege.antrag_hinweis}</p>
+  </section>
+
+  <section class="wrap section grid grid-2" style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <h2 class="h-m">Gut zu wissen</h2>
+      {beitraege.fragen.map((f) => <div class="card-soft"><h3 class="h-s">{f.frage}</h3><p class="muted" style="margin-top:6px">{f.antwort}</p></div>)}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card-outline" style="display:flex;flex-direction:column;gap:8px">
+        <h2 class="h-s">Bankverbindung für Beiträge</h2>
+        <p>{verein.bank.inhaber}<br />IBAN: {verein.bank.iban}<br />BIC: {verein.bank.bic}<br />{verein.bank.bank}</p>
+      </div>
+      <div class="card-soft" style="display:flex;flex-direction:column;gap:8px">
+        <h2 class="h-s">{beitraege.personal_training.titel}</h2>
+        <p class="muted">{beitraege.personal_training.text}</p>
+        <p><strong>{beitraege.personal_training.preis}</strong></p>
+        <p class="muted" style="font-size:14px">{beitraege.personal_training.hinweis} · Anfragen an <a href={`mailto:${verein.email}?subject=Personal%20Training`} class="link-u">{verein.email}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .check-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px 24px; }
+  @media (min-width: 760px) { .check-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .check-list li::before { content: '✓'; font-weight: 800; margin-right: 8px; background: var(--neon); border-radius: 999px; padding: 0 6px; }
+</style>

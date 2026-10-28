@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import gruppen from '../../data/gruppen.json';
 import { url } from '../../lib/url';
 import ks from '../../data/kinderschutz.json';
+import beitraege from '../../data/beitraege.json';
 
 const jahre = Array.from({ length: 11 }, (_, i) => 2011 + i);
 const start = 2017;
@@ -86,7 +87,7 @@ const start = 2017;
   <section class="wrap section">
     <h2 class="h-l" style="margin-bottom:20px">Häufige Fragen</h2>
     <div class="grid grid-2">
-      <div class="card-soft"><h3 class="h-s">Was kostet die Mitgliedschaft?</h3><p class="muted" style="margin-top:6px">[Beitrag laut Beitragsordnung] – die drei Probetrainings sind kostenlos.</p></div>
+      <div class="card-soft"><h3 class="h-s">Was kostet die Mitgliedschaft?</h3><p class="muted" style="margin-top:6px">{beitraege.tarife[0].monat} im Monat, für Geschwister {beitraege.tarife[1].monat}, dazu einmalig {beitraege.aufnahmegebuehr} Aufnahmegebühr. Die drei Probetrainings sind kostenlos. <a href={url('/mitmachen/mitgliedschaft/')} class="link-u">Beiträge &amp; Mitgliedschaft</a></p></div>
       <div class="card-soft"><h3 class="h-s">Was muss mein Kind mitbringen?</h3><p class="muted" style="margin-top:6px">Sportkleidung, Turnschuhe, Trinkflasche – im Winter Hallenschuhe.</p></div>
       <div class="card-soft"><h3 class="h-s">Wird in den Ferien trainiert?</h3><p class="muted" style="margin-top:6px">Nein, in den Berliner Schulferien findet kein Training statt. Dafür gibt es Camps.</p></div>
       <div class="card-soft"><h3 class="h-s">Wie schützt ihr die Kinder?</h3><p class="muted" style="margin-top:6px">Kinderschutz ist bei uns Chefsache: Ehrenkodex für alle Trainer:innen, feste Ansprechpersonen und offene Worte. <a href={url('/kinderschutz/')} class="link-u">Zum Kinderschutz</a></p></div>
