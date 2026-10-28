@@ -12,6 +12,8 @@ const news = defineCollection({
     klasse: z.string().optional(),
     fotos: z.number().optional(),
     teaser: z.string(),
+    // Adresse des Beitrags auf der alten Website (bei übernommenen Beiträgen)
+    quelle: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

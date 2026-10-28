@@ -2,6 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import gruppen from '../../data/gruppen.json';
 import { url } from '../../lib/url';
+import ks from '../../data/kinderschutz.json';
+import beitraege from '../../data/beitraege.json';
+import verein from '../../data/verein.json';
 
 const jahre = Array.from({ length: 11 }, (_, i) => 2011 + i);
 const start = 2017;
@@ -44,6 +47,7 @@ const start = 2017;
           <span class="notice" id="form-note" hidden>Vorschau: Das Formular ist noch nicht angeschlossen, es wurde nichts gesendet. Bitte vorerst per E-Mail an sc.east.side2023@gmail.com.</span>
         </div>
       </form>
+      <p class="muted" style="font-size:15px;border-top:1px solid var(--line);padding-top:16px"><strong style="color:var(--ink)">Kinderschutz:</strong> {ks.kurz} Alle Trainer:innen verpflichten sich zu unserem Ehrenkodex. <a href={url('/kinderschutz/')} class="link-u">Mehr erfahren</a></p>
     </div>
   </section>
 
@@ -68,7 +72,7 @@ const start = 2017;
         <tbody>
           {gruppen.map((g) => (
             <tr>
-              <td class="tc-name"><strong>{g.name}</strong></td>
+              <td class="tc-name"><strong>{g.name}</strong>{'hinweis' in g && <span class="muted" style="display:block;font-size:14px">{g.hinweis}</span>}</td>
               <td class="tc-jg">{Math.min(...g.jahrgaenge)}–{Math.max(...g.jahrgaenge)}</td>
               <td class="s-sommer" data-label="Sommer (Apr–Okt)">{g.sommer}</td>
               <td class="s-winter" data-label="Winter (Nov–Mär)">{g.winter}</td>
@@ -78,15 +82,40 @@ const start = 2017;
         </tbody>
       </table>
     </div>
-    <p class="muted" style="margin-top:14px">In den Berliner Schulferien findet kein Training statt.</p>
+    <p class="muted" style="margin-top:14px">In den Berliner Schulferien findet kein Training statt oder ein verändertes Trainingsangebot wird intern bekanntgegeben.</p>
+  </section>
+
+  <section class="wrap section" id="orte">
+    <h2 class="h-l" style="margin-bottom:24px">Trainingsorte</h2>
+    <div class="grid grid-3">
+      {verein.orte.map((o) => <div class="card-soft"><span class="meta">{o.wann}</span><h3 class="h-s" style="margin-top:4px">{o.name}</h3><p class="muted">{o.adresse}</p></div>)}
+    </div>
+  </section>
+
+  <section class="wrap section" id="camps">
+    <div class="card-outline grid grid-2" style="gap:24px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span class="eyebrow">In den Ferien</span>
+        <h2 class="h-l">Sportcamps</h2>
+        <p class="lead">Ein Sportcamp ist immer eine gute Idee für die Ferien: viel Sport, Spaß und Spiel – Mittagessen inklusive.</p>
+        <p class="muted">Zuletzt gab es zum Beispiel das Herbstsportcamp 2024 mit zwei Wochen in den Herbstferien. Auch Kinder, die nicht im Verein sind, konnten sich anmelden [prüfen].</p>
+        <p class="muted" style="font-size:15px">Auch im Camp gilt: <a href={url('/kinderschutz/')} class="link-u">Kinderschutz ist bei uns Chefsache.</a></p>
+      </div>
+      <div class="card-soft" style="display:flex;flex-direction:column;gap:8px">
+        <h3 class="h-s">Nächstes Camp</h3>
+        <p class="muted">[Termine, Alter, Preis und Anmeldung folgen]</p>
+        <a href={`mailto:${verein.email}?subject=Sportcamp`} class="link-u tap">Vorab anfragen →</a>
+      </div>
+    </div>
   </section>
 
   <section class="wrap section">
     <h2 class="h-l" style="margin-bottom:20px">Häufige Fragen</h2>
     <div class="grid grid-2">
-      <div class="card-soft"><h3 class="h-s">Was kostet die Mitgliedschaft?</h3><p class="muted" style="margin-top:6px">[Beitrag laut Beitragsordnung] – die drei Probetrainings sind kostenlos.</p></div>
+      <div class="card-soft"><h3 class="h-s">Was kostet die Mitgliedschaft?</h3><p class="muted" style="margin-top:6px">{beitraege.tarife[0].monat} im Monat, für Geschwister {beitraege.tarife[1].monat}, dazu einmalig {beitraege.aufnahmegebuehr} Aufnahmegebühr. Die drei Probetrainings sind kostenlos. <a href={url('/mitmachen/mitgliedschaft/')} class="link-u">Beiträge &amp; Mitgliedschaft</a></p></div>
       <div class="card-soft"><h3 class="h-s">Was muss mein Kind mitbringen?</h3><p class="muted" style="margin-top:6px">Sportkleidung, Turnschuhe, Trinkflasche – im Winter Hallenschuhe.</p></div>
-      <div class="card-soft"><h3 class="h-s">Wird in den Ferien trainiert?</h3><p class="muted" style="margin-top:6px">Nein, in den Berliner Schulferien findet kein Training statt. Dafür gibt es Camps.</p></div>
+      <div class="card-soft"><h3 class="h-s">Wird in den Ferien trainiert?</h3><p class="muted" style="margin-top:6px">Nein, in den Berliner Schulferien findet kein Training statt. Dafür gibt es <a href="#camps" class="link-u">Sportcamps</a>.</p></div>
+      <div class="card-soft"><h3 class="h-s">Wie schützt ihr die Kinder?</h3><p class="muted" style="margin-top:6px">Kinderschutz ist bei uns Chefsache: Ehrenkodex für alle Trainer:innen, feste Ansprechpersonen und offene Worte. <a href={url('/kinderschutz/')} class="link-u">Zum Kinderschutz</a></p></div>
       <div class="card-soft"><h3 class="h-s">Muss mein Kind an Wettkämpfen teilnehmen?</h3><p class="muted" style="margin-top:6px">Nein. Wer einfach Spaß an Bewegung hat, ist in der <a href={url('/mitmachen/dein-weg/#spass')} class="link-u">Spaß-Gruppe</a> genau richtig.</p></div>
     </div>
   </section>
@@ -95,7 +124,7 @@ const start = 2017;
 </Base>
 
 <script>
-  type Gruppe = { id: string; name: string; jahrgaenge: number[]; status: string; sommer: string; winter: string; trainer: string };
+  type Gruppe = { id: string; name: string; jahrgaenge: number[]; status: string; sommer: string; winter: string; trainer: string; hinweis?: string };
   const gruppen: Gruppe[] = JSON.parse(document.getElementById('gruppen-data')!.textContent || '[]');
   const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.chip[data-year]'));
   const out = document.getElementById('treffer')!;
@@ -122,13 +151,14 @@ const start = 2017;
     out.innerHTML = fits.map((g) => {
       const open = g.status === 'frei';
       const alt = fits.find((o) => o.status === 'frei' && o.id !== g.id);
-      const tip = alt ? `Tipp: In der ${esc(alt.name)} sind noch Plätze frei.` : 'Tipp: Schaut euch unsere Ferien-Camps an [Termine folgen].';
+      const tip = alt ? `Tipp: In der ${esc(alt.name)} sind noch Plätze frei.` : 'Tipp: Schaut euch unsere <a href="#camps" class="link-u">Ferien-Camps</a> an.';
       return `
         <article class="result ${open ? '' : 'is-wait'}">
           <div class="result-head">
             <div><h3>${esc(g.name)}</h3><span class="muted">Jahrgänge ${Math.min(...g.jahrgaenge)}–${Math.max(...g.jahrgaenge)}</span></div>
             <span class="pill ${open ? 'pill-neon' : 'pill-white'}"><span class="dot ${open ? '' : 'dot-muted'}"></span>${open ? 'Plätze frei' : 'Warteliste'}</span>
           </div>
+          ${g.hinweis ? `<p><strong>${esc(g.hinweis)}</strong></p>` : ''}
           <div class="times">
             <div class="time-box s-sommer"><small>Sommer (April bis Oktober)</small>${esc(g.sommer)}</div>
             <div class="time-box s-winter"><small>Winter (November bis März)</small>${esc(g.winter)}</div>

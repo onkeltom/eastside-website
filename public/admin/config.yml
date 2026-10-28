@@ -25,6 +25,7 @@ collections:
       - { name: klasse, label: "Altersklasse (optional)", widget: string, required: false }
       - { name: fotos, label: "Anzahl Fotos (optional)", widget: number, value_type: int, required: false }
       - { name: teaser, label: Kurztext für die Übersicht, widget: text }
+      - { name: quelle, label: "Adresse auf der alten Website (optional)", widget: string, required: false }
       - { name: draft, label: "Entwurf (nicht veröffentlichen)", widget: boolean, default: true }
       - { name: body, label: Text, widget: markdown }
 
@@ -48,6 +49,8 @@ collections:
               - { name: stufen, label: "Stufen für den Filter", widget: select, multiple: true, options: [U8, U10, U12, "U14+"] }
               - { name: disziplin, label: Disziplin, widget: string }
               - { name: wer, label: "Athlet:in / Team (nur mit Einwilligung)", widget: string }
+              - { name: art, label: "Einzel oder Team", widget: select, options: [Einzel, Team] }
+              - { name: meisterschaft, label: "Berliner Meisterschaft", widget: boolean, default: false }
               - { name: highlight, label: Highlight, widget: boolean, default: false }
               - { name: link, label: "Link zur Ergebnisliste", widget: string, required: false }
       - name: gruppen
@@ -68,6 +71,7 @@ collections:
               - { name: winter, label: "Zeiten Winter", widget: string }
               - { name: tage, label: Trainingstage, widget: string }
               - { name: trainer, label: "Trainer:in", widget: string }
+              - { name: hinweis, label: "Hinweis (optional)", widget: string, required: false }
       - name: termine
         label: Termine
         file: src/data/termine.json
@@ -79,3 +83,90 @@ collections:
             fields:
               - { name: datum, label: Datum, widget: string }
               - { name: titel, label: Titel, widget: string }
+      - name: partner
+        label: Partner & Sponsoren
+        file: src/data/partner.json
+        fields:
+          - name: items
+            label: Partner
+            widget: list
+            root: true
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: url, label: Website, widget: string }
+              - { name: logo, label: "Logo (optional)", widget: image, required: false }
+      - name: beitraege
+        label: Beiträge & Mitgliedschaft
+        file: src/data/beitraege.json
+        fields:
+          - { name: gueltig_ab, label: "Beitragsordnung gültig ab", widget: string }
+          - name: tarife
+            label: Tarife
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: fuer, label: Für, widget: string }
+              - { name: monat, label: "Pro Monat", widget: string }
+              - { name: jahr, label: "Pro Jahr", widget: string }
+          - { name: aufnahmegebuehr, label: Aufnahmegebühr, widget: string }
+          - { name: probetraining, label: Probetraining, widget: string }
+          - { name: inklusive, label: "Inklusive", widget: list }
+          - name: schritte
+            label: "So wirst du Mitglied"
+            widget: list
+            fields:
+              - { name: titel, label: Titel, widget: string }
+              - { name: text, label: Text, widget: text }
+          - name: fragen
+            label: Fragen
+            widget: list
+            fields:
+              - { name: frage, label: Frage, widget: string }
+              - { name: antwort, label: Antwort, widget: text }
+          - { name: antrag_url, label: "Mitgliedsantrag (PDF-Link)", widget: string }
+          - { name: antrag_hinweis, label: "Hinweis zum Antrag", widget: string, required: false }
+          - name: personal_training
+            label: Personal Training
+            widget: object
+            fields:
+              - { name: titel, label: Titel, widget: string }
+              - { name: text, label: Text, widget: text }
+              - { name: preis, label: Preis, widget: string }
+              - { name: hinweis, label: Hinweis, widget: string, required: false }
+      - name: kinderschutz
+        label: Kinderschutz
+        file: src/data/kinderschutz.json
+        fields:
+          - { name: kurz, label: "Kurzsatz (Startseite, Mitmachen)", widget: string }
+          - { name: haltung, label: "Haltung (Absätze)", widget: list, field: { name: absatz, label: Absatz, widget: text } }
+          - name: ansprechpersonen
+            label: Ansprechpersonen
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: rolle, label: Rolle, widget: string }
+              - { name: email, label: E-Mail, widget: string }
+          - { name: ansprech_hinweis, label: "Hinweis zu den Ansprechpersonen", widget: text }
+          - name: ehrenkodex
+            label: Ehrenkodex
+            widget: object
+            fields:
+              - { name: text, label: Text, widget: markdown }
+              - { name: hinweis, label: Hinweis, widget: string }
+          - name: massnahmen
+            label: "Was wir tun"
+            widget: list
+            fields:
+              - { name: titel, label: Titel, widget: string }
+              - { name: text, label: Text, widget: text }
+              - { name: status, label: "Status (erst auf umgesetzt setzen, wenn erledigt)", widget: select, options: [offen, umgesetzt] }
+          - name: hilfe
+            label: Hilfe von außen
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: text, label: Text, widget: string }
+              - { name: tel, label: Telefon, widget: string, required: false }
+              - { name: url, label: Website, widget: string, required: false }
+          - { name: hilfe_hinweis, label: "Hinweis", widget: string, required: false }
+          - { name: downloads, label: Downloads, widget: string }

@@ -32,13 +32,15 @@ Hauptmenü (fünf Punkte + Button „Probetraining anfragen" → Gruppenfinder):
 
 | Menüpunkt | Seiten |
 | --- | --- |
-| Mitmachen | `/mitmachen/` Gruppenfinder + alle Zeiten + FAQ · `/mitmachen/dein-weg/` |
+| Mitmachen | `/mitmachen/` Gruppenfinder + alle Zeiten + Trainingsorte + Sportcamps + FAQ · `/mitmachen/dein-weg/` · `/mitmachen/mitgliedschaft/` |
 | Erfolge | `/erfolge/` · `/erfolge/melden/` (nur Footer) |
 | News & Termine | `/news/` · `/news/<id>/` |
-| Verein | `/verein/` (Über uns, Team, Beiträge, Partner & Sponsoren, Downloads) |
+| Verein | `/verein/` (Über uns, Team, Beiträge, Partner & Sponsoren, Spenden, Vereinskleidung, Downloads) · `/verein/satzung/` |
 | Trainer:in werden | `/trainer/` |
 
-Offen / noch zu gestalten: eigene Seiten für Beiträge & Mitgliedschaft, Sportcamps, Presse; echte Fotogalerien; Impressum und Datenschutz (Texte von der alten Seite übernehmen und prüfen lassen).
+Außerhalb des Hauptmenüs: `/kinderschutz/` (Footer, mobiles Menü und Hinweise auf Startseite, Mitmachen, Verein, Trainer:in werden), `/impressum/`, `/datenschutz/`. Alte WordPress-Adressen leitet `public/_redirects` um (nur Cloudflare Pages).
+
+Offen / noch zu gestalten: eigene Seiten für Sportcamps und Presse; echte Fotogalerien; Datenschutz-Texte (nur Gliederung vorhanden) und rechtliche Prüfung von Impressum/Datenschutz. Die Texte der alten Website sind übernommen; offene Fragen dazu in `docs/offene-fragen-alte-website.md`.
 
 ## Projektstruktur
 
@@ -46,7 +48,8 @@ Offen / noch zu gestalten: eigene Seiten für Beiträge & Mitgliedschaft, Sportc
 - `src/styles/global.css` – gesamte Gestaltung, Design-Tokens in `:root`
 - `src/lib/url.ts` – `url()` für alle internen Links (wegen Unterpfad auf GitHub Pages) – **immer verwenden, nie `/pfad` hart codieren**
 - `src/content/news/*.md` – Beiträge (Schema in `src/content.config.ts`)
-- `src/data/*.json` – Gruppen, Erfolge, Termine, Stufen/Trainerrollen, Vereinsdaten
+- `src/data/*.json` – Gruppen, Erfolge, Termine, Stufen/Trainerrollen, Vereinsdaten (inkl. Vorstand, Team, Bank, Trainingsorte), Beiträge, Partner, Kinderschutz
+- `src/texte/satzung.md` – Satzung (Abschrift von der alten Website)
 - `public/admin/` – Sveltia CMS (Konfiguration noch ungetestet, v. a. JSON-Dateien mit `root: true`-Listen)
 
 Eine Information wird **einmal** gepflegt und an mehreren Stellen angezeigt (z. B. Erfolg → Erfolge-Seite, Startseite, News). Keine Inhalte doppelt in Seiten abtippen, sondern aus `src/data` oder `src/content` lesen.
@@ -63,6 +66,8 @@ Eine Information wird **einmal** gepflegt und an mehreren Stellen angezeigt (z. 
 ## Feste Regeln
 
 - **Keine echten Kindernamen oder Kinderfotos ohne dokumentierte Einwilligung der Eltern.** Ohne Einwilligung: „Athlet:in U12" oder Teamname. Solange das Repository öffentlich ist, gar keine echten Kinderdaten einchecken.
+- **Kinderschutz offen zeigen, aber ehrlich:** Haltung und Ehrenkodex sind öffentlich; Maßnahmen in `src/data/kinderschutz.json` erst auf `umgesetzt` setzen, wenn sie erledigt sind. Ansprechpersonen bleiben Platzhalter, bis sie benannt sind.
+- **Vereinsanschrift nur im Impressum:** Die eingetragene Anschrift (Atzpodienstr. 24a) ist die Privatadresse des Vorsitzenden – nirgends sonst anzeigen (Kontakt, Verein, Footer usw.).
 - **Keine erfundenen Fakten.** Fehlende Angaben bleiben als `[Platzhalter]` sichtbar. Belegte Zahlen bisher: Gründung 2022; Wettkämpfe laut LADV 2023: 2, 2024: 8, 2025: 14, 2026 bisher: 13 (Stand Sept. 2026). Trainingszeiten stammen von der alten Website.
 - **Vorschau bleibt `noindex`** mit Hinweisbalken. Erst für den Livebetrieb `PREVIEW=false` setzen.
 - Formulare sind noch nicht angeschlossen; Daten von Kindern/Eltern nur über Anbieter mit Servern in der EU und mit Datenschutzhinweis verarbeiten.

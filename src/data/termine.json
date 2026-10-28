@@ -1,5 +1,8 @@
 [
-  { "datum": "ab 1. Nov.", "titel": "Winterzeiten – Training in der Halle" },
-  { "datum": "[Datum]", "titel": "Berliner Crosslauf-Meisterschaften" },
-  { "datum": "[Datum]", "titel": "[Vereinsevent]" }
+  {"datum": "ab 1. Nov.", "titel": "Winterzeiten – Training in der Halle"},
+  {"datum": "03.11.", "titel": "Start der neuen U8-Gruppe (Jg. 2020/2021)"},
+  {"datum": "14.11.", "titel": "BM Crosslauf"},
+  {"datum": "22.11.", "titel": "55. Preußen-Cup"},
+  {"datum": "12.12.", "titel": "Sportfest Potsdam"},
+  {"datum": "18.12.", "titel": "EAST SIDE Weihnachtsfest"}
 ]

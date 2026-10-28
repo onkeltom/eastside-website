@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import verein from '../../data/verein.json';
+import { url } from '../../lib/url';
+import { Content } from '../../texte/satzung.md';
+---
+<Base title="Satzung" active="verein" description={`Satzung des ${verein.name_register}`}>
+  <section class="wrap" style="padding-top:40px;display:flex;flex-direction:column;gap:20px">
+    <a href={url('/verein/')} class="muted tap" style="font-weight:700">← Verein</a>
+    <div class="prose satzung">
+      <h1 class="h-l">Satzung {verein.name_register}</h1>
+      <p class="notice">Abschrift der Satzung vom 22.02.2023 von der bisherigen Website. Maßgeblich ist die im Vereinsregister eingetragene Fassung. [Aktuelle Fassung prüfen]</p>
+      <Content />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .satzung :global(h2) { font-size: 24px; }
+  .satzung :global(ol ol) { list-style-type: lower-alpha; }
+  .satzung :global(ol ol li::marker) { font-family: inherit; font-size: inherit; }
+</style>

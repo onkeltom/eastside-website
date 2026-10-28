@@ -36,12 +36,14 @@ const menu = [
     { key: 'mitmachen', label: 'Gruppen & Trainingszeiten', href: '/mitmachen/#alle-gruppen' },
     { key: '', label: 'Termine', href: '/news/#termine' },
     { key: '', label: 'Dein Weg bei EASTSIDE', href: '/mitmachen/dein-weg/' },
+    { key: '', label: 'Beiträge & Mitgliedschaft', href: '/mitmachen/mitgliedschaft/' },
   ] },
   { label: 'VEREIN', links: [
     { key: 'erfolge', label: 'Erfolge', href: '/erfolge/' },
     { key: 'news', label: 'News', href: '/news/' },
     { key: 'verein', label: 'Über uns', href: '/verein/' },
     { key: 'trainer', label: 'Trainer:in werden', href: '/trainer/' },
+    { key: '', label: 'Kinderschutz', href: '/kinderschutz/' },
   ] },
 ];
 ---
@@ -117,7 +119,8 @@ const menu = [
           <a href={url('/mitmachen/')}>Gruppenfinder</a>
           <a href={url('/mitmachen/dein-weg/')}>Dein Weg</a>
           <a href={url('/mitmachen/')}>Probetraining</a>
-          <a href={url('/verein/#beitraege')}>Beiträge</a>
+          <a href={url('/mitmachen/#camps')}>Sportcamps</a>
+          <a href={url('/mitmachen/mitgliedschaft/')}>Beiträge &amp; Mitgliedschaft</a>
         </nav>
         <nav aria-label="Verein">
           <strong>Verein</strong>
@@ -125,6 +128,8 @@ const menu = [
           <a href={url('/erfolge/')}>Erfolge</a>
           <a href={url('/trainer/')}>Trainer:in werden</a>
           <a href={url('/verein/#partner')}>Partner &amp; Sponsoren</a>
+          <a href={url('/verein/#spenden')}>Spenden</a>
+          <a href={url('/kinderschutz/')}>Kinderschutz</a>
           <a href={url('/erfolge/melden/')}>Erfolg melden (Trainer:innen)</a>
         </nav>
         <nav aria-label="Kontakt">
@@ -135,7 +140,7 @@ const menu = [
       </div>
       <div class="footer-bottom">
         <span>{verein.name}</span>
-        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> · <a href={url('/verein/#satzung')}>Satzung</a></span>
+        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> · <a href={url('/kinderschutz/')}>Kinderschutz</a> · <a href={url('/verein/satzung/')}>Satzung</a></span>
       </div>
     </div>
   </footer>

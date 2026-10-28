@@ -43,7 +43,11 @@ npm run dev        # http://localhost:4321
 | Gruppen, Zeiten, freie Plätze | `src/data/gruppen.json` | Startseite, Gruppenfinder |
 | Termine | `src/data/termine.json` | Startseite, News |
 | Stufen „Dein Weg" und Trainerrollen | `src/data/stufen.json` | Dein Weg, Trainer:in werden |
-| Vereinsdaten, Wettkämpfe pro Jahr | `src/data/verein.json` | mehrere Seiten |
+| Vereinsdaten, Vorstand, Team, Bank, Trainingsorte, Vereinskleidung | `src/data/verein.json` | mehrere Seiten, Impressum |
+| Beiträge & Mitgliedschaft | `src/data/beitraege.json` | Mitgliedschaft, Mitmachen-FAQ, Verein |
+| Partner & Sponsoren | `src/data/partner.json` | Startseite, Verein |
+| Kinderschutz | `src/data/kinderschutz.json` | Kinderschutz, Startseite, Mitmachen, Verein, Trainer:in werden |
+| Satzung | `src/texte/satzung.md` | `/verein/satzung/` |
 | Gestaltung | `src/styles/global.css` | überall |
 
 ## Seitenstruktur
@@ -51,12 +55,15 @@ npm run dev        # http://localhost:4321
 - `/` Startseite (Willkommen, News mit Fotos, Termine, freie Plätze, Angebot, Erfolge, Partner)
 - `/mitmachen/` Gruppenfinder mit Warteliste, alle Trainingszeiten, FAQ
 - `/mitmachen/dein-weg/` Altersstufen U8 bis U14+, Spaß-Gruppe, Trainerrollen
+- `/mitmachen/mitgliedschaft/` Beiträge, Mitgliedsantrag, Personal Training
 - `/erfolge/` Berichte, Ergebnisse (filterbar), Wettkämpfe pro Jahr, Porträts
 - `/erfolge/melden/` Meldeformular für Trainer:innen (nur im Footer verlinkt)
 - `/news/` und `/news/<beitrag>/` Beiträge mit Fotogalerie, Termine
-- `/verein/` Über uns, Team, Beiträge, Partner & Sponsoren, Downloads
+- `/verein/` Über uns, Team, Beiträge, Partner & Sponsoren, Spenden, Vereinskleidung, Downloads
+- `/verein/satzung/` Satzung
+- `/kinderschutz/` Haltung, Ansprechpersonen, Ehrenkodex, Maßnahmen, Hilfe von außen
 - `/trainer/` Trainer:in werden
-- `/impressum/`, `/datenschutz/` (Texte folgen)
+- `/impressum/` (von der alten Website, rechtlich prüfen), `/datenschutz/` (nur Gliederung)
 
 ## Nächste Schritte (siehe Planungsdokument)
 

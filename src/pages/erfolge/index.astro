@@ -12,6 +12,11 @@ const highlights = erfolge.filter((e) => e.highlight);
 const stufen = ['Alle', 'U8', 'U10', 'U12', 'U14+'];
 const max = Math.max(...verein.wettkaempfe_pro_jahr.map((w) => w.anzahl));
 const wk2026 = verein.wettkaempfe_pro_jahr.find((w) => w.jahr.startsWith('2026'))?.anzahl;
+// Kennzahlen aus erfolge.json – zählt Platzierungen (Einzel und Team)
+const podest = (e: (typeof erfolge)[number]) => ['1.', '2.', '3.'].includes(e.platz);
+const bmTitel = erfolge.filter((e) => e.meisterschaft && e.platz === '1.').length;
+const bmMedaillen = erfolge.filter((e) => e.meisterschaft && podest(e)).length;
+const podest2026 = erfolge.filter((e) => e.saison === 2026 && podest(e)).length;
 ---
 <Base title="Erfolge" active="erfolge">
   <section class="wrap" style="padding-top:16px">
@@ -22,10 +27,10 @@ const wk2026 = verein.wettkaempfe_pro_jahr.find((w) => w.jahr.startsWith('2026')
         <p>Vom ersten Pokal beim KiLa-Cup bis zum Berliner Meistertitel: Hier sammeln wir, was unsere Athlet:innen erreichen – jede Medaille, jede Bestleistung, jeder Teamsieg.</p>
       </div>
       <div class="stat-grid">
-        <div class="stat"><b class="neon">[X]</b><span>Berliner Meistertitel</span></div>
-        <div class="stat"><b>[X]</b><span>Podestplätze 2026</span></div>
+        <div class="stat"><b class="neon">{bmTitel}</b><span>Berliner Meistertitel seit 2023</span></div>
+        <div class="stat"><b>{bmMedaillen}</b><span>Medaillen bei Berliner Meisterschaften</span></div>
+        <div class="stat"><b>{podest2026}</b><span>Podestplätze 2026</span></div>
         <div class="stat"><b>{wk2026}</b><span>Wettkämpfe 2026 bisher</span></div>
-        <div class="stat"><b>[X]</b><span>Athlet:innen am Start</span></div>
       </div>
     </div>
     <div class="ticker" style="margin-top:16px" aria-hidden="true">
@@ -70,7 +75,7 @@ const wk2026 = verein.wettkaempfe_pro_jahr.find((w) => w.jahr.startsWith('2026')
       })}
       <p id="leer" class="muted" hidden>Für diese Altersklasse sind noch keine Ergebnisse eingetragen.</p>
     </div>
-    <p class="muted" style="margin-top:16px;font-size:14px">Namen und Fotos von Kindern nur mit Einwilligung der Eltern, sonst „Athlet:in U12" oder Teamname. Einträge mit [Platzhaltern] werden noch ergänzt.</p>
+    <p class="muted" style="margin-top:16px;font-size:14px">Einzel- und Teamplatzierungen, übernommen aus der Ergebnisliste der bisherigen Website. Namen und Fotos von Kindern nur mit Einwilligung der Eltern, sonst „Athlet:in U12" oder Teamname. Einträge mit [Platzhaltern] werden noch ergänzt.</p>
   </section>
 
   <section class="wrap section">

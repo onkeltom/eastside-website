@@ -1,0 +1,29 @@
+{
+  "_hinweis": "Beitragsordnung ab 01.01.2026 – abgeschrieben aus dem Bild auf der alten Website (/pricing/). Gegen das Original prüfen.",
+  "gueltig_ab": "01.01.2026",
+  "tarife": [
+    { "name": "Mitgliedsbeitrag", "fuer": "Erwachsene und Kinder 1–17 Jahre", "monat": "30 €", "jahr": "300 €" },
+    { "name": "Familienangebot", "fuer": "Geschwisterkinder – das zweite und jedes weitere Kind", "monat": "25 €", "jahr": "250 €" }
+  ],
+  "aufnahmegebuehr": "15 €",
+  "probetraining": "3× kostenlos",
+  "inklusive": ["3 kostenlose Probetrainings", "60–90 Minuten Training", "Ausgebildete Trainer:innen", "Startpass inklusive", "Die wichtigsten Wettkämpfe inklusive", "Nur ein Monat Kündigungsfrist"],
+  "schritte": [
+    { "titel": "Antrag ausfüllen", "text": "Mitgliedsantrag ausfüllen, ausdrucken und unterschrieben zum Training mitbringen. Den Antrag gibt es auch direkt bei unseren Trainer:innen." },
+    { "titel": "Begrüßung abwarten", "text": "Du bekommst eine Begrüßungs-E-Mail mit allen Infos zu den nächsten Schritten." },
+    { "titel": "Beitrag zahlen", "text": "Monatlich oder einmal im Jahr – bei jährlicher Zahlung gibt es einen Sonderpreis." }
+  ],
+  "fragen": [
+    { "frage": "Wie kündige ich?", "antwort": "Die unterschriebene Kündigung persönlich bei der Trainerin oder dem Trainer abgeben. Die Kündigungsfrist ist ein Monat und beginnt am 1. des nächsten Monats. Im Voraus gezahlte Beiträge werden nicht erstattet." },
+    { "frage": "Sind Wettkämpfe im Beitrag enthalten?", "antwort": "Die wichtigsten Wettkämpfe sind im Mitgliedsbeitrag enthalten. Für andere Wettkämpfe fällt ein kleiner Zuschlag an." },
+    { "frage": "Was gebe ich bei der Überweisung an?", "antwort": "Name des Kindes (wie im Antrag), Zeitraum der Zahlung und Mitgliedsnummer." }
+  ],
+  "antrag_url": "https://sc-eastside.de/wp-content/uploads/2026/01/Mitgliedsantrag-29.1.2026.pdf",
+  "antrag_hinweis": "[PDF vorerst von der alten Website – nach Prüfung unter /downloads/ ablegen]",
+  "personal_training": {
+    "titel": "Personal Training",
+    "text": "Einzeltraining oder kleine Gruppe mit voller Aufmerksamkeit – für Anfänger:innen und Fortgeschrittene, auch als Vorbereitung auf 5 km, 10 km, Halbmarathon oder Marathon. Der Trainingsort wird mit dem Trainer vereinbart.",
+    "preis": "50 € pro Stunde für eine Person. Rabatt bei mehreren Einheiten oder kleinen Gruppen.",
+    "hinweis": "[Noch aktuell? → Dejvid]"
+  }
+}

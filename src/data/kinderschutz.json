@@ -1,0 +1,36 @@
+{
+  "_hinweis": "Kinderschutz – eine Quelle für /kinderschutz/, Startseite, Mitmachen, Verein und Trainer:in werden. Maßnahmen erst auf status \"umgesetzt\" setzen, wenn sie wirklich erledigt sind.",
+  "kurz": "Kinder sollen bei uns sicher sein. Darüber reden wir offen.",
+  "haltung": [
+    "Kinderschutz ist bei uns Chefsache. Alle, die bei EASTSIDE mit Kindern und Jugendlichen arbeiten – Trainer:innen, Helfer:innen, Betreuer:innen bei Wettkämpfen und Camps –, verpflichten sich, Kinder vor jeder Form von Gewalt zu schützen.",
+    "Wir sprechen das Thema bewusst offen an, denn Offenheit schützt: Kinder und Eltern sollen wissen, dass sie mit jeder Sorge zu uns kommen können. Und alle sollen wissen, dass bei uns genau hingeschaut wird.",
+    "[Text mit Dejvid abstimmen]"
+  ],
+  "ansprechpersonen": [
+    { "name": "[Name]", "rolle": "Ansprechperson Kinderschutz", "email": "[E-Mail]" },
+    { "name": "[Name]", "rolle": "Ansprechperson Kinderschutz", "email": "[E-Mail]" }
+  ],
+  "ansprech_hinweis": "Du kannst dich auch als Kind oder Jugendliche:r direkt an sie wenden. Jede Meldung behandeln wir vertraulich.",
+  "ehrenkodex": {
+    "text": "[Ehrenkodex des Vereins folgt – wird nach der Vorlage des Landessportbundes Berlin erstellt.]",
+    "hinweis": "Alle Trainer:innen und Helfer:innen unterschreiben ihn, bevor sie mit Kindern arbeiten."
+  },
+  "massnahmen": [
+    { "titel": "Ansprechpersonen", "text": "Zwei geschulte Ansprechpersonen für Kinderschutz, die Kinder, Eltern und Trainer:innen kennen.", "status": "offen" },
+    { "titel": "Ehrenkodex", "text": "Alle Trainer:innen und Helfer:innen unterschreiben unseren Ehrenkodex.", "status": "offen" },
+    { "titel": "Erweitertes Führungszeugnis", "text": "Wer bei uns mit Kindern arbeitet, legt regelmäßig ein erweitertes Führungszeugnis vor.", "status": "offen" },
+    { "titel": "Schulungen", "text": "Unsere Trainer:innen nehmen alle zwei Jahre an einer Kinderschutz-Schulung teil.", "status": "offen" },
+    { "titel": "Kinderschutzerklärung", "text": "Der Vorstand unterzeichnet die Kinderschutzerklärung des Landessportbundes Berlin.", "status": "offen" },
+    { "titel": "Satzung", "text": "Der Schutz vor Gewalt wird in unserer Satzung verankert.", "status": "offen" },
+    { "titel": "Schutzkonzept", "text": "Ein eigenes Kinderschutzkonzept nach den Eckpunkten des LSB Berlin.", "status": "offen" },
+    { "titel": "Kinderschutzsiegel", "text": "Wir beantragen das Kinderschutzsiegel des Landessportbundes Berlin.", "status": "offen" }
+  ],
+  "hilfe": [
+    { "name": "Kinderschutz im Berliner Sport", "text": "Landessportbund Berlin: Koordinierungsstellen und schnelle Hilfe", "url": "https://www.lsb-berlin.de/themenwelten/kinderschutz/schnelle-hilfe" },
+    { "name": "Hilfetelefon Sexueller Missbrauch", "text": "kostenfrei und anonym", "tel": "0800 22 55 530" },
+    { "name": "Nummer gegen Kummer", "text": "Kinder- und Jugendtelefon", "tel": "116 111" },
+    { "name": "Berliner Notdienst Kinderschutz", "text": "rund um die Uhr", "tel": "030 61 00 66" }
+  ],
+  "hilfe_hinweis": "[Nummern und Links vor dem Start prüfen]",
+  "downloads": "Ehrenkodex und Kinderschutzkonzept als PDF [folgen]"
+}
