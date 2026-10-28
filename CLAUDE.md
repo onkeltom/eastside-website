@@ -67,6 +67,7 @@ Eine Information wird **einmal** gepflegt und an mehreren Stellen angezeigt (z. 
 
 - **Keine echten Kindernamen oder Kinderfotos ohne dokumentierte Einwilligung der Eltern.** Ohne Einwilligung: „Athlet:in U12" oder Teamname. Solange das Repository öffentlich ist, gar keine echten Kinderdaten einchecken.
 - **Kinderschutz offen zeigen, aber ehrlich:** Haltung und Ehrenkodex sind öffentlich; Maßnahmen in `src/data/kinderschutz.json` erst auf `umgesetzt` setzen, wenn sie erledigt sind. Ansprechpersonen bleiben Platzhalter, bis sie benannt sind.
+- **Vereinsanschrift nur im Impressum:** Die eingetragene Anschrift (Atzpodienstr. 24a) ist die Privatadresse des Vorsitzenden – nirgends sonst anzeigen (Kontakt, Verein, Footer usw.).
 - **Keine erfundenen Fakten.** Fehlende Angaben bleiben als `[Platzhalter]` sichtbar. Belegte Zahlen bisher: Gründung 2022; Wettkämpfe laut LADV 2023: 2, 2024: 8, 2025: 14, 2026 bisher: 13 (Stand Sept. 2026). Trainingszeiten stammen von der alten Website.
 - **Vorschau bleibt `noindex`** mit Hinweisbalken. Erst für den Livebetrieb `PREVIEW=false` setzen.
 - Formulare sind noch nicht angeschlossen; Daten von Kindern/Eltern nur über Anbieter mit Servern in der EU und mit Datenschutzhinweis verarbeiten.

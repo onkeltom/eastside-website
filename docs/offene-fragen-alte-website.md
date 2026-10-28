@@ -2,6 +2,12 @@
 
 Stand: 28.10.2026. Die Texte von sc-eastside.de sind in die neue Vorschau übernommen. Diese Punkte sind auf der Website als `[…]` markiert und brauchen eine Antwort von Dejvid bzw. dem Vorstand.
 
+## Geklärt
+
+- Atzpodienstr. 24a ist die Privatadresse von Dejvid, aber die eingetragene Vereinsanschrift. Sie bleibt im Impressum und erscheint sonst nirgends.
+- Der Verein darf Spendenbescheinigungen ausstellen.
+- Vereinskleidung gibt es weiterhin; das Sortiment wird gerade erneuert.
+
 ## Gruppen und Zeiten
 
 - Neue U8-Gruppe ab 03.11.2026 (Jg. 2020/2021, Di + Fr 16:00–17:00): Wo trainiert sie, und wie sind die Sommerzeiten?
@@ -13,17 +19,15 @@ Stand: 28.10.2026. Die Texte von sc-eastside.de sind in die neue Vorschau übern
 ## Verein und Rechtliches
 
 - Name: Im Vereinsregister steht „SC East Side Berlin e.V.“, die neue Website nutzt „EAST SIDE BERLIN e.V.“. Welcher Name gilt für Impressum und Website?
-- Ist Atzpodienstr. 24a eine Privatadresse? (Für das Impressum ist eine ladungsfähige Anschrift nötig.)
 - Impressum rechtlich prüfen (Angabe nach § 5 DDG fehlt bisher), Datenschutzerklärung neu schreiben lassen – die alte Website hatte keine.
 - Satzung: Ist die Fassung vom 22.02.2023 noch aktuell?
-- Gemeinnützigkeit: Dürfen wir Spendenbescheinigungen ausstellen?
 - Dejvid als Schiedsrichter: Welche Ligen stimmen? (Die alten Seiten nennen „2. Bundesliga Damen & 1. Regionalliga Herren“ und „1. Bundesliga Damen & 2. Bundesliga Herren“.)
 - Rolle von Trainer Tarik und weitere Trainer:innen für die Teamseite.
 
 ## Angebote
 
 - Personal Training (50 €/Stunde): Gibt es das noch?
-- Vereinskleidung: noch erhältlich? Preise für Hoodies und Sportbeutel?
+- Vereinskleidung: wird gerade erneuert – neues Sortiment und Preise nachtragen, sobald sie feststehen.
 - Sportcamps: Termine, Alter, Preis, Anmeldung für das nächste Camp.
 - Mitgliedsantrag: PDF prüfen und in die neue Website übernehmen (derzeit Link zur alten Seite).
 
