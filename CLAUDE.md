@@ -23,6 +23,8 @@ Die Website hat drei Aufgaben, in dieser Reihenfolge:
 - **Statische Website** (Astro), kein WordPress. Grund: wenig Wartung, Redesigns betreffen nur Vorlagen, nicht Inhalte.
 - **Dominik ist einziger Haupteditor** mit GitHub-Zugang. Andere reichen über Formulare ein; Einreichungen werden als Entwurf (`draft: true`) im Repository abgelegt und von Dominik veröffentlicht.
 - **Hosting**: Vorschau auf GitHub Pages (`.github/workflows/deploy.yml`). Livebetrieb geplant auf **Cloudflare Pages** (nicht Vercel Hobby – nur persönliche, nicht-kommerzielle Nutzung erlaubt). Domain sc-eastside.de bleibt beim Registrar, wird per DNS umgestellt (vorher prüfen, ob Mail-Records existieren).
+- **Fotos, Dokumente, Dateien**: nicht im Repository, sondern in einem **Cloudflare-R2-Bucket mit EU-Jurisdiktion** (bei der Anlage festlegen, nicht nur „Location Hint"), öffentlich über `media.sc-eastside.de`. Dafür muss der DNS der Domain bei Cloudflare liegen (Nameserver umstellen, Mail-Records vorher übernehmen). Die Website kennt nur eine Basisadresse (`MEDIA_URL`); Inhalte speichern nur Pfade (z. B. `news/2026-kila-cup/01.webp`), damit ein Umzug nur eine Einstellung ändert. Fotos vor dem Hochladen verkleinern (z. B. 800/1600 px, WebP), keine Originale. Nur Fotos mit dokumentierter Einwilligung, die die Veröffentlichung im Web abdeckt – öffentliche Links sind teilbar. Sveltia CMS lädt nicht direkt nach R2; anfangs lädt Dominik hoch, später das Formular-Skript. In der Datenschutzerklärung Cloudflare als Hoster/CDN nennen (Kopien im weltweiten Cache).
+- **EU-Hoster als Ausweichweg**, falls nötig: statichost.eu oder Webspace bei Hetzner/netcup (Build per GitHub Actions, Upload per SFTP). Codeberg Pages verworfen (Nutzungsbedingungen verlangen freie Inhalte, keine Verfügbarkeitszusage).
 - **Redaktionsbereich**: Sveltia CMS unter `/admin` (`public/admin/`). Login später über `sveltia-cms-auth` auf Cloudflare Workers. Nicht auf Netlify Identity / Git Gateway bauen (Git Gateway ist deprecated).
 - **Automatisierung später, in Stufen**: (1) kleines Formular-Skript → Entwurf im Repo, (2) KI als Schreibhilfe für Entwürfe, (3) ggf. n8n mit KI-Baustein. Eine KI veröffentlicht nie selbst.
 
@@ -90,7 +92,7 @@ Vor dem Commit: `npm run build` muss ohne Fehler laufen; neue Seiten auf 390 px 
 3. Redaktionsbereich aktivieren (sveltia-cms-auth auf Cloudflare Workers, `base_url` in `public/admin/config.yml`), Konfiguration testen.
 4. Formular-Skript: Einreichungen (Erfolg melden, Beitrag, Änderung vorschlagen) → Entwurf bzw. Issue im Repository, Fotos verkleinern.
 5. Offene Seiten: Beiträge & Mitgliedschaft, Camps, Presse; Impressum/Datenschutz.
-6. Livebetrieb: Cloudflare Pages, DNS umstellen, `PREVIEW=false`.
+6. Livebetrieb: Cloudflare Pages (zuerst mit `PREVIEW=true` als Ersatz für die GitHub-Pages-Vorschau), R2-Bucket (EU) zuerst für Dateien ohne Personenbezug (Mitgliedsantrag, Satzung, Partnerlogos), DNS zu Cloudflare umziehen, `media.sc-eastside.de` anbinden, im Code `MEDIA_URL` einführen und `Foto.astro` auf R2 umstellen, dann `PREVIEW=false`.
 
 ## Referenzen
 
