@@ -194,6 +194,8 @@ p { margin: 0; }
 .gruppe-row:hover { color: var(--ink); }
 .gruppe-row:hover strong { text-decoration: underline 2px var(--neon); text-underline-offset: 4px; }
 .gruppe-zeit { grid-column: 1 / -1; font-size: 15px; color: var(--text-2); }
+.gruppe-jg-m { display: none; }
+.gruppe-hinweis { grid-column: 1 / -1; font-size: 14px; color: var(--muted); }
 .gruppen-hinweis { font-size: 15px; padding-top: 14px; border-top: 1px solid var(--line); }
 
 /* Galerie */
@@ -359,6 +361,19 @@ fieldset { min-width: 0; }
   .home-partner { order: 7; }
   .home-gruppen .card-soft { padding: 22px 18px; }
   .gruppen-head h2 { font-size: 24px; }
+
+  /* Gruppenzeilen kompakt: Name + Status oben, Jahrgang vor der Zeit */
+  .gruppe-row { padding: 10px 0; gap: 2px 10px; }
+  .gruppe-jg { display: none; }
+  .gruppe-jg-m { display: inline; font-weight: 700; color: var(--ink); }
+  .gruppe-row .pill { padding: 3px 10px; font-size: 12px; }
+  .gruppe-zeit { font-size: 14px; line-height: 1.4; }
+  .gruppe-hinweis { font-size: 13px; line-height: 1.35; }
+
+  /* Termine: auf der Startseite nur die nächsten drei */
+  .termine-kurz .list-row { padding: 10px 0; }
+  .termine-kurz .list-row:nth-of-type(n+4) { display: none; }
+  .termine-kurz .list-row .date { min-width: 76px; }
 
   /* Angebot als kompakte Liste mit kleinem Foto */
   .angebot-list { gap: 10px; }

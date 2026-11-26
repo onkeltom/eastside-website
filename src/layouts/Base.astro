@@ -57,6 +57,7 @@ const menu = [
   {preview && <meta name="robots" content="noindex, nofollow" />}
   <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
   <script is:inline>(function () { var m = new Date().getMonth(); document.documentElement.dataset.saison = m >= 10 || m <= 2 ? 'winter' : 'sommer'; })();</script>
+  <script is:inline>document.addEventListener('DOMContentLoaded', function () { var h = new Date().toISOString().slice(0, 10); document.querySelectorAll('[data-bis]').forEach(function (e) { if (e.dataset.bis < h) e.remove(); }); });</script>
 </head>
 <body>
   <a href="#inhalt" class="visually-hidden">Zum Inhalt springen</a>
