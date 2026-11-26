@@ -112,13 +112,13 @@ const menu = [
       <div class="footer-grid">
         <div>
           <a href={url('/')} class="logo">EASTSIDE</a>
-          <p class="muted" style="margin-top:10px;max-width:320px">{verein.claim}</p>
+          <p class="muted footer-claim" style="margin-top:10px;max-width:320px">{verein.claim}</p>
         </div>
         <nav aria-label="Mitmachen">
           <strong>Mitmachen</strong>
           <a href={url('/mitmachen/')}>Gruppenfinder</a>
           <a href={url('/mitmachen/dein-weg/')}>Dein Weg</a>
-          <a href={url('/mitmachen/')}>Probetraining</a>
+          <a href={url('/mitmachen/#anfrage')}>Probetraining</a>
           <a href={url('/mitmachen/#camps')}>Sportcamps</a>
           <a href={url('/mitmachen/mitgliedschaft/')}>Beiträge &amp; Mitgliedschaft</a>
         </nav>
@@ -140,7 +140,7 @@ const menu = [
       </div>
       <div class="footer-bottom">
         <span>{verein.name}</span>
-        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> · <a href={url('/kinderschutz/')}>Kinderschutz</a> · <a href={url('/verein/satzung/')}>Satzung</a></span>
+        <span><a href={url('/impressum/')}>Impressum</a> · <a href={url('/datenschutz/')}>Datenschutz</a> <span class="hide-mobile">· <a href={url('/kinderschutz/')}>Kinderschutz</a></span> · <a href={url('/verein/satzung/')}>Satzung</a></span>
       </div>
     </div>
   </footer>

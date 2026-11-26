@@ -80,7 +80,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
       </div>
     </div>
     {more.length > 0 && (
-      <div class="grid grid-3" style="margin-top:24px">
+      <div class="grid grid-3 news-more" style="margin-top:24px">
         {more.map((n) => (
           <a href={url(`/news/${n.id}/`)} class="card"><Foto news={n.id}>Foto</Foto><div class="card-body"><span class="meta">{formatDate(n.data.date)} · {n.data.kategorie}</span><h3 class="h-s">{n.data.title}</h3></div></a>
         ))}

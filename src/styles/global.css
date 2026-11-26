@@ -340,7 +340,8 @@ fieldset { min-width: 0; }
   .wins-tiles { grid-template-columns: minmax(0, 1fr); }
   .wins-tiles .win-tile { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
   .wins-tiles .win-tile b { min-width: 2.6em; }
-  .site-footer { margin-top: 64px; padding: 40px 0 16px; }
+  .site-footer { margin-top: 48px; padding: 32px 0 16px; }
+  .footer-claim { display: none; }
   .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
   .footer-grid > :first-child, .footer-grid > :last-child { grid-column: 1 / -1; }
   .footer-grid nav { gap: 0; font-size: 16px; }
@@ -354,7 +355,8 @@ fieldset { min-width: 0; }
   .home-news { order: 3; }
   .home-galerie { order: 4; }
   .home-erfolge { order: 5; }
-  .home-partner { order: 6; }
+  .home-kinderschutz { order: 6; }
+  .home-partner { order: 7; }
   .home-gruppen .card-soft { padding: 22px 18px; }
   .gruppen-head h2 { font-size: 24px; }
 
@@ -369,10 +371,17 @@ fieldset { min-width: 0; }
   /* News-Aufmacher: Anrisstext auf drei Zeilen */
   .news-big .lead { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-  /* Galerie als ein Block in drei Spalten */
-  .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 96px; gap: 8px; }
-  .gallery .ph { border-radius: 16px; padding: 10px; font-size: 12px; }
-  .gallery > :last-child { grid-column: span 2; }
+  /* Weitere News als Titelliste ohne Fotos */
+  .news-more { gap: 0; margin-top: 16px !important; }
+  .news-more .card { background: none; border-radius: 0; border-top: 1px solid var(--line); }
+  .news-more .ph { display: none; }
+  .news-more .card-body { padding: 12px 0; gap: 2px; }
+  .news-more .h-s { font-size: 17px; line-height: 1.25; }
+
+  /* Galerie als Wischreihe (scrollt nur in sich, nicht die Seite) */
+  .gallery { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 4px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery .ph, .gallery .big { flex: 0 0 68%; height: 180px; border-radius: 18px; padding: 12px; font-size: 13px; scroll-snap-align: start; }
 
   /* Partner-Platzhalter kompakt */
   .partners { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
