@@ -10,7 +10,9 @@ export async function getStaticPaths() {
 }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const fotos = Math.min(entry.data.fotos ?? 6, 9);
+const { bilder } = entry.data;
+const platzhalter = Math.min(entry.data.fotos ?? 6, 9);
+const anzahl = bilder.length || entry.data.fotos;
 ---
 <Base title={entry.data.title} active="news">
   <article class="wrap" style="padding-top:40px;display:flex;flex-direction:column;gap:28px">
@@ -27,9 +29,11 @@ const fotos = Math.min(entry.data.fotos ?? 6, 9);
     <Foto news={entry.id} class="dark" style="aspect-ratio:16/8;border-radius:var(--radius-lg)">Titelfoto</Foto>
     <div class="prose"><Content /></div>
     <section style="display:flex;flex-direction:column;gap:16px">
-      <h2 class="h-m">Fotogalerie {entry.data.fotos && <span class="muted" style="font-size:18px;font-weight:500">({entry.data.fotos} Fotos)</span>}</h2>
+      <h2 class="h-m">Fotogalerie {anzahl && <span class="muted" style="font-size:18px;font-weight:500">({anzahl} Fotos)</span>}</h2>
       <div class="gallery">
-        {Array.from({ length: fotos }, (_, i) => <div class={`ph ${i === 0 ? 'big alt' : i % 2 ? 'alt' : ''}`}>Foto {i + 1}</div>)}
+        {bilder.length
+          ? bilder.map((b, i) => <Foto bild={b} class={i === 0 ? 'big alt' : i % 2 ? 'alt' : ''}>Foto {i + 1}</Foto>)
+          : Array.from({ length: platzhalter }, (_, i) => <div class={`ph ${i === 0 ? 'big alt' : i % 2 ? 'alt' : ''}`}>Foto {i + 1}</div>)}
       </div>
     </section>
   </article>

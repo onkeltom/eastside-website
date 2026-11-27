@@ -11,6 +11,13 @@ const news = defineCollection({
     kategorie: z.enum(['Erfolg', 'Wettkampf', 'Verein', 'Training']),
     klasse: z.string().optional(),
     fotos: z.number().optional(),
+    // Fotos im R2-Bucket (Schlüssel wie news/<datei>/01.jpg), ausgeliefert über /fotos/.
+    // Ohne einwilligung: true bricht der Build ab.
+    bilder: z.array(z.object({
+      datei: z.string().regex(/^news\/[a-z0-9-]+\/\d{2}\.jpg$/),
+      alt: z.string().min(1),
+      einwilligung: z.literal(true, { message: 'Foto ohne dokumentierte Einwilligung der Eltern' }),
+    })).default([]),
     teaser: z.string(),
     // Adresse des Beitrags auf der alten Website (bei übernommenen Beiträgen)
     quelle: z.string().optional(),

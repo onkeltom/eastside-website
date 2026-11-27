@@ -1,0 +1,126 @@
+---
+// Bericht einreichen (nur für Trainer:innen, geschützt durch Cloudflare Access).
+// Sendet an functions/api/bericht.js: Fotos → R2, Text → Pull Request. Dominik prüft und veröffentlicht.
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+const kategorien = ['Wettkampf', 'Erfolg', 'Training', 'Verein'];
+const heute = new Date().toISOString().slice(0, 10);
+---
+<Base title="Bericht einreichen">
+  <section class="wrap" style="max-width:680px;padding-top:40px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span class="pill pill-soft" style="align-self:flex-start">Für Trainer:innen</span>
+      <h1 class="h-l">Bericht einreichen</h1>
+      <p class="muted">Nach dem Wettkampf schnell vom Handy: Text und Fotos hochladen. Die Redaktion prüft den Bericht und stellt ihn online.</p>
+    </div>
+    <p class="notice"><strong>Keine Namen von Kindern.</strong> Schreib „Athlet:in U12" oder den Teamnamen, z. B. „unsere U10-Staffel".</p>
+
+    <form class="form" id="bericht">
+      <label>Titel<input name="title" maxlength="120" placeholder="z. B. Drei Medaillen beim Kladow-Cup" required /></label>
+      <label>Datum des Wettkampfs<input type="date" name="datum" value={heute} required /></label>
+      <label>Kategorie<select name="kategorie">{kategorien.map((k) => <option>{k}</option>)}</select></label>
+      <label>Altersklasse (optional)<input name="klasse" maxlength="40" placeholder="z. B. U12" /></label>
+      <label>Kurztext für die Übersicht<textarea name="teaser" rows="2" maxlength="300" placeholder="Ein, zwei Sätze: Was ist passiert?" required></textarea></label>
+      <label>Bericht<textarea name="body" rows="10" placeholder="Wie lief es? Was war besonders?" required></textarea></label>
+
+      <label>Fotos (optional, bis zu 20)<input type="file" accept="image/*" multiple id="fotos" /></label>
+      <p class="muted" style="font-size:14px;margin:0">Das erste Foto wird das Titelfoto. Fotos werden vor dem Hochladen verkleinert, Standortdaten entfernt.</p>
+      <ul id="vorschau" style="list-style:none;margin:0;padding:0;display:grid;gap:12px"></ul>
+      <label class="check" id="einwilligung-box" hidden><input type="checkbox" name="einwilligung" value="ja" /><span><strong>Für alle Kinder auf diesen Fotos liegt die Einwilligung der Eltern vor</strong>, dass Fotos auf der Website erscheinen dürfen.</span></label>
+
+      <label>Dein Name (steht im Hinweis an die Redaktion)<input name="von" maxlength="80" required /></label>
+      <p id="fehler" class="notice" role="alert" hidden></p>
+      <button type="submit" class="btn btn-dark" id="senden">Bericht einreichen</button>
+    </form>
+
+    <div id="danke" class="card-soft" hidden style="text-align:center;flex-direction:column;gap:12px;align-items:center">
+      <h2 class="h-m">Danke – ist angekommen!</h2>
+      <p class="muted">Die Redaktion prüft den Bericht und stellt ihn online.</p>
+      <a href={url('/einreichen/')} class="btn btn-outline">Weiteren Bericht einreichen</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const MAX_SEITE = 2000;
+  const form = document.getElementById('bericht') as HTMLFormElement;
+  const input = document.getElementById('fotos') as HTMLInputElement;
+  const liste = document.getElementById('vorschau')!;
+  const einwilligung = document.getElementById('einwilligung-box')!;
+  const fehler = document.getElementById('fehler')!;
+  const senden = document.getElementById('senden') as HTMLButtonElement;
+  let fotos: { blob: Blob; alt: HTMLInputElement }[] = [];
+
+  // Verkleinert auf höchstens 2000 px und speichert als JPEG neu – dabei fallen EXIF-Daten (z. B. GPS) weg.
+  async function verkleinern(datei: File): Promise<Blob> {
+    const bild = await createImageBitmap(datei, { imageOrientation: 'from-image' });
+    const f = Math.min(1, MAX_SEITE / Math.max(bild.width, bild.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bild.width * f);
+    canvas.height = Math.round(bild.height * f);
+    canvas.getContext('2d')!.drawImage(bild, 0, 0, canvas.width, canvas.height);
+    return new Promise((ok, fail) => canvas.toBlob((b) => (b ? ok(b) : fail(new Error('JPEG'))), 'image/jpeg', 0.85));
+  }
+
+  input.addEventListener('change', async () => {
+    const neu = [...(input.files ?? [])].slice(0, 20 - fotos.length);
+    input.value = '';
+    for (const datei of neu) {
+      let blob: Blob;
+      try { blob = await verkleinern(datei); } catch { zeigeFehler(`„${datei.name}" konnte nicht gelesen werden.`); continue; }
+      const li = document.createElement('li');
+      li.style.cssText = 'display:grid;grid-template-columns:88px 1fr 44px;gap:10px;align-items:center';
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(blob);
+      img.alt = '';
+      img.style.cssText = 'width:88px;height:88px;object-fit:cover;border-radius:14px';
+      const alt = document.createElement('input');
+      alt.placeholder = 'Was ist zu sehen?';
+      alt.required = true;
+      alt.maxLength = 200;
+      alt.setAttribute('aria-label', 'Kurze Bildbeschreibung');
+      const weg = document.createElement('button');
+      weg.type = 'button';
+      weg.textContent = '✕';
+      weg.className = 'btn btn-outline';
+      weg.style.cssText = 'min-width:44px;min-height:44px;padding:0';
+      weg.setAttribute('aria-label', 'Foto entfernen');
+      const eintrag = { blob, alt };
+      weg.addEventListener('click', () => { fotos = fotos.filter((x) => x !== eintrag); li.remove(); aktualisieren(); });
+      li.append(img, alt, weg);
+      liste.append(li);
+      fotos.push(eintrag);
+    }
+    aktualisieren();
+  });
+
+  function aktualisieren() {
+    einwilligung.hidden = fotos.length === 0;
+    (einwilligung.querySelector('input') as HTMLInputElement).required = fotos.length > 0;
+  }
+
+  function zeigeFehler(text: string) { fehler.textContent = text; fehler.hidden = false; }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    fehler.hidden = true;
+    const daten = new FormData(form);
+    fotos.forEach((f, i) => { daten.append('foto', f.blob, `${i + 1}.jpg`); daten.append('alt', f.alt.value); });
+    senden.disabled = true;
+    senden.textContent = 'Wird hochgeladen …';
+    try {
+      const res = await fetch(`${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/bericht`, { method: 'POST', body: daten });
+      const json = await res.json().catch(() => ({}));
+      if (res.status === 401) return zeigeFehler('Deine Anmeldung ist abgelaufen. Bitte Seite neu laden und noch einmal anmelden. Text vorher kopieren!');
+      if (!res.ok) return zeigeFehler(json.fehler ?? 'Das hat nicht geklappt. Bitte später noch einmal versuchen.');
+      form.hidden = true;
+      document.getElementById('danke')!.hidden = false;
+      document.getElementById('danke')!.style.display = 'flex';
+    } catch {
+      zeigeFehler('Keine Verbindung. Bitte später noch einmal versuchen – das Formular funktioniert nur auf der Live-Website.');
+    } finally {
+      senden.disabled = false;
+      senden.textContent = 'Bericht einreichen';
+    }
+  });
+</script>

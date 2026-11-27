@@ -29,7 +29,7 @@ const news = (await getCollection('news', ({ data }) => !data.draft))
         <a href={url(`/news/${n.id}/`)} class="card">
           <Foto news={n.id} class={i % 2 ? 'alt' : ''}>
             Foto · {n.data.title}
-            <div slot="over" class="badge-row"><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span>{n.data.fotos && <span class="pill pill-dark">{n.data.fotos} Fotos</span>}</div>
+            <div slot="over" class="badge-row"><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span>{(n.data.bilder.length || n.data.fotos) && <span class="pill pill-dark">{n.data.bilder.length || n.data.fotos} Fotos</span>}</div>
           </Foto>
           <div class="card-body">
             <span class="meta">{formatDate(n.data.date)}</span>

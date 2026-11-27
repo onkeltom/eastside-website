@@ -24,6 +24,14 @@ collections:
       - { name: kategorie, label: Kategorie, widget: select, options: [Erfolg, Wettkampf, Verein, Training] }
       - { name: klasse, label: "Altersklasse (optional)", widget: string, required: false }
       - { name: fotos, label: "Anzahl Fotos (optional)", widget: number, value_type: int, required: false }
+      - name: bilder
+        label: "Fotos in R2 (kommen über /einreichen/)"
+        widget: list
+        required: false
+        fields:
+          - { name: datei, label: "Schlüssel in R2", widget: string }
+          - { name: alt, label: Bildbeschreibung, widget: string }
+          - { name: einwilligung, label: "Einwilligung der Eltern liegt vor", widget: boolean, default: false }
       - { name: teaser, label: Kurztext für die Übersicht, widget: text }
       - { name: quelle, label: "Adresse auf der alten Website (optional)", widget: string, required: false }
       - { name: draft, label: "Entwurf (nicht veröffentlichen)", widget: boolean, default: true }
