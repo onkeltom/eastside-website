@@ -6,9 +6,9 @@ compatibility_date = "2026-11-01"
 
 [vars]
 GITHUB_REPO = "onkeltom/eastside-website"
-GITHUB_APP_ID = "[Platzhalter]"
+GITHUB_APP_ID = "5949046"
 GITHUB_INSTALLATION_ID = "[Platzhalter]"
-ACCESS_TEAM_DOMAIN = "https://[Platzhalter].cloudflareaccess.com"
+ACCESS_TEAM_DOMAIN = "https://blue-shadow-7022.cloudflareaccess.com"
 ACCESS_AUD = "[Platzhalter]"
 FOTOS_NUR_MIT_LOGIN = "false"
 
@@ -21,9 +21,9 @@ jurisdiction = "eu"
 # Vorschau-Versionen (jeder Pull Request): Fotos nur mit Login, da dort noch ungeprüfte Fotos liegen.
 [env.preview.vars]
 GITHUB_REPO = "onkeltom/eastside-website"
-GITHUB_APP_ID = "[Platzhalter]"
+GITHUB_APP_ID = "5949046"
 GITHUB_INSTALLATION_ID = "[Platzhalter]"
-ACCESS_TEAM_DOMAIN = "https://[Platzhalter].cloudflareaccess.com"
+ACCESS_TEAM_DOMAIN = "https://blue-shadow-7022.cloudflareaccess.com"
 ACCESS_AUD = "[Platzhalter]"
 FOTOS_NUR_MIT_LOGIN = "true"
 
