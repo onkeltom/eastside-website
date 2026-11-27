@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import gruppen from '../data/gruppen.json';
-import termine from '../data/termine.json';
+import { termine } from '../lib/termine';
 import erfolge from '../data/erfolge.json';
 import ks from '../data/kinderschutz.json';
 import partner from '../data/partner.json';
@@ -17,6 +17,8 @@ const more = rest.slice(2, 5);
 const jg = (j: number[]) => `${Math.min(...j)}–${Math.max(...j)}`;
 // „wie im Sommer (ganzjährig gleich)" → eine Zeit für beide Saisons
 const ganzjaehrig = (g: (typeof gruppen)[number]) => g.winter.startsWith('wie im Sommer');
+// Uhrzeiten wie 17:30–19:15 nicht am Bindestrich umbrechen
+const zeit = (z: string) => z.replace(/(\d)–(\d)/g, '$1\u2060–\u2060$2');
 const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
 ---
 <Base>
@@ -80,7 +82,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
       </div>
     </div>
     {more.length > 0 && (
-      <div class="grid grid-3" style="margin-top:24px">
+      <div class="grid grid-3 news-more" style="margin-top:24px">
         {more.map((n) => (
           <a href={url(`/news/${n.id}/`)} class="card"><Foto news={n.id}>Foto</Foto><div class="card-body"><span class="meta">{formatDate(n.data.date)} · {n.data.kategorie}</span><h3 class="h-s">{n.data.title}</h3></div></a>
         ))}
@@ -97,17 +99,19 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
         </div>
         {gruppen.map((g) => (
           <a class="gruppe-row" href={url(`/mitmachen/?jahr=${Math.max(...g.jahrgaenge)}#ergebnis`)}>
-            <span><strong>{g.name}</strong> <span class="muted nowrap">Jg. {jg(g.jahrgaenge)}</span>{'hinweis' in g && !g.hinweis.startsWith('[') && <span class="muted" style="display:block;font-size:14px">{g.hinweis}</span>}</span>
+            <span class="gruppe-name"><strong>{g.name}</strong> <span class="muted nowrap gruppe-jg">Jg. {jg(g.jahrgaenge)}</span></span>
             <span class={`pill ${g.status === 'frei' ? 'pill-neon' : 'pill-white'}`}>{g.status === 'frei' ? 'Plätze frei' : 'Warteliste'}</span>
-            <span class="gruppe-zeit">{ganzjaehrig(g) ? g.sommer : <Fragment><span class="s-sommer">{g.sommer}</span><span class="s-winter">{g.winter}</span></Fragment>}</span>
+            <span class="gruppe-zeit"><span class="gruppe-jg-m">Jg. {jg(g.jahrgaenge)} · </span>{ganzjaehrig(g) ? zeit(g.sommer) : <Fragment><span class="s-sommer">{zeit(g.sommer)}</span><span class="s-winter">{zeit(g.winter)}</span></Fragment>}</span>
+            {'hinweis' in g && !g.hinweis.startsWith('[') && <span class="gruppe-hinweis">{g.hinweis}</span>}
           </a>
         ))}
         <p class="muted gruppen-hinweis">Gruppe voll? Auf die Warteliste setzen – oder als <a href={url('/trainer/')} class="link-u">Trainer:in</a> helfen, damit neue Gruppen entstehen. In den Schulferien kein Training.</p>
         <a href={url('/mitmachen/')} class="tap" style="font-weight:700">Zum Gruppenfinder →</a>
       </div>
-      <div class="card-outline list-dates">
+      <div class="card-outline list-dates termine-kurz">
         <h3 class="h-m" style="margin-bottom:14px">Nächste Termine</h3>
-        {termine.map((t) => <div class="list-row"><span class="date">{t.datum}</span><span>{t.titel}</span></div>)}
+        {termine.map((t) => <div class="list-row" data-bis={t.bis}><span class="date">{t.datum}</span><span>{t.titel}</span></div>)}
+        {termine.length === 0 && <p class="muted">Gerade keine Termine eingetragen.</p>}
         <a href={url('/news/#termine')} class="tap" style="font-weight:700;margin-top:4px">Alle Termine →</a>
       </div>
     </div>

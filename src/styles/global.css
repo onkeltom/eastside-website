@@ -194,6 +194,8 @@ p { margin: 0; }
 .gruppe-row:hover { color: var(--ink); }
 .gruppe-row:hover strong { text-decoration: underline 2px var(--neon); text-underline-offset: 4px; }
 .gruppe-zeit { grid-column: 1 / -1; font-size: 15px; color: var(--text-2); }
+.gruppe-jg-m { display: none; }
+.gruppe-hinweis { grid-column: 1 / -1; font-size: 14px; color: var(--muted); }
 .gruppen-hinweis { font-size: 15px; padding-top: 14px; border-top: 1px solid var(--line); }
 
 /* Galerie */
@@ -241,6 +243,8 @@ p { margin: 0; }
 .result.is-wait { border-color: #e3e6dc; background: #fafaf7; }
 .result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .result-head h3 { font-size: clamp(28px, 3vw, 40px); }
+/* Redaktionelle Prüfnotizen ([…]) bleiben in der Vorschau sichtbar, aber unauffällig */
+.hinweis-intern { font-size: 13px; line-height: 1.4; color: var(--muted); font-style: italic; }
 .time-box { background: #fff; border-radius: 20px; padding: 14px 18px; }
 .time-box small { display: block; font-size: 13px; font-weight: 700; color: var(--muted); }
 .alt-tip { font-weight: 700; color: #3f5a00; }
@@ -251,7 +255,7 @@ p { margin: 0; }
 
 /* Dein Weg */
 .steps { display: flex; flex-direction: column; }
-.step { display: grid; grid-template-columns: 96px 1fr; gap: 16px; }
+.step { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; }
 @media (min-width: 900px) { .step { grid-template-columns: 240px 1fr; gap: 40px; } }
 .step-left { display: flex; flex-direction: column; align-items: center; }
 .step-circle { border-radius: 999px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0; }
@@ -282,6 +286,11 @@ p { margin: 0; }
 .medal.gold { background: var(--neon); border-color: var(--ink); }
 .medal.small-text { font-size: 13px; }
 .results { display: flex; flex-direction: column; gap: 10px; }
+.saison-gruppe > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 56px; padding: 8px 4px; border-bottom: 2px solid var(--ink); }
+.saison-gruppe > summary::-webkit-details-marker { display: none; }
+.saison-gruppe > summary::after { content: '+'; font: 700 24px var(--display); margin-left: auto; }
+.saison-gruppe[open] > summary::after { content: '–'; }
+.saison-gruppe[open] > summary { margin-bottom: 12px; }
 .result-row { display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: center; padding: 14px; border-radius: 20px; background: var(--soft); }
 @media (min-width: 900px) { .result-row { grid-template-columns: 60px 140px 1fr 90px 180px 200px 100px; background: transparent; border-radius: 0; padding: 16px 0; border-bottom: 1px solid var(--line); } .result-row .m-only { display: none !important; } }
 .result-row .d-only { display: none; }
@@ -340,7 +349,8 @@ fieldset { min-width: 0; }
   .wins-tiles { grid-template-columns: minmax(0, 1fr); }
   .wins-tiles .win-tile { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
   .wins-tiles .win-tile b { min-width: 2.6em; }
-  .site-footer { margin-top: 64px; padding: 40px 0 16px; }
+  .site-footer { margin-top: 48px; padding: 32px 0 16px; }
+  .footer-claim { display: none; }
   .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
   .footer-grid > :first-child, .footer-grid > :last-child { grid-column: 1 / -1; }
   .footer-grid nav { gap: 0; font-size: 16px; }
@@ -354,9 +364,23 @@ fieldset { min-width: 0; }
   .home-news { order: 3; }
   .home-galerie { order: 4; }
   .home-erfolge { order: 5; }
-  .home-partner { order: 6; }
+  .home-kinderschutz { order: 6; }
+  .home-partner { order: 7; }
   .home-gruppen .card-soft { padding: 22px 18px; }
   .gruppen-head h2 { font-size: 24px; }
+
+  /* Gruppenzeilen kompakt: Name + Status oben, Jahrgang vor der Zeit */
+  .gruppe-row { padding: 10px 0; gap: 2px 10px; }
+  .gruppe-jg { display: none; }
+  .gruppe-jg-m { display: inline; font-weight: 700; color: var(--ink); }
+  .gruppe-row .pill { padding: 3px 10px; font-size: 12px; }
+  .gruppe-zeit { font-size: 14px; line-height: 1.4; }
+  .gruppe-hinweis { font-size: 13px; line-height: 1.35; }
+
+  /* Termine: auf der Startseite nur die nächsten drei */
+  .termine-kurz .list-row { padding: 10px 0; }
+  .termine-kurz .list-row:nth-of-type(n+4) { display: none; }
+  .termine-kurz .list-row .date { min-width: 76px; }
 
   /* Angebot als kompakte Liste mit kleinem Foto */
   .angebot-list { gap: 10px; }
@@ -369,14 +393,56 @@ fieldset { min-width: 0; }
   /* News-Aufmacher: Anrisstext auf drei Zeilen */
   .news-big .lead { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-  /* Galerie als ein Block in drei Spalten */
-  .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 96px; gap: 8px; }
-  .gallery .ph { border-radius: 16px; padding: 10px; font-size: 12px; }
-  .gallery > :last-child { grid-column: span 2; }
+  /* News-Übersicht: erster Beitrag groß, die übrigen als Zeilen mit kleinem Foto */
+  .news-list { gap: 10px; }
+  .news-list > .card:not(:first-child) { flex-direction: row; border-radius: 20px; }
+  .news-list > .card:not(:first-child) .ph { width: 104px; flex-shrink: 0; aspect-ratio: auto; min-height: 96px; font-size: 0; padding: 0; }
+  .news-list > .card:not(:first-child) .badge-row, .news-list > .card:not(:first-child) .card-body > p, .news-list > .card:not(:first-child) .card-body > strong { display: none; }
+  .news-list > .card:not(:first-child) .card-body { padding: 12px 14px; gap: 2px; justify-content: center; }
+  .news-list > .card:not(:first-child) .h-s { font-size: 17px; line-height: 1.25; }
+
+  /* Weitere News als Titelliste ohne Fotos */
+  .news-more { gap: 0; margin-top: 16px !important; }
+  .news-more .card { background: none; border-radius: 0; border-top: 1px solid var(--line); }
+  .news-more .ph { display: none; }
+  .news-more .card-body { padding: 12px 0; gap: 2px; }
+  .news-more .h-s { font-size: 17px; line-height: 1.25; }
+
+  /* Kartenreihen, die auf dem Handy seitlich gewischt werden (z. B. Erfolgsberichte) */
+  .swipe-mobile { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 4px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .swipe-mobile::-webkit-scrollbar { display: none; }
+  .swipe-mobile > * { flex: 0 0 78%; scroll-snap-align: start; }
+  .swipe-mobile .ph { aspect-ratio: 16 / 9; }
+
+  .step-card { padding: 18px 16px; }
+
+  /* Team: kleines Foto neben Name und Rolle */
+  .team-grid { gap: 10px; }
+  .team-grid .card { display: grid; grid-template-columns: 80px minmax(0, 1fr); align-items: start; border-radius: 22px; }
+  .team-grid .ph { width: 80px; height: 80px; margin: 14px 0 14px 14px; border-radius: 16px; font-size: 0; padding: 0; }
+  .team-grid .card-body { padding: 14px 16px; gap: 4px; }
+
+  /* Ergebnisliste kompakter */
+  .result-row { padding: 10px 12px; gap: 12px; grid-template-columns: 40px 1fr; border-radius: 16px; }
+  .result-row .medal { width: 40px; height: 40px; font-size: 15px; }
+  .result-row .medal.small-text { font-size: 11px; }
+
+  /* Galerie als Wischreihe (scrollt nur in sich, nicht die Seite) */
+  .gallery { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 4px; scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery .ph, .gallery .big { flex: 0 0 68%; height: 180px; border-radius: 18px; padding: 12px; font-size: 13px; scroll-snap-align: start; }
 
   /* Partner-Platzhalter kompakt */
   .partners { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .partners div, .partners a { height: 64px; border-radius: 16px; }
+
+  /* Gruppenfinder-Ergebnis kompakt: aktuelle Saison als Kasten, andere als Zeile */
+  .result { padding: 20px 18px; gap: 12px; border-radius: 24px; }
+  .result-head h3 { font-size: 24px; line-height: 1.15; }
+  .result .btn { width: 100%; }
+  .times { gap: 6px; }
+  .times .time-box { padding: 10px 14px; font-size: 15px; }
+  [data-saison="winter"] .times .s-sommer, [data-saison="sommer"] .times .s-winter { background: none; padding: 0 4px; font-size: 13px; color: var(--muted); }
 
   /* Trainingszeiten-Tabelle als Karten, aktuelle Saison zuerst */
   .table-cards thead { display: none; }
