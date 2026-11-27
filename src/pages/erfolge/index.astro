@@ -16,6 +16,8 @@ const wk2026 = verein.wettkaempfe_pro_jahr.find((w) => w.jahr.startsWith('2026')
 const podest = (e: (typeof erfolge)[number]) => ['1.', '2.', '3.'].includes(e.platz);
 const bmTitel = erfolge.filter((e) => e.meisterschaft && e.platz === '1.').length;
 const bmMedaillen = erfolge.filter((e) => e.meisterschaft && podest(e)).length;
+// Ergebnisse nach Saison gruppieren, neueste zuerst; nur die neueste ist aufgeklappt
+const saisons = [...new Set(erfolge.map((e) => e.saison))].sort((a, b) => b - a);
 const podest2026 = erfolge.filter((e) => e.saison === 2026 && podest(e)).length;
 ---
 <Base title="Erfolge" active="erfolge">
@@ -40,7 +42,7 @@ const podest2026 = erfolge.filter((e) => e.saison === 2026 && podest(e)).length;
 
   <section class="wrap section">
     <h2 class="h-l" style="margin-bottom:24px">Berichte zu unseren Erfolgen</h2>
-    <div class="grid grid-3">
+    <div class="grid grid-3 swipe-mobile">
       {berichte.map((n) => (
         <a href={url(`/news/${n.id}/`)} class="card">
           <Foto news={n.id}>Foto · {n.data.title}</Foto>
@@ -59,20 +61,27 @@ const podest2026 = erfolge.filter((e) => e.saison === 2026 && podest(e)).length;
       {stufen.map((s, i) => <button type="button" class="chip chip-neon" data-stufe={s} aria-pressed={i === 0 ? 'true' : 'false'}>{s}</button>)}
     </div>
     <div class="results" id="results">
-      {erfolge.map((e) => {
-        const gold = e.platz.startsWith('1.');
-        return (
-          <div class="result-row" data-stufen={e.stufen.join(',')}>
-            <span class={`medal ${gold ? 'gold' : ''} ${e.platz.length > 3 ? 'small-text' : ''}`}>{e.platz}</span>
-            <span class="d-only muted">{e.datum}</span>
-            <span><strong>{e.wettkampf}</strong><span class="m-only" style="font-size:14px;color:var(--text-2)">{e.klasse} · {e.disziplin}</span><span class="m-only" style="font-size:13px;color:var(--muted)">{e.datum} · {e.wer}</span></span>
-            <span class="d-only">{e.klasse}</span>
-            <span class="d-only">{e.disziplin}</span>
-            <span class="d-only">{e.wer}</span>
-            <span class="d-only">{e.link ? <a href={e.link} class="link-u">Ergebnis ↗</a> : <span class="muted">Link folgt</span>}</span>
+      {saisons.map((j, i) => (
+        <details class="saison-gruppe" open={i === 0} data-saison-gruppe>
+          <summary><span class="h-s">Saison {j}</span><span class="muted" data-anzahl>{erfolge.filter((e) => e.saison === j).length} Platzierungen</span></summary>
+          <div class="results">
+        {erfolge.filter((e) => e.saison === j).map((e) => {
+          const gold = e.platz.startsWith('1.');
+          return (
+            <div class="result-row" data-stufen={e.stufen.join(',')}>
+              <span class={`medal ${gold ? 'gold' : ''} ${e.platz.length > 3 ? 'small-text' : ''}`}>{e.platz}</span>
+              <span class="d-only muted">{e.datum}</span>
+              <span><strong>{e.wettkampf}</strong><span class="m-only" style="font-size:14px;color:var(--text-2)">{e.klasse} · {e.disziplin}</span><span class="m-only" style="font-size:13px;color:var(--muted)">{e.datum} · {e.wer}</span></span>
+              <span class="d-only">{e.klasse}</span>
+              <span class="d-only">{e.disziplin}</span>
+              <span class="d-only">{e.wer}</span>
+              <span class="d-only">{e.link ? <a href={e.link} class="link-u">Ergebnis ↗</a> : <span class="muted">Link folgt</span>}</span>
+            </div>
+          );
+        })}
           </div>
-        );
-      })}
+        </details>
+      ))}
       <p id="leer" class="muted" hidden>Für diese Altersklasse sind noch keine Ergebnisse eingetragen.</p>
     </div>
     <p class="muted" style="margin-top:16px;font-size:14px">Einzel- und Teamplatzierungen, übernommen aus der Ergebnisliste der bisherigen Website. Namen und Fotos von Kindern nur mit Einwilligung der Eltern, sonst „Athlet:in U12" oder Teamname. Einträge mit [Platzhaltern] werden noch ergänzt.</p>
@@ -136,6 +145,12 @@ const podest2026 = erfolge.filter((e) => e.saison === 2026 && podest(e)).length;
     chips.forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
     let n = 0;
     rows.forEach((r) => { const show = s === 'Alle' || r.dataset.stufen!.split(',').includes(s); r.hidden = !show; if (show) n++; });
+    // Saison-Gruppen: Anzahl anpassen, leere Gruppen ausblenden
+    document.querySelectorAll<HTMLDetailsElement>('[data-saison-gruppe]').forEach((g) => {
+      const k = g.querySelectorAll('[data-stufen]:not([hidden])').length;
+      g.hidden = k === 0;
+      g.querySelector('[data-anzahl]')!.textContent = `${k} Platzierung${k === 1 ? '' : 'en'}`;
+    });
     leer.hidden = n > 0;
   }));
 </script>

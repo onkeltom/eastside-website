@@ -24,7 +24,7 @@ import partner from '../data/partner.json';
 
   <section class="wrap section" id="team">
     <h2 class="h-l" style="margin-bottom:24px">Team &amp; Vorstand</h2>
-    <div class="grid grid-4">
+    <div class="grid grid-4 team-grid">
       {verein.team.map((p, i) => (
         <div class="card"><div class={`ph ${i % 2 ? 'alt' : ''}`}>Foto</div><div class="card-body"><h3 class="h-s">{p.name}</h3><p class="meta">{p.rolle}</p>{p.text && <p class="muted" style="font-size:15px">{p.text}</p>}</div></div>
       ))}
