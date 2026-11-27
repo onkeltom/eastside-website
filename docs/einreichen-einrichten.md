@@ -60,16 +60,17 @@ Die Reihenfolge der Schritte ist wichtig. Am besten genau so abarbeiten.
 ## Schritt 2: Das Haus bauen (Cloudflare Pages)
 
 1. Links im Menü **Workers & Pages** öffnen.
-2. **Create** → Reiter **Pages** → **Connect to Git**.
-3. GitHub verbinden. Cloudflare fragt, auf welche Repositories es zugreifen darf. **Only select repositories** wählen und `onkeltom/eastside-website` auswählen.
-4. Repository `eastside-website` wählen, **Begin setup**.
-5. Einstellungen:
+2. **Create application** klicken.
+3. **Nicht** „Continue with GitHub“ wählen (das legt einen Worker an, kein Pages-Projekt). Stattdessen ganz unten den Link **Continue to Pages** („Need to use the legacy Pages workflow?“) klicken, dann **Connect to Git** bzw. **Import an existing Git repository**.
+4. GitHub verbinden. Cloudflare fragt, auf welche Repositories es zugreifen darf. **Only select repositories** wählen und `onkeltom/eastside-website` auswählen.
+5. Repository `eastside-website` wählen, **Begin setup**.
+6. Einstellungen:
    - **Project name:** `eastside-website`. Ist der Name schon vergeben, schlägt Cloudflare einen anderen vor. Dann diesen Namen merken und in `wrangler.toml` bei `name =` eintragen.
    - **Production branch:** `main`
    - **Framework preset:** Astro
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
-6. **Save and Deploy** klicken und warten, bis der Bau fertig ist (ein, zwei Minuten).
+7. **Save and Deploy** klicken und warten, bis der Bau fertig ist (ein, zwei Minuten).
 
 Die Website ist jetzt unter `https://eastside-website.pages.dev` erreichbar. Die eigene Domain `sc-eastside.de` kommt erst beim Livebetrieb dazu.
 
