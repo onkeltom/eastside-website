@@ -1,0 +1,30 @@
+# Cloudflare Pages: Bindings und Variablen für die Functions in functions/.
+# Einrichtung Schritt für Schritt: docs/einreichen-einrichten.md
+name = "eastside-website"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
+
+[vars]
+GITHUB_REPO = "onkeltom/eastside-website"
+GITHUB_APP_ID = "[Platzhalter]"
+GITHUB_INSTALLATION_ID = "[Platzhalter]"
+ACCESS_TEAM_DOMAIN = "https://[Platzhalter].cloudflareaccess.com"
+ACCESS_AUD = "[Platzhalter]"
+FOTOS_NUR_MIT_LOGIN = "false"
+
+[[r2_buckets]]
+binding = "FOTOS"
+bucket_name = "eastside-fotos"
+
+# Vorschau-Versionen (jeder Pull Request): Fotos nur mit Login, da dort noch ungeprüfte Fotos liegen.
+[env.preview.vars]
+GITHUB_REPO = "onkeltom/eastside-website"
+GITHUB_APP_ID = "[Platzhalter]"
+GITHUB_INSTALLATION_ID = "[Platzhalter]"
+ACCESS_TEAM_DOMAIN = "https://[Platzhalter].cloudflareaccess.com"
+ACCESS_AUD = "[Platzhalter]"
+FOTOS_NUR_MIT_LOGIN = "true"
+
+[[env.preview.r2_buckets]]
+binding = "FOTOS"
+bucket_name = "eastside-fotos"

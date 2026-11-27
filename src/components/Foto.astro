@@ -1,16 +1,23 @@
 ---
-// Platzhalter-Fläche, die in der Vorschau ein verlinktes Foto der alten Website zeigt
-// (src/data/vorschau-fotos.json). Lädt das Foto nicht, bleibt der Platzhalter-Text sichtbar.
+// Foto-Fläche. Reihenfolge: eigenes Foto aus R2 (bild oder erstes Foto des Beitrags news),
+// sonst in der Vorschau ein verlinktes Foto der alten Website (src/data/vorschau-fotos.json),
+// sonst der Platzhalter-Text.
+import { getEntry } from 'astro:content';
 import fotos from '../data/vorschau-fotos.json';
+import { fotoUrl } from '../lib/fotos';
 
-interface Props { id?: string; news?: string; class?: string; style?: string }
+interface Props { id?: string; news?: string; bild?: { datei: string; alt: string }; class?: string; style?: string }
 const { id, news, class: cls = '', style } = Astro.props;
+const bild = Astro.props.bild ?? (news ? (await getEntry('news', news))?.data.bilder[0] : undefined);
+const eigen = bild && fotoUrl(bild.datei);
 const preview = import.meta.env.PREVIEW !== 'false';
 const map = fotos as unknown as Record<string, string> & { news: Record<string, string> };
-const src = preview ? (news ? map.news[news] : id ? map[id] : '') : '';
+const vorschau = preview ? (news ? map.news[news] : id ? map[id] : '') : '';
 ---
 <div class={`ph ${cls}`} style={style}>
   <slot />
-  {src && <img class="ph-img" src={src} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()" />}
+  {eigen
+    ? <img class="ph-img" src={eigen} alt={bild.alt} loading="lazy" decoding="async" />
+    : vorschau && <img class="ph-img" src={vorschau} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()" />}
   <slot name="over" />
 </div>

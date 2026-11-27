@@ -55,7 +55,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
         <a href={url(`/news/${top.id}/`)} class="card news-big">
           <Foto news={top.id}>
             Foto · {top.data.title}
-            <div slot="over" class="badge-row"><span class="pill pill-neon">{top.data.kategorie}</span>{top.data.fotos && <span class="pill pill-dark">{top.data.fotos} Fotos</span>}</div>
+            <div slot="over" class="badge-row"><span class="pill pill-neon">{top.data.kategorie}</span>{(top.data.bilder.length || top.data.fotos) && <span class="pill pill-dark">{top.data.bilder.length || top.data.fotos} Fotos</span>}</div>
           </Foto>
           <div class="card-body">
             <span class="meta">{formatDate(top.data.date)}</span>
@@ -73,7 +73,7 @@ const highlights = erfolge.filter((e) => e.highlight).slice(0, 3);
               <span><span class={`pill ${n.data.kategorie === 'Erfolg' ? 'pill-neon' : 'pill-white'}`}>{n.data.kategorie}</span></span>
               <span class="meta">{formatDate(n.data.date)}</span>
               <h3>{n.data.title}</h3>
-              {n.data.fotos && <span style="font-size:14px;font-weight:700;margin-top:auto">{n.data.fotos} Fotos · Weiterlesen →</span>}
+              {(n.data.bilder.length || n.data.fotos) && <span style="font-size:14px;font-weight:700;margin-top:auto">{n.data.bilder.length || n.data.fotos} Fotos · Weiterlesen →</span>}
             </div>
           </a>
         ))}

@@ -21,7 +21,8 @@ Die Website hat drei Aufgaben, in dieser Reihenfolge:
 - **„Trainer:in werden"** ist eine eigene Seite, nur über das Hauptmenü erreichbar – kein Block am Ende der Startseite.
 - **„Erfolg melden"** für Trainer:innen ist nur im Footer verlinkt.
 - **Statische Website** (Astro), kein WordPress. Grund: wenig Wartung, Redesigns betreffen nur Vorlagen, nicht Inhalte.
-- **Dominik ist einziger Haupteditor** mit GitHub-Zugang. Andere reichen über Formulare ein; Einreichungen werden als Entwurf (`draft: true`) im Repository abgelegt und von Dominik veröffentlicht.
+- **Dominik ist einziger Haupteditor** mit GitHub-Zugang. Andere reichen über Formulare ein. Berichte kommen über `/einreichen/` als Pull Request; Merge = veröffentlichen. Andere Einreichungen werden als Entwurf (`draft: true`) abgelegt.
+- **Fotos liegen in R2, nicht im Repository** (privater Bucket `eastside-fotos`, ausgeliefert über `functions/fotos/` nur für veröffentlichte Beiträge). Grund: Bei widerrufener Einwilligung lässt sich ein Foto in R2 löschen, aus der Git-Historie nicht. Einrichtung: `docs/einreichen-einrichten.md`.
 - **Hosting**: Vorschau auf GitHub Pages (`.github/workflows/deploy.yml`). Livebetrieb geplant auf **Cloudflare Pages** (nicht Vercel Hobby – nur persönliche, nicht-kommerzielle Nutzung erlaubt). Domain sc-eastside.de bleibt beim Registrar, wird per DNS umgestellt (vorher prüfen, ob Mail-Records existieren).
 - **Redaktionsbereich**: Sveltia CMS unter `/admin` (`public/admin/`). Login später über `sveltia-cms-auth` auf Cloudflare Workers. Nicht auf Netlify Identity / Git Gateway bauen (Git Gateway ist deprecated).
 - **Automatisierung später, in Stufen**: (1) kleines Formular-Skript → Entwurf im Repo, (2) KI als Schreibhilfe für Entwürfe, (3) ggf. n8n mit KI-Baustein. Eine KI veröffentlicht nie selbst.
@@ -50,6 +51,7 @@ Offen / noch zu gestalten: eigene Seiten für Sportcamps und Presse; echte Fotog
 - `src/content/news/*.md` – Beiträge (Schema in `src/content.config.ts`)
 - `src/data/*.json` – Gruppen, Erfolge, Termine, Stufen/Trainerrollen, Vereinsdaten (inkl. Vorstand, Team, Bank, Trainingsorte), Beiträge, Partner, Kinderschutz
 - `src/texte/satzung.md` – Satzung (Abschrift von der alten Website)
+- `src/pages/einreichen.astro`, `functions/`, `cloudflare/` – Berichte einreichen (Cloudflare Access → R2 + Pull Request), Test: `node scripts/test-einreichen.mjs`
 - `public/admin/` – Sveltia CMS (Konfiguration noch ungetestet, v. a. JSON-Dateien mit `root: true`-Listen)
 
 Eine Information wird **einmal** gepflegt und an mehreren Stellen angezeigt (z. B. Erfolg → Erfolge-Seite, Startseite, News). Keine Inhalte doppelt in Seiten abtippen, sondern aus `src/data` oder `src/content` lesen.
@@ -88,7 +90,7 @@ Vor dem Commit: `npm run build` muss ohne Fehler laufen; neue Seiten auf 390 px 
 1. Vorschau auf GitHub Pages online bringen, Feedback von Dejvid und ersten Eltern einholen.
 2. Echte Inhalte einpflegen: Erfolge (Datum, Wettkampf, Klasse, Disziplin, Platz), Fotos mit Einwilligung, Trainerprofile, Beiträge, Termine.
 3. Redaktionsbereich aktivieren (sveltia-cms-auth auf Cloudflare Workers, `base_url` in `public/admin/config.yml`), Konfiguration testen.
-4. Formular-Skript: Einreichungen (Erfolg melden, Beitrag, Änderung vorschlagen) → Entwurf bzw. Issue im Repository, Fotos verkleinern.
+4. Formular-Skript: Berichte erledigt (`/einreichen/`, Einrichtung in `docs/einreichen-einrichten.md`). Offen: Erfolg melden, Änderung vorschlagen.
 5. Offene Seiten: Beiträge & Mitgliedschaft, Camps, Presse; Impressum/Datenschutz.
 6. Livebetrieb: Cloudflare Pages, DNS umstellen, `PREVIEW=false`.
 
