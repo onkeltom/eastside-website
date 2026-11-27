@@ -15,6 +15,8 @@ FOTOS_NUR_MIT_LOGIN = "false"
 [[r2_buckets]]
 binding = "FOTOS"
 bucket_name = "eastside-fotos"
+# Daten von Kindern nur auf Servern in der EU: Bucket mit Jurisdiction EU anlegen.
+jurisdiction = "eu"
 
 # Vorschau-Versionen (jeder Pull Request): Fotos nur mit Login, da dort noch ungeprüfte Fotos liegen.
 [env.preview.vars]
@@ -28,3 +30,5 @@ FOTOS_NUR_MIT_LOGIN = "true"
 [[env.preview.r2_buckets]]
 binding = "FOTOS"
 bucket_name = "eastside-fotos"
+# Daten von Kindern nur auf Servern in der EU: Bucket mit Jurisdiction EU anlegen.
+jurisdiction = "eu"
