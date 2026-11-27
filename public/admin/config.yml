@@ -89,8 +89,9 @@ collections:
             widget: list
             root: true
             fields:
-              - { name: datum, label: Datum, widget: string }
+              - { name: datum, label: Datum, widget: string, hint: "So wie es angezeigt wird, z. B. 14.11. oder ab 1. Nov." }
               - { name: titel, label: Titel, widget: string }
+              - { name: bis, label: Anzeigen bis, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false, hint: "Danach verschwindet der Termin automatisch." }
       - name: partner
         label: Partner & Sponsoren
         file: src/data/partner.json

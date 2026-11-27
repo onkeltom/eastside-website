@@ -1,8 +1,8 @@
 [
-  {"datum": "ab 1. Nov.", "titel": "Winterzeiten – Training in der Halle"},
-  {"datum": "03.11.", "titel": "Start der neuen U8-Gruppe (Jg. 2020/2021)"},
-  {"datum": "14.11.", "titel": "BM Crosslauf"},
-  {"datum": "22.11.", "titel": "55. Preußen-Cup"},
-  {"datum": "12.12.", "titel": "Sportfest Potsdam"},
-  {"datum": "18.12.", "titel": "EAST SIDE Weihnachtsfest"}
+  {"datum": "ab 1. Nov.", "titel": "Winterzeiten – Training in der Halle", "bis": "2026-11-30"},
+  {"datum": "03.11.", "titel": "Start der neuen U8-Gruppe (Jg. 2020/2021)", "bis": "2026-11-03"},
+  {"datum": "14.11.", "titel": "BM Crosslauf", "bis": "2026-11-14"},
+  {"datum": "22.11.", "titel": "55. Preußen-Cup", "bis": "2026-11-22"},
+  {"datum": "12.12.", "titel": "Sportfest Potsdam", "bis": "2026-12-12"},
+  {"datum": "18.12.", "titel": "EAST SIDE Weihnachtsfest", "bis": "2026-12-18"}
 ]

@@ -81,4 +81,6 @@ import { url } from '../lib/url';
   .ks-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
   .ks-row p { margin-top: 2px; font-size: 15px; }
   .ks-row .pill { flex-shrink: 0; }
+  .ks-row > div { min-width: 0; hyphens: auto; }
+  @media (max-width: 479px) { .ks-row { flex-direction: column; align-items: flex-start; gap: 8px; } }
 </style>
