@@ -9,7 +9,7 @@ GITHUB_REPO = "onkeltom/eastside-website"
 GITHUB_APP_ID = "5949046"
 GITHUB_INSTALLATION_ID = "186411278"
 ACCESS_TEAM_DOMAIN = "https://blue-shadow-7022.cloudflareaccess.com"
-ACCESS_AUD = "[Platzhalter]"
+ACCESS_AUD = "ba50730655da088f7c8d600418cd007a35a5f01dff18173a13c8d6e63a2f41d0"
 FOTOS_NUR_MIT_LOGIN = "false"
 
 [[r2_buckets]]
@@ -24,7 +24,7 @@ GITHUB_REPO = "onkeltom/eastside-website"
 GITHUB_APP_ID = "5949046"
 GITHUB_INSTALLATION_ID = "186411278"
 ACCESS_TEAM_DOMAIN = "https://blue-shadow-7022.cloudflareaccess.com"
-ACCESS_AUD = "[Platzhalter]"
+ACCESS_AUD = "8d5e351ad561bc72e1cff72833bb813b74c57c8668e6b73ac786e563a28dda8f"
 FOTOS_NUR_MIT_LOGIN = "true"
 
 [[env.preview.r2_buckets]]
