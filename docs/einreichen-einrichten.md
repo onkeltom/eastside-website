@@ -184,7 +184,7 @@ Wird dieser Schritt vergessen, passiert nichts Schlimmes: Die Vorschau zeigt dan
 2. **Add** → Typ **Secret**:
    - **Variable name:** `GITHUB_APP_KEY`
    - **Value:** den ganzen Inhalt von `app-key.pem` hineinkopieren, inklusive der Zeilen mit `-----BEGIN` und `-----END`. Zum Kopieren die Datei mit einem Texteditor öffnen. Gehen Zeilenumbrüche verloren, ist das egal.
-3. Speichern. Dasselbe noch einmal für die Umgebung **Preview** machen. Je nach Ansicht gibt es oben eine Auswahl „Production / Preview".
+3. Speichern. Das reicht für **Production**. Für die Vorschau-Versionen ist der Schlüssel nicht nötig: Eingereicht wird immer über die Live-Adresse, die Vorschau zeigt nur an.
 4. Danach beide Schlüsseldateien im Download-Ordner löschen. Brauchst du den Schlüssel noch mal, erzeugst du bei GitHub einfach einen neuen.
 
 ### 5b. `wrangler.toml` ausfüllen
