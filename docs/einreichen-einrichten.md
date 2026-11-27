@@ -164,8 +164,8 @@ Neue Trainerin dazu? Später einfach in dieser Policy ihre E-Mail-Adresse ergän
 
 Jeder Bericht bekommt erst eine Vorschau-Version. Dort liegen noch ungeprüfte Fotos, also muss auch hier ein Türsteher stehen.
 
-1. Zurück zu **Workers & Pages** → Projekt `eastside-website` → **Settings** → **General**.
-2. Bei **Access policy** auf **Enable access policy** klicken. Cloudflare legt dafür eine zweite Access-Application an (für `*.eastside-website.pages.dev`).
+1. Zurück zu **Workers & Pages** → Projekt `eastside-website` → **Settings**, ganz nach unten scrollen.
+2. Im Abschnitt **General** bei **Preview access** auf **Restrict previews** klicken. Cloudflare legt dafür eine zweite Access-Application an (für `*.eastside-website.pages.dev`).
 3. In **Zero Trust** → **Access** → **Applications** diese neue Application öffnen:
    - Policy prüfen: Nur du (Dominik) und wer sonst Berichte prüft, steht drin.
    - Den **AUD Tag** kopieren. Das ist die **AUD für Vorschau**. Aufschreiben.
