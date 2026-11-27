@@ -106,8 +106,8 @@ Weil die Datei `wrangler.toml` im Repository liegt, liest Cloudflare den Fotosch
 
 ### 3c. Schlüssel für den Roboter
 
-1. Zurück zur App: **Settings** → **Developer settings** → **GitHub Apps** → deine App → **Edit**.
-2. Ganz unten **Private keys** → **Generate a private key**. Der Browser lädt eine Datei herunter, z. B. `east-side-einreichungen.2026-11-27.private-key.pem`.
+1. Zurück zur App: **Settings** → **Developer settings** → **GitHub Apps** → deine App.
+2. Links im Menü **Credentials** öffnen → Abschnitt **Private keys** → **Generate a private key**. (In älteren Ansichten steht der Abschnitt ganz unten unter **General**.) Der Browser lädt eine Datei herunter, z. B. `east-side-einreichungen.2026-11-27.private-key.pem`.
 3. Terminal öffnen, in den Download-Ordner wechseln und die Datei umwandeln. Cloudflare versteht nur dieses andere Format:
 
 ```bash
