@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test:einreichen": "node scripts/test-einreichen.mjs"
+    "test:einreichen": "node scripts/test-einreichen.mjs",
+    "test:anfrage": "node scripts/test-anfrage.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",

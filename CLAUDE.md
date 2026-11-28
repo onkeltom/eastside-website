@@ -56,6 +56,7 @@ Offen / noch zu gestalten: eigene Seiten für Sportcamps und Presse; echte Fotog
 - `src/data/*.json` – Gruppen, Erfolge, Termine, Stufen/Trainerrollen, Vereinsdaten (inkl. Vorstand, Team, Bank, Trainingsorte), Beiträge, Partner, Kinderschutz
 - `src/texte/satzung.md` – Satzung (Abschrift von der alten Website)
 - `src/pages/einreichen.astro`, `functions/`, `cloudflare/` – Berichte einreichen (Cloudflare Access → R2 + Pull Request), Test: `node scripts/test-einreichen.mjs`
+- `functions/api/anfrage.js`, `cloudflare/anfrage.js` – Formular Probetraining/Warteliste auf `/mitmachen/` → E-Mail an den Verein über Cloudflare Email Routing (Einrichtung: `docs/anfrage-einrichten.md`, Test: `npm run test:anfrage`). Ohne Server bietet das Formular einen fertigen `mailto:`-Link.
 - `public/admin/` – Sveltia CMS (Konfiguration noch ungetestet, v. a. JSON-Dateien mit `root: true`-Listen)
 
 Eine Information wird **einmal** gepflegt und an mehreren Stellen angezeigt (z. B. Erfolg → Erfolge-Seite, Startseite, News). Keine Inhalte doppelt in Seiten abtippen, sondern aus `src/data` oder `src/content` lesen.
@@ -76,7 +77,7 @@ Eine Information wird **einmal** gepflegt und an mehreren Stellen angezeigt (z. 
 - **Vereinsanschrift nur im Impressum:** Die eingetragene Anschrift (Atzpodienstr. 24a) ist die Privatadresse des Vorsitzenden – nirgends sonst anzeigen (Kontakt, Verein, Footer usw.).
 - **Keine erfundenen Fakten.** Fehlende Angaben bleiben als `[Platzhalter]` sichtbar. Belegte Zahlen bisher: Gründung 2022; Wettkämpfe laut LADV 2023: 2, 2024: 8, 2025: 14, 2026 bisher: 13 (Stand Sept. 2026). Trainingszeiten stammen von der alten Website.
 - **Vorschau bleibt `noindex`** mit Hinweisbalken. Erst für den Livebetrieb `PREVIEW=false` setzen.
-- Formulare sind noch nicht angeschlossen; Daten von Kindern/Eltern nur über Anbieter mit Servern in der EU und mit Datenschutzhinweis verarbeiten.
+- Formulare: Probetraining/Warteliste ist angeschlossen (E-Mail, nichts gespeichert), Camps noch nicht. Daten von Kindern/Eltern nur über Anbieter mit Servern in der EU und mit Datenschutzhinweis verarbeiten. Offen: Das Zielpostfach ist Gmail (Google); vor dem Start rechtlich prüfen oder auf ein EU-Postfach umstellen.
 
 ## Befehle
 
@@ -94,7 +95,7 @@ Vor dem Commit: `npm run build` muss ohne Fehler laufen; neue Seiten auf 390 px 
 1. Vorschau auf GitHub Pages online bringen, Feedback von Dejvid und ersten Eltern einholen.
 2. Echte Inhalte einpflegen: Erfolge (Datum, Wettkampf, Klasse, Disziplin, Platz), Fotos mit Einwilligung, Trainerprofile, Beiträge, Termine.
 3. Redaktionsbereich aktivieren (sveltia-cms-auth auf Cloudflare Workers, `base_url` in `public/admin/config.yml`), Konfiguration testen.
-4. Formular-Skript: Berichte erledigt (`/einreichen/`, Einrichtung in `docs/einreichen-einrichten.md`). Offen: Erfolg melden, Änderung vorschlagen.
+4. Formular-Skript: Berichte erledigt (`/einreichen/`, Einrichtung in `docs/einreichen-einrichten.md`). Probetraining/Warteliste erledigt (`docs/anfrage-einrichten.md`; beim ersten Deploy prüfen, ob Pages das `send_email`-Binding annimmt). Offen: Erfolg melden, Änderung vorschlagen, Camps.
 5. Offene Seiten: Beiträge & Mitgliedschaft, Camps, Presse; Impressum/Datenschutz.
 6. Livebetrieb: Cloudflare Pages (zuerst mit `PREVIEW=true` als Ersatz für die GitHub-Pages-Vorschau), R2-Bucket (EU) zuerst für Dateien ohne Personenbezug (Mitgliedsantrag, Satzung, Partnerlogos), DNS zu Cloudflare umziehen, `media.sc-eastside.de` anbinden, im Code `MEDIA_URL` für Dateien ohne Personenbezug einführen (Beitragsfotos laufen schon über `/fotos/`), dann `PREVIEW=false`.
 

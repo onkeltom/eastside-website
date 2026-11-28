@@ -11,6 +11,8 @@ GITHUB_INSTALLATION_ID = "186411278"
 ACCESS_TEAM_DOMAIN = "https://blue-shadow-7022.cloudflareaccess.com"
 ACCESS_AUD = "ba50730655da088f7c8d600418cd007a35a5f01dff18173a13c8d6e63a2f41d0"
 FOTOS_NUR_MIT_LOGIN = "false"
+ANFRAGE_ABSENDER = "formular@sc-eastside.de"
+ANFRAGE_EMPFAENGER = "sc.east.side2023@gmail.com"
 
 [[r2_buckets]]
 binding = "FOTOS"
@@ -32,3 +34,9 @@ binding = "FOTOS"
 bucket_name = "eastside-fotos"
 # Daten von Kindern nur auf Servern in der EU: Bucket mit Jurisdiction EU anlegen.
 jurisdiction = "eu"
+
+# Formular /mitmachen/ (Probetraining, Warteliste) → E-Mail an den Verein. Einrichtung: docs/anfrage-einrichten.md
+# Nur im Livebetrieb: Vorschau-Versionen haben kein Binding, dort öffnet das Formular das E-Mail-Programm.
+[[send_email]]
+name = "ANFRAGEN"
+destination_address = "sc.east.side2023@gmail.com"

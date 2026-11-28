@@ -36,15 +36,18 @@ const start = 2017;
         <h2 class="h-m" id="form-title">Probetraining anfragen</h2>
         <p class="muted">Dreimal kostenlos testen. Wir melden uns mit einem Termin – oder, wenn die Gruppe voll ist, sobald ein Platz frei wird.</p>
       </div>
-      <form class="form two" id="anfrage-form">
+      <form class="form two" id="anfrage-form" action={url('/api/anfrage')} method="post">
+        <input type="hidden" name="art" id="art-input" value="probetraining" />
         <label>Gruppe<select name="gruppe" id="gruppe-select">{gruppen.map((g) => <option value={g.id}>{g.name}</option>)}</select></label>
-        <label>Geburtsjahr des Kindes<input name="jahr" id="jahr-input" inputmode="numeric" value={start} /></label>
-        <label>Name (Elternteil)<input name="name" required autocomplete="name" /></label>
-        <label>E-Mail<input type="email" name="email" required autocomplete="email" /></label>
-        <label class="check full"><input type="checkbox" required /><span>Ich bin einverstanden, dass der Verein meine Angaben zur Bearbeitung der Anfrage speichert. [Datenschutzhinweis folgt]</span></label>
+        <label>Geburtsjahr des Kindes<input name="jahr" id="jahr-input" inputmode="numeric" value={start} required /></label>
+        <label>Name (Elternteil)<input name="name" required autocomplete="name" maxlength="80" /></label>
+        <label>E-Mail<input type="email" name="email" required autocomplete="email" maxlength="120" /></label>
+        <label class="full">Nachricht (optional)<textarea name="nachricht" rows="3" maxlength="1000" placeholder="z. B. ab wann es passt oder was wir wissen sollten"></textarea></label>
+        <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <label class="check full"><input type="checkbox" name="einwilligung" value="ja" required /><span>Ich bin einverstanden, dass der Verein meine Angaben zur Bearbeitung der Anfrage speichert. Mehr dazu in der <a href={url('/datenschutz/')} class="link-u">Datenschutzerklärung</a>.</span></label>
         <div class="full" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
           <button type="submit" class="btn btn-dark" id="form-submit">Anfrage senden</button>
-          <span class="notice" id="form-note" hidden>Vorschau: Das Formular ist noch nicht angeschlossen, es wurde nichts gesendet. Bitte vorerst per E-Mail an sc.east.side2023@gmail.com.</span>
+          <p class="notice" id="form-note" role="status" hidden></p>
         </div>
       </form>
       <p class="muted" style="font-size:15px;border-top:1px solid var(--line);padding-top:16px"><strong style="color:var(--ink)">Kinderschutz:</strong> {ks.kurz} Alle Trainer:innen verpflichten sich zu unserem Ehrenkodex. <a href={url('/kinderschutz/')} class="link-u">Mehr erfahren</a></p>
@@ -120,6 +123,7 @@ const start = 2017;
     </div>
   </section>
 
+  <script type="application/json" id="verein-email" set:html={JSON.stringify(verein.email)}></script>
   <script type="application/json" id="gruppen-data" set:html={JSON.stringify(gruppen)}></script>
 </Base>
 
@@ -138,6 +142,7 @@ const start = 2017;
 
   function choose(id: string, wait: boolean) {
     select.value = id;
+    (document.getElementById('art-input') as HTMLInputElement).value = wait ? 'warteliste' : 'probetraining';
     formTitle.textContent = wait ? 'Auf die Warteliste setzen' : 'Probetraining anfragen';
     submit.textContent = wait ? 'Auf die Warteliste' : 'Anfrage senden';
     document.getElementById('anfrage')!.scrollIntoView({ behavior: 'smooth' });
@@ -178,9 +183,38 @@ const start = 2017;
     const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-choose]');
     if (b) choose(b.dataset.choose!, b.dataset.wait === '1');
   });
-  document.getElementById('anfrage-form')!.addEventListener('submit', (e) => {
+  const form = document.getElementById('anfrage-form') as HTMLFormElement;
+  const note = document.getElementById('form-note')!;
+  const vereinEmail: string = JSON.parse(document.getElementById('verein-email')!.textContent || '""');
+  // Ohne angeschlossenes Formular (Vorschau auf GitHub Pages, Störung): dieselben Angaben als fertige E-Mail anbieten.
+  function mailtoLink(d: FormData) {
+    const art = d.get('art') === 'warteliste' ? 'Warteliste' : 'Probetraining';
+    const text = [`Art: ${art}`, `Gruppe: ${select.selectedOptions[0]?.text}`, `Geburtsjahr: ${d.get('jahr')}`, `Name: ${d.get('name')}`, `E-Mail: ${d.get('email')}`, d.get('nachricht') ? `\n${d.get('nachricht')}` : ''].join('\n');
+    return `mailto:${vereinEmail}?subject=${encodeURIComponent(`${art}: ${select.selectedOptions[0]?.text}, Jahrgang ${d.get('jahr')}`)}&body=${encodeURIComponent(text)}`;
+  }
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    document.getElementById('form-note')!.hidden = false;
+    const d = new FormData(form);
+    submit.setAttribute('disabled', '');
+    note.hidden = true;
+    let res: Response | undefined;
+    try { res = await fetch(form.action, { method: 'POST', body: d }); } catch { /* offline oder kein Server */ }
+    submit.removeAttribute('disabled');
+    note.hidden = false;
+    if (res?.ok) {
+      note.textContent = d.get('art') === 'warteliste'
+        ? 'Danke! Ihr steht auf der Warteliste. Wir melden uns per E-Mail, sobald ein Platz frei wird.'
+        : 'Danke! Wir melden uns per E-Mail mit einem Termin fürs Probetraining.';
+      form.reset();
+      render(Number(jahrInput.defaultValue));
+      return;
+    }
+    const fehler = res && res.status === 400 ? ((await res.json().catch(() => ({}))).fehler as string | undefined) : undefined;
+    if (fehler) { note.textContent = fehler; return; }
+    note.innerHTML = '';
+    note.append('Das Formular konnte gerade nicht senden. ');
+    const a = Object.assign(document.createElement('a'), { href: mailtoLink(d), className: 'link-u', textContent: 'Anfrage per E-Mail schicken' });
+    note.append(a, ` (an ${vereinEmail}).`);
   });
   render(Number(new URLSearchParams(location.search).get('jahr')) || 2017);
 </script>

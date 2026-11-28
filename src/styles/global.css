@@ -306,6 +306,7 @@ p { margin: 0; }
 .form label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700; }
 .form input, .form select, .form textarea { min-height: 52px; border-radius: 14px; border: 1px solid var(--line-2); padding: 12px 14px; font: 400 16px var(--body); background: #fff; color: var(--ink); }
 .form textarea { resize: vertical; }
+.form .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .check { flex-direction: row !important; align-items: flex-start; gap: 12px !important; background: var(--soft); border-radius: 16px; padding: 14px; font-weight: 400 !important; line-height: 1.45; }
 .check input { min-height: 0; width: 22px; height: 22px; margin: 0; flex-shrink: 0; }
 .notice { background: #fff3b0; border-radius: 14px; padding: 12px 14px; font-size: 14px; }
