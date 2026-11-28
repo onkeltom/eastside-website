@@ -9,8 +9,14 @@ import partner from '../data/partner.json';
 import { url, formatDate } from '../lib/url';
 import Foto from '../components/Foto.astro';
 
-const news = (await getCollection('news', ({ data }) => !data.draft))
+const neueste = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+// Angepinnte Beiträge (startseite_oben_bis heute oder später) kommen zuerst, höchstens zwei.
+const heute = new Date().toISOString().slice(0, 10);
+const oben = neueste
+  .filter((n) => n.data.startseite_oben_bis && n.data.startseite_oben_bis.toISOString().slice(0, 10) >= heute)
+  .slice(0, 2);
+const news = [...oben, ...neueste.filter((n) => !oben.includes(n))];
 const [top, ...rest] = news;
 const side = rest.slice(0, 2);
 const more = rest.slice(2, 5);

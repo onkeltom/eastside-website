@@ -21,6 +21,9 @@ const news = defineCollection({
     teaser: z.string(),
     // Adresse des Beitrags auf der alten Website (bei übernommenen Beiträgen)
     quelle: z.string().optional(),
+    // Bis zu diesem Tag (einschließlich) steht der Beitrag oben auf der Startseite.
+    // Höchstens zwei gleichzeitig: der neuere groß, der zweite in der ersten Seitenzeile.
+    startseite_oben_bis: z.coerce.date().optional(),
     draft: z.boolean().default(false),
   }),
 });

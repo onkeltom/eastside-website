@@ -34,6 +34,7 @@ collections:
           - { name: einwilligung, label: "Einwilligung der Eltern liegt vor", widget: boolean, default: false }
       - { name: teaser, label: Kurztext für die Übersicht, widget: text }
       - { name: quelle, label: "Adresse auf der alten Website (optional)", widget: string, required: false }
+      - { name: startseite_oben_bis, label: "Auf der Startseite oben bis (optional, max. 2 Beiträge gleichzeitig)", widget: datetime, time_format: false, format: "YYYY-MM-DD", required: false }
       - { name: draft, label: "Entwurf (nicht veröffentlichen)", widget: boolean, default: true }
       - { name: body, label: Text, widget: markdown }
 
